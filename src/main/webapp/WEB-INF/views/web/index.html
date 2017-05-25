@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>首页</title>
+</head>
+<body>
+	hello,freemarker   ${ctx} ${user!}<br/>
+	${util.getClasspath()}<br/>   <#assign time = '2017-05-21'>
+	${util.formatShortDateStr(time)?string('yyyy-MM-dd HH:mm:ss')}<br/> 
+	${req.requestURL}<br/>
+	${util.getWebPath(req)}
+</body>
+</html>

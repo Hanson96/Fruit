@@ -2,7 +2,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<#include "/WEB-INF/views/include/meta.html"/>
 <title>首页</title>
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/plugin/bootstrap/bootstrap-3.3.7/css/bootstrap.min.css" />
 </head>
 <body>
 	hello,freemarker   ${ctx} ${user!}<br/>
@@ -10,5 +12,30 @@
 	${util.formatShortDateStr(time)?string('yyyy-MM-dd HH:mm:ss')}<br/> 
 	${req.requestURL}<br/>
 	${util.getWebPath(req)}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="banner">
+				<ul>
+					<li>
+						<img src="${ctx}/resource/img/banner/banner01.jpg" width="1349"/>
+						<img src="${ctx}/resource/img/banner/banner02.jpg" width="1349"/>
+						<img src="${ctx}/resource/img/banner/banner03.jpg" width="1349"/>
+						<img src="${ctx}/resource/img/banner/banner04.jpg" width="1349"/>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
 </body>
+<script type="text/javascript">
+	var _ctx = '${ctx}';
+</script>
+<script type="text/javascript" src="${ctx}/resource/plugin/requirejs/require.js"></script>
+<script type="text/javascript" src="${ctx}/resource/js/require-config.js"></script>
+<script>
+	require(['./web/index'],function(page){
+		var p = new page();
+		p.main();
+	});
+</script>
 </html>

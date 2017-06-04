@@ -1,11 +1,16 @@
 package com.hanson.foundation.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.hanson.core.domain.IdEntity;
 
-
+/**
+ * 附件 实体    图片、文件等
+ * @author hanson
+ *
+ */
 @Entity
 @Table(name="accessory")
 public class Accessory extends IdEntity{
@@ -24,6 +29,10 @@ public class Accessory extends IdEntity{
 	private String ext;
 	/*** @Fields info : 信息*/
 	private String info;
+	
+	// 商品
+	@ManyToOne
+	private Goods goods;
 	
 	public String getName() {
 		return name;
@@ -66,6 +75,12 @@ public class Accessory extends IdEntity{
 	}
 	public void setInfo(String info) {
 		this.info = info;
+	}
+	public Goods getGoods() {
+		return goods;
+	}
+	public void setGoods(Goods goods) {
+		this.goods = goods;
 	}
 	
 

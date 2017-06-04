@@ -24,7 +24,7 @@ import com.hanson.core.tools.CustomEnum;
  *
  */
 @Entity
-@Table(name="sec_user")
+@Table(name="user")
 public class User extends IdEntity{
 
 	/** 用户名*/
@@ -37,7 +37,7 @@ public class User extends IdEntity{
 	private Integer user_type = 0;
 	// 用户类型枚举
 	public static enum UserType implements CustomEnum{
-		STUDENT("学生",0),ADMIN("管理员",99);
+		BUYER("买家",0),ADMIN("管理员",99);
 		private String typeName;
 		private int value;
 		private UserType(String typeName, int value){
@@ -67,6 +67,9 @@ public class User extends IdEntity{
 		return "";
 	}
 	
+	// 收货地址
+	private String address;
+	
 	public String getUserName() {
 		return userName;
 	}
@@ -85,6 +88,11 @@ public class User extends IdEntity{
 	public void setUser_type(Integer user_type) {
 		this.user_type = user_type;
 	}
-	
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
 	
 }

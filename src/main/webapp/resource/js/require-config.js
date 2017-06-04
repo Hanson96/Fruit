@@ -51,15 +51,11 @@ require.config({
       'bootstrap': '../../plugin/bootstrap/bootstrap-3.3.7/js/bootstrap.min',
       'datetimepicker': '../../plugin/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min',
       'datetimepicker.zh-CN': '../../plugin/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN',
-      'flexpaper_flash': '../../plugin/flexpaper/js/flexpaper_flash',
-      'flexpaper_flash_debug': '../../plugin/flexpaper/js/flexpaper_flash_debug',
       'jquery.validate': '../../plugin/jquery/jquery-validation-1.13.0/jquery.validate.min',
       'additional-methods': '../../plugin/jquery/jquery-validation-1.13.0/additional-methods',
       'jquery-validate-messages_zh': '../../plugin/jquery/jquery-validation-1.13.0/localization/messages_zh',
       'jquery.metadata': '../../plugin/jquery/jquery.metadata',
       'jquery.placeholder': '../../plugin/jquery/jquery.placeholder.min',
-      'respond': '../../plugin/Respond/respond',
-      'pie': '../../plugin/PIE/PIE-1.0.0'
     },
     shim:{
     	'bootstrap': {

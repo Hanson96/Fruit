@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 import com.hanson.core.dao.BaseDAO;
 import com.hanson.core.dao.CommonDAO;
 import com.hanson.core.dao.ICommonDAO;
+import com.hanson.core.domain.IdEntity;
 import com.hanson.core.query.IPageObject;
 import com.hanson.core.query.PageObject;
 import com.hanson.core.query.QueryObject;
@@ -53,6 +54,16 @@ public class CommonServiceImpl<T> implements ICommonService<T>{
 	}
 
 	@Override
+	public boolean cascadeDelete(Long id) {
+		return this.delete(id);
+	}
+
+	@Override
+	public boolean maintainDelete(Long id) {
+		return this.cascadeDelete(id);
+	}
+	
+	@Override
 	public boolean update(T obj) {
 		return dao.update(obj);
 	}
@@ -72,6 +83,16 @@ public class CommonServiceImpl<T> implements ICommonService<T>{
 		return (T) dao.getObjByProperties(paramNames, paramValues);
 	}
 
+	@Override
+	public T getObjByQueryObj(QueryObject qo){
+		qo.setClazz(clazz);
+		List list = dao.query(qo.getQueryHqlStr(), qo.getParams(), -1, -1);
+		if(list!=null && list.size()==1){
+			return (T)list.get(0);
+		}
+		return null;
+	}
+	
 	@Override
 	public List<T> queryByProperties(String[] paramNames, Object[] paramValues, int begin, int max){
 		return (List<T>)dao.queryByProperties(paramNames, paramValues, begin, max);
@@ -110,6 +131,7 @@ public class CommonServiceImpl<T> implements ICommonService<T>{
 			po.setTotalRows(totalRows);
 			po.setResultList(resultList);
 			po.setCurrentPage(currentPage);
+			po.setPageRows(qo.getPageRows());
 			po.setTotalPages(totalPages);
 		}
 		return po;
@@ -140,4 +162,16 @@ public class CommonServiceImpl<T> implements ICommonService<T>{
 		int totalRows = dao.queryTotalRows(qo.getQueryHqlStr_forTotalRows(), qo.getParams());
 		return totalRows;
 	}
+
+	@Override
+	public boolean existSameName(String fieldName, Object fieldValue, Long id) {
+		IdEntity obj = (IdEntity)this.getObjByProperty(fieldName, fieldValue);
+		if(obj!=null){
+			if(id==null || (id!=null && !obj.getId().equals(id))){
+				return true;
+			}
+		}
+		return false;
+	}
+
 }

@@ -5,13 +5,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.util.WebUtils;
 
 import com.hanson.core.tools.CommUtil;
-import com.hanson.core.tools.HttpInclude;
+
+import freemarker.ext.servlet.IncludePage;
 
 
 /**
@@ -37,7 +37,12 @@ public class JModelAndView extends ModelAndView{
 		}else if(type==12){
 			super.setViewName("user/buyer/"+viewName);
 		}
-		
+		if(request == null){
+			request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
+		}
+		if(response == null){
+			response = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getResponse();
+		}
 		if(request != null){
 			String ctx = CommUtil.getContextPath(request);
 			super.addObject("ctx", ctx);
@@ -57,6 +62,8 @@ public class JModelAndView extends ModelAndView{
 			super.addObject("current_user", user);
 			log.info("当前用户："+user.getUserName());
 		}*/
+		super.addObject("include_page", new IncludePage(request, response));
+		
 	}
 	
 	public void setViewName(String viewName, int type) {

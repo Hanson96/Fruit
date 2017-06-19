@@ -27,6 +27,7 @@ repositories {
 ext {
 	slf4jVersion = '1.7.2'
     springVersion = '4.3.7.RELEASE'
+    jacksonVersion = '2.8.7'
 }
 
 dependencies {
@@ -61,6 +62,11 @@ dependencies {
     compile "org.hibernate:hibernate-core:4.2.5.Final"
     compile "mysql:mysql-connector-java:5.1.38"
     
+    /* jackson */
+    compile "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
+    compile "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion"
+    compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+    
     /* freemarker */
     compile group: 'org.freemarker', name: 'freemarker', version: '2.3.23'
     
@@ -70,6 +76,7 @@ dependencies {
     compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.2'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.5'
     compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
+    compile group: 'commons-codec', name: 'commons-codec', version: '1.10'
     
     /* 添加单独的本地jar */
     compile fileTree(dir:'src/main/webapp/WEB-INF/lib',include:['*.jar'])

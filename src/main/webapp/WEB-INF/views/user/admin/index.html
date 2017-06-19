@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<#include "/WEB-INF/views/include/meta.html"/>
+<title>校园水果团购运营平台</title>
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/plugin/bootstrap/bootstrap-3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/css/common/common.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/css/user/admin/admin.css" />
+</head>
+<body style="overflow-y:hidden;background-color: #92f396">
+	<header id="header">
+		<h3>校园水果团购运营平台</h3>
+		<a href="${ctx}/index" style="float:right;"><span>首页</span></a>
+	</header>
+	<div id="main">
+		<aside class="aside-left">
+			<nav class="nav_">
+				<ul class="nav nav-pills nav-stacked">
+					<li role="presentation" class="active"><a href="${ctx}/admin/goods_class_list" target="main_content">商品分类管理</a></li>
+					<li role="presentation"><a href="${ctx}/admin/goods_list" target="main_content">商品管理</a></li>
+					<li><a href="" target="main_content">团购活动管理</a></li>
+					<li><a href="" target="main_content">订单管理</a></li>
+					<li><a href="${ctx}/admin/advertisement_photo_list" target="main_content">广告位管理</a></li>
+					<li><a href="" target="main_content">用户管理</a></li>
+					<li><a href="" target="main_content">系统日志管理</a></li>
+				</ul>
+			</nav>
+		</aside>
+		<section class="content">
+			<iframe id="main_content" name="main_content" src="${ctx}/admin/goods_list" frameborder="no" border="0"></iframe>
+		</section>
+	</div>
+</body>
+<script type="text/javascript">
+	var _ctx = '${ctx}';
+</script>
+<script type="text/javascript" src="${ctx}/resource/plugin/requirejs/require.js"></script>
+<script type="text/javascript" src="${ctx}/resource/js/require-config.js"></script>
+<script>
+	require(['jquery','bootstrap'],function($){
+		var window_h = $(window).height();
+		var header_h = $('#header').height();
+		$('#main').height(window_h - header_h);
+		$('.nav_ ul li').click(function(){
+			$(this).addClass('active').siblings().removeClass('active');
+		});
+	});
+</script>
+</html>

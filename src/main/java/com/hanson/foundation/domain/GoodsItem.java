@@ -37,4 +37,54 @@ public class GoodsItem extends IdEntity{
 	// 活动状态    表明是什么活动的商品    与 Goods中的activity_status相对应
 	@Column(columnDefinition="int default 0")
 	private Integer activity_status = 0;
+
+	public Goods getGoods() {
+		return goods;
+	}
+
+	public void setGoods(Goods goods) {
+		this.goods = goods;
+	}
+
+	public Cart getCart() {
+		return cart;
+	}
+
+	public void setCart(Cart cart) {
+		this.cart = cart;
+	}
+
+	public OrderForm getOrder() {
+		return order;
+	}
+
+	public void setOrder(OrderForm order) {
+		this.order = order;
+	}
+
+	public Integer getCount() {
+		return count;
+	}
+
+	public void setCount(Integer count) {
+		this.count = count;
+	}
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
+	public Integer getActivity_status() {
+		return activity_status;
+	}
+
+	public void setActivity_status(Integer activity_status) {
+		this.activity_status = activity_status;
+	}
+	
+	
 }

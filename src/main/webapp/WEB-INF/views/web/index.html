@@ -1,31 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
 <#include "/WEB-INF/views/include/meta.html"/>
 <title>首页</title>
 <link rel="stylesheet" type="text/css" href="${ctx}/resource/plugin/bootstrap/bootstrap-3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/css/common/common.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/css/web/index.css" />
 </head>
-<body>
+<body style="overflow-y:auto">
+	<#--
 	hello,freemarker   ${ctx} ${user!}<br/>
 	${util.getClasspath()}<br/>   <#assign time = '2017-05-21'>
 	${util.formatShortDateStr(time)?string('yyyy-MM-dd HH:mm:ss')}<br/> 
 	${req.requestURL}<br/>
 	${util.getWebPath(req)}
-	<div class="container-fluid">
-		<div class="row">
-			<div class="banner">
-				<ul>
+	-->
+	<@include_page path="/top"/>
+	<header>
+	
+	</header>
+	<div id="main">
+		<section>
+			<div class="banner banner_">
+				<ul class="image">
+					<#list index_slide_list! as item>
 					<li>
-						<img src="${ctx}/resource/img/banner/banner01.jpg" width="1349"/>
-						<img src="${ctx}/resource/img/banner/banner02.jpg" width="1349"/>
-						<img src="${ctx}/resource/img/banner/banner03.jpg" width="1349"/>
-						<img src="${ctx}/resource/img/banner/banner04.jpg" width="1349"/>
+						<a href="${(item.url)!}" style="background-image: url('${ctx}/${(item.acc.path)!}/${(item.acc.name)!}')"></a>
 					</li>
+					</#list>
 				</ul>
+				<div class="circle">
+					<ul>
+						<#list index_slide_list! as item>
+							<#if item_index==0>
+								<li class="active"></li>
+							<#else>
+								<li></li>
+							</#if>
+						</#list>
+					</ul>
+				</div>
 			</div>
-		</div>
+		</section>
 	</div>
+	
+	<div class="container-fluid">
+		
+	</div>
+	<footer>
+	
+	</footer>
 </body>
 <script type="text/javascript">
 	var _ctx = '${ctx}';

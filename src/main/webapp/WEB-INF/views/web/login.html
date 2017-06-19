@@ -1,10 +1,98 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<#include "/WEB-INF/views/include/meta.html"/>
 <title>登录页面</title>
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/plugin/bootstrap/bootstrap-3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/css/common/common.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/css/web/index.css" />
 </head>
 <body>
-	这是登录页面
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-4 pull-right">
+				<div class="div-login-register">
+					<section class="section-login section_login">
+						<form action="${ctx}/login_submit" metho="post" class="form_login">
+							<div class="form-group text-center">
+								<h4>登录</h4>
+							</div>
+							<div class="form-group">
+								<input type="text" name="userName" class="form-control inp_verify_code" placeholder="用户名" required>
+							</div>
+							<div class="form-group">
+								<input type="password" name="password" class="form-control" placeholder="密码" required>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-6 text-center">
+									<label>
+									    <input type="radio" name="user_type" value="${(UserType.buyer)!}" checked> 买家
+									</label>
+								</div>
+								<div class="col-sm-6 text-center">
+									<label>
+									    <input type="radio" name="user_type" value="${(UserType.admin)!}" > 管理员
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-7" style="padding-left:0px;">
+									<input type="text" name="verify_code" class="form-control inp_verify_code" placeholder="验证码" required>
+								</div>
+								<div class="col-sm-5">
+									<img src="" class="img-responsive img_verify_code"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label><input type="checkbox"> 记住我</label>
+								<span class="pull-right">还没有账号？<a>立即注册</a></span>
+							</div>
+							<div class="form-group">
+								<button type="button" class="form-control btn btn_form_login_submit">登&nbsp;&nbsp;&nbsp;&nbsp;录</button>
+							</div>
+						</form>
+					</section>
+					<section class="section-register hide section_register">
+						<form action="${ctx}/register_submit" metho="post" class="form_register">
+							<div class="form-group text-center">
+								<h4>注册</h4>
+							</div>
+							<div class="form-group">
+								<input type="text" name="userName" class="form-control" placeholder="用户名(只能包含数组、字母、下划线)" required>
+							</div>
+							<div class="form-group">
+								<input type="password" name="password" class="form-control" placeholder="6-20位密码(只能包含数组、字母、下划线)" required>
+							</div>
+							<div class="form-group">
+								<input type="password" name="password_confirm" class="form-control inp_password" placeholder="确认密码" required>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-7" style="padding-left:0px;">
+									<input type="text" name="verify_code" class="form-control inp_verify_code" placeholder="验证码" required>
+								</div>
+								<div class="col-sm-5">
+									<img src="" class="img-responsive img_verify_code"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<button type="button" class="form-control btn btn_form_login_register">注&nbsp;&nbsp;&nbsp;&nbsp;册</button>
+							</div>
+						</form>
+					</section>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
+<script type="text/javascript">
+	var _ctx = '${ctx}';
+</script>
+<script type="text/javascript" src="${ctx}/resource/plugin/requirejs/require.js"></script>
+<script type="text/javascript" src="${ctx}/resource/js/require-config.js"></script>
+<script>
+	require(['./web/login'],function(page){
+		var p = new page();
+		p.main();
+	});
+</script>
 </html>

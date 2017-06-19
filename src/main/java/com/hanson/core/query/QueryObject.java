@@ -3,7 +3,6 @@ package com.hanson.core.query;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.springframework.web.servlet.ModelAndView;
 
@@ -47,9 +46,15 @@ public class QueryObject implements IQueryObject{
 		setClazz(clazz);
 	}
 	
-	public QueryObject(ModelAndView mv, String currentPage, String orderBy, String orderType){
+	public QueryObject(ModelAndView mv, String currentPage, String pageRows, String orderBy, String orderType){
 		if(CommUtil.isNotNull(currentPage)){
 			setCurrentPage(CommUtil.null2Int(currentPage));
+		}
+		if(CommUtil.isNotNull(pageRows)){
+			int number = CommUtil.null2Int(pageRows);
+			if(number>0){
+				setPageRows(CommUtil.null2Int(pageRows));
+			}
 		}
 		if(CommUtil.isNotNull(orderBy)){
 			setOrderBy(orderBy);
@@ -58,6 +63,7 @@ public class QueryObject implements IQueryObject{
 			setOrderType(orderType);
 		}
 		mv.addObject("currentPage", this.currentPage);
+		mv.addObject("pageRows", this.pageRows);
 		mv.addObject("orderBy", this.orderBy);
 		mv.addObject("orderType", this.orderType);
 	}
@@ -79,7 +85,7 @@ public class QueryObject implements IQueryObject{
 	}
 	
 	/**
-	 * 添加单个条件字符串   如  addQuery("obj.name",new Simple("name","hanson"),"=")
+	 * 添加单个条件字符串   如  addQuery("obj.name",new Simple("name","shifang"),"=")
 	 * @param field  字段
 	 * @param map 单一值对
 	 * @param expression 条件表达式 (>,<,=,like)
@@ -91,7 +97,7 @@ public class QueryObject implements IQueryObject{
 	}
 	
 	/**
-	 * 添加单个条件字符串   如  addQuery("obj.name",new Simple("name","hanson"),"=","or")
+	 * 添加单个条件字符串   如  addQuery("obj.name",new Simple("name","shifang"),"=","or")
 	 * @param field  字段
 	 * @param map 单一值对
 	 * @param expression 条件表达式 (>,<,=,like)

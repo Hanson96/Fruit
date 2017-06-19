@@ -1,0 +1,69 @@
+@CHARSET "UTF-8";
+
+/* 登录相关  start */
+.div-login-register{
+	border: 1px solid #666666;
+	border-radius:5px;
+	padding:10px;
+}
+
+
+
+/* 登录相关  end */
+
+#top{
+	background-color: #fafafa;
+	height:30px;
+	line-height: 30px;
+}
+
+#main{
+	width:100%;
+}
+.banner{
+	height:400px;
+	width:100%;
+	position: relative;
+	overflow: hidden;
+}
+.banner ul.image{
+	height: 100%;
+	position: absolute;
+	left: 0;
+}
+.banner ul.image li{
+	height:inherit;
+	float:left;
+}
+.banner ul.image li a{
+	width:100%;
+	height:inherit;
+	display:block;
+	background-position: center; 
+	background-repeat: no-repeat;
+	text-align: center;
+}
+.banner .circle{
+	position: absolute;
+	bottom:10px;
+	z-index:1;
+	width:100%;
+}
+.banner .circle ul{
+	text-align: center;
+}
+.banner .circle ul li{
+	width:20px;
+	height:20px;
+	display:inline-block;
+	border-radius: 50%;
+	border: 1px solid #F8a768;
+	margin:0 5px;
+	cursor: pointer;
+}
+.banner .circle ul li:hover{
+	background-color: #F8a768;
+}
+.banner .circle ul li.active{
+	background-color: #F8a768;
+}

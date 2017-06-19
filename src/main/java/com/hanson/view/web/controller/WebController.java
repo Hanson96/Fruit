@@ -22,9 +22,4 @@ public class WebController {
 		return mv;
 	}
 	
-	@RequestMapping("/index")
-	public ModelAndView index(HttpServletRequest request){
-		JModelAndView mv = new JModelAndView("index.html", 0, request);
-		return mv;
-	}
 }

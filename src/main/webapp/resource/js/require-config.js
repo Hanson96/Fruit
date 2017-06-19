@@ -56,6 +56,17 @@ require.config({
       'jquery-validate-messages_zh': '../../plugin/jquery/jquery-validation-1.13.0/localization/messages_zh',
       'jquery.metadata': '../../plugin/jquery/jquery.metadata',
       'jquery.placeholder': '../../plugin/jquery/jquery.placeholder.min',
+      'bootstrap-fileinput': '../../plugin/bootstrap/bootstrap-fileinput/js/fileinput.min',
+      'bootstrap-fileinput_zh': '../../plugin/bootstrap/bootstrap-fileinput/js/locales/zh',
+      'ueditor': '../../plugin/ueditor/ueditor.all',
+      'ueditor_zh-cn': '../../plugin/ueditor/lang/zh-cn/zh-cn',
+      'zeroclipboard': '../../plugin/ueditor/third-party/zeroclipboard/ZeroClipboard.min'
+    },
+    map: { 
+        '*': {
+        	// 加载这个可以引入css样式    依赖中要以  css! 开头  比如'css!../../plugin/ueditor/themes/default/css/ueditor' 表示引入ueditor.css
+            'css': '../../plugin/requirejs/lib/css'
+        }
     },
     shim:{
     	'bootstrap': {
@@ -81,6 +92,20 @@ require.config({
 		},
 		'jquery.placeholder': {
 			deps:['jquery']
+		},
+		'bootstrap-fileinput_zh': {
+			deps:['bootstrap','bootstrap-fileinput']
+		},
+		'ueditor': {
+			deps:['zeroclipboard','../../plugin/ueditor/ueditor.config','css!../../plugin/ueditor/themes/default/css/ueditor'],
+			exports: 'UE',
+            init:function(ZeroClipboard){
+                //导出到全局变量，供ueditor使用
+                window.ZeroClipboard = ZeroClipboard;
+            }
+		},
+		'ueditor_zh-cn': {
+			deps:['ueditor']
 		}
     }
 });

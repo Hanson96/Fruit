@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -38,33 +39,45 @@ import com.hanson.foundation.domain.Accessory;
  *
  */
 public class FileHelper {
-
+	
 	private static final Logger log = LoggerFactory.getLogger(FileHelper.class);
 
 	/**
-	 * 
+	 * 将文件上传到服务器
 	 * @param request
-	 * @param fileField
-	 *            上传文件的 表单字段
-	 * @param uploadFolderPath
-	 *            文件的上传目录
-	 * @param saveFileName
-	 *            保存文件的文件名
-	 * @param extendes
-	 *            文件的扩展类型
+	 * @param fileField 上传文件的 表单字段
+	 * @param uploadFolderPath 文件的上传目录
+	 * @param saveFileName 保存文件的文件名
+	 * @param extendes 文件的扩展类型
 	 * @return
-	 * @throws IOException
 	 */
 	public static Map saveFileToServer(HttpServletRequest request, String fileField, String uploadFolderPath,
 			String saveFileName, String[] extendes) {
+		MultipartRequest mrequest = (MultipartRequest) request;
+		MultipartFile multipartFile = mrequest.getFile(fileField);
+		log.info("文件字段【{}】不存在文件---{}", fileField, multipartFile.isEmpty());
+		return saveMultipartFileToServer(request, multipartFile,  uploadFolderPath, saveFileName, extendes);
+	}
+
+	/**
+	 * 将multipartFile文件上传到服务器
+	 * @param multipartFile
+	 * @param request
+	 * @param fileField 上传文件的 表单字段
+	 * @param uploadFolderPath 文件的上传目录
+	 * @param saveFileName 保存文件的文件名
+	 * @param extendes 文件的扩展类型
+	 * @return
+	 */
+	public static Map saveMultipartFileToServer(HttpServletRequest request, MultipartFile multipartFile,  
+			String uploadFolderPath, String saveFileName, String[] extendes) {
 		// 真实的上传路径
 		String realSavePath = CommUtil.getRealPath(request) + uploadFolderPath;
 		System.out.println("文件上传路径：" + realSavePath);
 		Map map = new HashMap();
-		MultipartRequest mrequest = (MultipartRequest) request;
 		// 1.获取上传文件file对象
-		MultipartFile file = mrequest.getFile(fileField);
-		log.info("文件字段【{}】不存在文件---{}", fileField, file.isEmpty());
+		MultipartFile file = multipartFile;
+		log.info("不存在文件---{}", file.isEmpty());
 		if (file != null && !file.isEmpty()) {
 			// 2.获取上传文件的后缀并转化成大写
 			String extend = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1)
@@ -157,6 +170,49 @@ public class FileHelper {
 		}
 		return map;
 	}
+	
+	/**
+	 * 将文件保存到Accessory对象中  同时上传到服务器
+	 * @param request 
+	 * @param uploadConfig  上传的配置项包括以下
+	 * (fileField:表单的文件字段，(若fileField不为空则忽略下面的multipartFile);
+	 *  multipartFile: 文件对象 (fileField和multipartFile必须有一个不为空);
+	 *  uploadFolderPath:上传目录，不能空;
+	 *  saveFileName:保存的文件名，为空时自动生成唯一名称;
+	 *  extendes,允许的扩展名，为空时不受限制;
+	 *  originalAccessory:原始的Accessory附件对象，为空时表示新增;)
+	 * @return
+	 */
+	 public static Accessory saveFileToAcc(HttpServletRequest request, Map uploadConfig){
+		String fileField = (String) uploadConfig.get("fileField");
+		MultipartFile multipartFile = (MultipartFile) uploadConfig.get("multipartFile");
+		String uploadFolderPath = (String) uploadConfig.get("uploadFolderPath");
+		String uploadFolderWebPath = uploadFolderPath.replace("\\", "/"); // web的访问路径，只能是左斜杠/
+		String saveFileName = (String) uploadConfig.get("saveFileName");
+		String[] extendes = (String[]) uploadConfig.get("extendes");
+		Accessory originalAccessory = (Accessory) uploadConfig.get("originalAccessory");
+		Map file_info = null;
+		if(StringUtils.isNotEmpty(fileField)){
+			file_info = saveFileToServer(request, fileField, uploadFolderPath, saveFileName, extendes);
+		}else{
+			file_info = saveMultipartFileToServer(request, multipartFile, uploadFolderPath, saveFileName, extendes);
+		}
+		Accessory acc = originalAccessory;
+		if (originalAccessory == null) { // 原本没有文件
+			if (StringUtils.isNotEmpty((String) file_info.get("fileName"))) {
+				acc = new Accessory();
+				fileInfoToAcc(file_info, acc, uploadFolderWebPath, true);
+			}
+		} else { // 原本有文件
+			if (StringUtils.isNotEmpty((String) file_info.get("fileName"))) { // 上传有新的文件 就需要把原来的删除
+				FileHelper.deleteAcc(request, originalAccessory); // 删除原有文件
+				acc = originalAccessory;
+				FileHelper.fileInfoToAcc(file_info, acc, uploadFolderWebPath, true);
+			}
+		}
+		return acc;
+	}
+	 
 
 	/**
 	 * @Description: 将文件信息映射给acc；
@@ -177,6 +233,13 @@ public class FileHelper {
 		}
 	}
 
+	/**
+	 * 将文件信息存到Accessory附件对象
+	 * @param map
+	 * @param acc
+	 * @param uploadFolderPath
+	 * @param newTime
+	 */
 	public static void fileInfoToAcc(Map map, Accessory acc, String uploadFolderPath, boolean newTime) {
 		mapToAcc(map, acc);
 		acc.setPath(uploadFolderPath);
@@ -194,7 +257,16 @@ public class FileHelper {
 	public static boolean deleteAcc(HttpServletRequest request, Accessory acc) {
 		boolean ret = true;
 		if (acc != null) {
-			String path = request.getRealPath("/") + acc.getPath() + File.separator + acc.getName();
+			String path = CommUtil.getRealPath(request) + acc.getPath() + File.separator + acc.getName();
+			ret = deleteFile(path);
+		}
+		return ret;
+	}
+	
+	public static boolean deleteAcc(ServletContext servletContext, Accessory acc) {
+		boolean ret = true;
+		if (acc != null) {
+			String path = CommUtil.getRealPath(servletContext) + acc.getPath() + File.separator + acc.getName();
 			ret = deleteFile(path);
 		}
 		return ret;

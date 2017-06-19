@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<#include "/WEB-INF/views/include/meta.html"/>
+<title>编辑广告位图片</title>
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/plugin/bootstrap/bootstrap-3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/plugin/bootstrap/bootstrap-fileinput/css/fileinput.min.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/css/user/admin/admin.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/css/common/common.css" />
+</head>
+<body>
+	<div class="container-fluid">
+		<header>
+			<h3><#if (obj.id)??>编辑<#else>新增</#if>广告图片</h3>
+		</header>
+		<form action="${ctx}/admin/advertisement_photo_save" method="post" class="form-horizontal form_advertisement_photo" enctype="multipart/form-data" >
+			<input type="hidden" name="obj_id" value="${(obj.id)!}"/>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">图片名称：</label>
+				<div class="col-sm-6">
+					<input type="text" name="name" value="${(obj.name)!}" class="form-control" placeholder="输入图片名称" required/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">所属广告位：</label>
+				<div class="col-sm-6">
+					<select name="position" class="form-control" required>
+						<#list position_list! as item>
+							<option value="${item.value()}" <#if ((obj.position)??&&obj.position==item.value())>selected</#if> >${item.typeName()}</option>
+						</#list> 
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">广告图：</label>
+				<div class="col-sm-6">
+					<input type="file" id="acc_file" name="acc_file" multiple file_count="0" class="form-control file-loading" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">显示序号：</label>
+				<div class="col-sm-6">
+					<input type="text" name="sequence" value="${(obj.sequence)!}" class="form-control" placeholder="输入显示序号（整数，负数表示不显示）" required/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">链接URL：</label>
+				<div class="col-sm-6">
+					<input type="text" name="url" value="${(obj.url)!}" class="form-control" placeholder="输入要连接的网址" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-10 col-sm-offset-2">
+					<button type="button" class="btn btn-primary btn_advertisement_photo_submit">保存</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+<script type="text/javascript">
+	var _ctx = '${ctx}';
+</script>
+<script type="text/javascript" src="${ctx}/resource/plugin/requirejs/require.js"></script>
+<script type="text/javascript" src="${ctx}/resource/js/require-config.js"></script>
+<script type="text/javascript">
+	require(['./user/admin/advertisement_photo_add'],function(page){
+		var p = new page();
+		p.main();
+		window.page = p;
+		<#if (obj.acc)??>
+			$('#acc_file').attr('file_count','1');
+		</#if>
+		// initial preview configuration
+		$('#acc_file').fileinput({
+	    	language: 'zh', //设置语言
+	    	maxFileCount: 1, // 最大上传数量
+	    	showCaption: false, // 显示标题
+	        showUpload: false, // 显示上传按钮
+	        showRemove: false, // 显示删除按钮
+	        required: true, // 是否必选
+	        validateInitialCount: true, // 验证是否超过数目
+	        allowedFileExtensions : ['jpg', 'png','gif'],//接收的文件后缀
+	        previewSettings:{
+	        	image:{width: "100%", height: "auto"}
+	        },
+	        initialPreview: [
+	        	<#if (obj.acc)??>
+	        	'<img src="${ctx}/${(obj.acc.path)!}/${(obj.acc.name)!}" style="width:100%;" class="file-preview-image" >',
+	        	</#if>
+		    ],
+	        initialPreviewConfig: [
+	        	<#if (obj.acc)??>
+		        {
+		            //caption: '商品主图.jpg',
+		            //width: '120px', 
+		            //url: '${ctx}/admin/goods_photo_delete', 
+		            key: 101, 
+		            //frameClass: 'photo-main-frame-css',
+		            frameAttr: {
+		                style: 'height:300px',
+		                title: 'My Custom Title',
+		            }
+		        },
+		        </#if>
+		    ]
+	    });	
+	});
+</script>
+</body>
+</html>

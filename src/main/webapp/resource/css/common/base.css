@@ -1,0 +1,81 @@
+@CHARSET "UTF-8";
+/* reset start */
+*{
+	margin: 0;
+	padding: 0;
+}
+
+html,body{
+	width:100%;
+	height:100%;
+}
+
+ul li{
+	list-style: none;
+}
+
+a{
+	text-decoration: none;
+}
+
+table{
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+fieldset, img, abbr{
+    border: 0;
+}
+
+input[type=button], button{
+  outline: none;
+}
+
+button{
+  cursor: pointer;
+}
+/* reset end */
+
+/* util start */
+.clear{
+	clear:both;
+    display:block;
+    font-size:0;
+    height:0;
+    line-height:0;
+    overflow:hidden
+}
+
+.clearfix{
+	*+height:1%;
+	zoom:1; /* for ie6 & ie7 */
+}
+.clearfix:after{
+	content:".";
+	display:block;
+	height:0;
+	clear:both;
+	visibility:hidden
+}
+
+.hide{
+    display:none;
+}
+
+.block{
+    display:block;
+}
+.inline-block{
+	display: inline-block;
+}
+.fl{
+    float:left;
+}
+
+.fr{
+    float:right;
+}
+.margin-left-10{
+	margin-left:10px;
+}
+/* util end */

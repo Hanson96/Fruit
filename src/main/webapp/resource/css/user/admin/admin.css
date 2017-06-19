@@ -1,0 +1,44 @@
+@CHARSET "UTF-8";
+
+#header{
+	height: 60px;
+	padding-top:1px;
+}
+
+.aside-left{
+	width:15%;
+	float:left;
+}
+#main{
+	
+}
+.content{
+	width:85%;
+	height: 100%;
+	margin-left:15%;
+}
+#main_content{
+	width:100%;
+	height: 100%;
+}
+
+
+/* 商品相关  */
+.photo-main{
+	width:100%;
+	height:100%;
+}
+.photo-other{
+	width:100%;
+	width:100%;
+}/* .krajee-default.file-preview-frame .kv-file-content */
+.photo-main-frame-css{
+	
+}
+.photo-main-frame-css.file-preview-frame .kv-file-content{
+	width:260px;
+	height:260px;
+}
+.photo-other-frame-css.file-preview-frame .kv-file-content{
+	width:160px;
+}

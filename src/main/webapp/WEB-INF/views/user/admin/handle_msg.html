@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<#include "/WEB-INF/views/include/meta.html"/>
+<title>统一消息处理页面</title>
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/plugin/bootstrap/bootstrap-3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/css/common/common.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/css/user/admin/admin.css" />
+</head>
+<body>
+	<div class="container">
+		<div class="r-previous" style="padding-bottom:10px;">
+			<h2>
+				<#if result==true>
+					<span style="margin-left:20px;">${msg_title!}</span>
+				<#else>
+					<span style="margin-left:20px;">错误信息：${error_msg!}</span>
+				</#if>
+			</h2>
+		</div>
+		<h4 style="width:150px;display:inline-block; padding-top:30px;">你可能需要：</h4>
+		
+		<div class="r-previous" style="display:inline-block;padding-right:10px;">
+			<#if previous_url??>
+				<a class="btn btn-default" href="${previous_url}">返回上一页</a>
+			</#if>
+		</div>
+		<div class="r-list" style="display:inline-block;padding-right:10px;">
+			<#if list_url??>
+				<a class="btn btn-default" href="${list_url}">返回列表</a>
+			</#if>
+		</div>
+		<div class="r-add" style="display:inline-block;padding-right:10px;">
+			<#if add_url??>
+				<a class="btn btn-default" href="${add_url}">继续添加</a>
+			</#if>
+		</div>
+		<div class="r-edit" style="display:inline-block;padding-right:10px;">
+			<#if edit_url??>
+				<a class="btn btn-default" href="${edit_url}">重新编辑</a>
+			</#if>
+		</div>
+	</div>
+</body>
+</html>

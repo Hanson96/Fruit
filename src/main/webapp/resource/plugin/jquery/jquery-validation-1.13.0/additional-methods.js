@@ -490,7 +490,7 @@ $.validator.addMethod("iban", function(value, element) {
 
 $.validator.addMethod("integer", function(value, element) {
 	return this.optional(element) || /^-?\d+$/.test(value);
-}, "A positive or negative non-decimal number please");
+}, "只能输入整数");//A positive or negative non-decimal number please
 
 $.validator.addMethod("ipv4", function(value, element) {
 	return this.optional(element) || /^(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)$/i.test(value);
@@ -928,6 +928,12 @@ $.validator.addMethod("ziprange", function(value, element) {
 }));
 
 /** 自定义校验    author: hanson */
+//只能包含字母、数字、下划线
+$.validator.addMethod("letter_number_underline", function(value, element) {
+	 var reg = /^[a-zA-Z0-9_]+$/;
+	    return this.optional(element) || (reg.test(value));
+}, "只能包含字母、数字、下划线"); 
+
 // 正数，并且最多只能有两位小数
 $.validator.addMethod("positive_decimal_two", function(value, element) {
 	return this.optional(element) || /^\+?\d+\.?\d{0,2}$/.test(value);
@@ -947,8 +953,3 @@ $.validator.addMethod("fix_phone", function(value, element) {
     return this.optional(element) || (fix.test(value));
 }, "请填写正确的固定电话号码");
 
-// 许可证编号格式校验
-$.validator.addMethod("certificate_number", function(value, element) {
-    var reg = /^[A-Z]{2}\d{2}[-]\d{3}[-]\d{5}$/;
-    return this.optional(element) || (reg.test(value));
-}, "许可证编号格式为XK00-000-00000");

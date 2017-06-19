@@ -5,10 +5,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * 公共工具类
@@ -265,7 +268,7 @@ public class CommUtil {
 	public static String getClasspath() {
 	    try {
 	    	// 随便填一个class类
-	        return Class.forName("com.hanson.core.domain.IdEntity").getResource("/").getPath();
+	        return Class.forName("com.shifang.core.domain.IdEntity").getResource("/").getPath();
 	    } catch (Exception e) {
 	    	log.info("获取classpath错误", e);
 	    }
@@ -298,4 +301,33 @@ public class CommUtil {
 		return real_path;
 	}
 	
+	public static String getRealPath(ServletContext servletContext){
+		String real_path = servletContext.getRealPath("/");
+		return real_path;
+	}
+	
+	/**
+	* @Description: 获取客户端真实IP地址（解决了使用反向代理软件获取不到IP的情况）
+	* @param request
+	* @return
+	*/
+    public static String getIpAddr(HttpServletRequest request) {
+        String ip = request.getHeader("x-forwarded-for");
+	    if ((ip == null) || (ip.length() == 0) || ("unknown".equalsIgnoreCase(ip))) {
+	    	ip = request.getHeader("Proxy-Client-IP");
+	    }
+	    if ((ip == null) || (ip.length() == 0) || ("unknown".equalsIgnoreCase(ip))) {
+	    	ip = request.getHeader("WL-Proxy-Client-IP");
+	    }
+	    if ((ip == null) || (ip.length() == 0) || ("unknown".equalsIgnoreCase(ip))) {
+	    	ip = request.getRemoteAddr();//返回客户端的ip地址
+	    }
+	    return ip;
+    }
+    
+    public static ServletContext getServletContextBySpring(){
+    	WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();    
+        ServletContext servletContext = webApplicationContext.getServletContext();
+        return servletContext;
+    }
 }

@@ -36,6 +36,21 @@ public abstract interface ICommonService<T> {
 	public abstract boolean delete(long id);
 	
 	/**
+	 * 级联删除  删除关联此id的其它对象（即此id被其它对象作为外键，需要把这其它对象先删除）
+	 * @param id
+	 * @return
+	 */
+	public abstract boolean cascadeDelete(Long id);
+	
+	/**
+	 * 维护删除   维护此id对象主动关联的其它对象（即此对象把其它对象的id作为外键）
+	 * 代码逻辑：获取此对象的维护对象们，调用此对象的cascadeDelete级联删除，再对维护对象们进行维护（删除或更新信息）
+	 * @param id
+	 * @return
+	 */
+	public abstract boolean maintainDelete(Long id);
+	
+	/**
 	 * 更新实体对象
 	 * @param obj
 	 * @return 是否成功
@@ -64,6 +79,14 @@ public abstract interface ICommonService<T> {
 	 * @return
 	 */
 	public abstract T getObjByProperties(String[] paramNames, Object[] paramValues);
+	
+	/**
+	 * 根据QueryObject来查询某个唯一对象
+	 * @param paramNames  属性名数组
+	 * @param paramValues  属性值数组
+	 * @return
+	 */
+	public abstract T getObjByQueryObj(QueryObject qo);
 	
 	/**
 	 * 根据对象属性查询对象列表
@@ -127,4 +150,13 @@ public abstract interface ICommonService<T> {
 	 * @return
 	 */
 	public int queryTotalRows(String[] paramNames, Object[] paramValues);
+	
+	/**
+	 * 检查是否存在某一字段同名的对象
+	 * @param fieldName 字段的名称
+	 * @param fieldValue 字段的值
+	 * @param id 原对象的id 如果为新的对象则用空
+	 * @return true表示存在同名数据对象    false表示不存在
+	 */
+	public abstract boolean existSameName(String fieldName, Object fieldValue, Long id);
 }

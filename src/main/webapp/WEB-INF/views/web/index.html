@@ -2,10 +2,14 @@
 <html>
 <head>
 <#include "/WEB-INF/views/include/meta.html"/>
+<#include "/WEB-INF/views/include/macro.html"/>
 <title>首页</title>
 <link rel="stylesheet" type="text/css" href="${ctx}/resource/plugin/bootstrap/bootstrap-3.3.7/css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="${ctx}/resource/css/common/common.css" />
 <link rel="stylesheet" type="text/css" href="${ctx}/resource/css/web/index.css" />
+<style type="text/css">
+	
+</style>
 </head>
 <body style="overflow-y:auto">
 	<#--
@@ -15,10 +19,8 @@
 	${req.requestURL}<br/>
 	${util.getWebPath(req)}
 	-->
-	<@include_page path="/top"/>
-	<header>
-	
-	</header>
+	<@include_page path="/top" />
+	<@include_page path="/header" />
 	<div id="main">
 		<section>
 			<div class="banner banner_">
@@ -42,6 +44,16 @@
 				</div>
 			</div>
 		</section>
+		<div class="container">
+			<section class="floor">
+				<div class="floor-title">最新推荐</div>
+				<div class="floor-content">
+					<ul class="list-inline">
+						<@floor_list new_goods_list! />
+					</ul>
+				</div>
+			</section>
+		</div>
 	</div>
 	
 	<div class="container-fluid">

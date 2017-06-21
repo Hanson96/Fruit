@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<#include "/WEB-INF/views/include/meta.html"/>
+<title>商品详情页</title>
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/plugin/bootstrap/bootstrap-3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/css/common/common.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/css/web/index.css" />
+<style>
+	div.zoomDiv{z-index:999;position:absolute;top:0px;left:0px;width:200px;height:200px;background:#ffffff;border:1px solid #CCCCCC;display:none;text-align:center;overflow:hidden;}
+	div.zoomMask{position:absolute;background:url("${ctx}/resource/plugin/imagezoom/images/mask.png") repeat scroll 0 0 transparent;cursor:move;z-index:1;}
+</style>
+</head>
+<body class="relative">
+	<@include_page path="/top"/>
+	<@include_page path="/header" />
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="photo">
+					<div class="photo-main photo_main">
+						<img src="${ctx}/${(obj.main_photo.path)!}/${(obj.main_photo.name)!}" class="img-responsive jqzoom" rel="${ctx}/${(obj.main_photo.path)!}/${(obj.main_photo.name)!}"/>
+					</div>
+					<div class="photo-list">
+						<ul class="list-inline">
+							<#list (obj.getPhoto_list5())! as item>
+							<li>
+								<img src="${ctx}/${(item.path)!}/${(item.name)!}" class="img-responsive"/>
+							</li>
+							</#list>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<section class="section_goods_info" goods_id="${(obj.id)!}">
+					<div class="row">
+						${(obj.name)!}
+					</div>
+					<div class="row">
+						价格：${(obj.price)!}<br/>
+						原价：${(obj.original_price)!}
+					</div>
+					<div class="row">
+						单位：${(obj.unit)!}
+					</div>
+					<div class="row">
+						数量：<input tppe="text" name="count" class="inp_count" value="1"/>
+					</div>
+					<div>
+						<button type="button" class="btn btn_add_cart" >加入购物车</button>
+						<button type="button" class="btn btt_buy_now">立即购买</button>
+					</div>
+				</section>
+			</div>
+		</div>
+		<div class="row">
+			<section>
+				<article class="goods-description">
+					${(obj.description_html)!}
+				</article>
+			</section>
+		</div>
+	</div>
+	<div class="zoomDiv" style="top: 30px; left: 599.5px; width: 310px; height: 310px;"><img class="bigimg" src="/Fruit/upload/goods/photo_main/6/18/15/43a5d675-9888-4f7d-ade9-7da97693ae5a.jpg"></div>
+</body>
+<script type="text/javascript">
+	var _ctx = '${ctx}';
+</script>
+<script type="text/javascript" src="${ctx}/resource/plugin/requirejs/require.js"></script>
+<script type="text/javascript" src="${ctx}/resource/js/require-config.js"></script>
+<script>
+	require(['./web/goods_detail'],function(page){
+		var p = new page();
+		p.main();
+	});
+</script>
+</html>

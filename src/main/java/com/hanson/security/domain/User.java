@@ -3,20 +3,15 @@ package com.hanson.security.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.hanson.core.domain.IdEntity;
 import com.hanson.core.tools.CustomEnum;
+import com.hanson.foundation.domain.Cart;
 
 /**
  * 所有用户
@@ -70,6 +65,9 @@ public class User extends IdEntity{
 	// 收货地址
 	private String address;
 	
+	@OneToMany(mappedBy="user")
+	private List<Cart> cart_list = new ArrayList<Cart>();
+	
 	public String getUserName() {
 		return userName;
 	}
@@ -94,5 +92,20 @@ public class User extends IdEntity{
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
+	public List<Cart> getCart_list() {
+		return cart_list;
+	}
+	public void setCart_list(List<Cart> cart_list) {
+		this.cart_list = cart_list;
+	}
+	@Transient
+	public List<String> getRolesName(){
+		List<String> rolesName = new ArrayList<>();
+		if(this.user_type.intValue() == User.UserType.BUYER.value()){
+			rolesName.add("buyer");
+		}else if(this.user_type.intValue() == User.UserType.ADMIN.value()){
+			rolesName.add("admin");
+		}
+		return rolesName;
+	}
 }

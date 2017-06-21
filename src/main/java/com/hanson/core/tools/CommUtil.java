@@ -1,6 +1,8 @@
 package com.hanson.core.tools;
 
 import java.io.File;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -233,6 +235,78 @@ public class CommUtil {
 		return dateFormat.format(v);
 	}
 	
+	/**
+	 * @Description: 两个浮点数相除，格式化结果保留两位小数
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	public static double div(Object a, Object b) {
+		double ret = 0.0D;
+		if ((!null2String(a).equals("")) && (!null2String(b).equals(""))) {
+			BigDecimal e = new BigDecimal(null2String(a));
+			BigDecimal f = new BigDecimal(null2String(b));
+			if (null2Double(f) > 0.0D)
+				ret = e.divide(f, 3, 1).doubleValue();
+		}
+		DecimalFormat df = new DecimalFormat("0.00");
+		return Double.valueOf(df.format(ret)).doubleValue();
+	}
+
+	/**
+	 * @Description: 两个浮点数相减，格式化结果保留两位小数
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	public static double subtract(Object a, Object b) {
+		double ret = 0.0D;
+		BigDecimal e = new BigDecimal(null2Double(a));
+		BigDecimal f = new BigDecimal(null2Double(b));
+		ret = e.subtract(f).doubleValue();
+		DecimalFormat df = new DecimalFormat("0.00");
+		return Double.valueOf(df.format(ret)).doubleValue();
+	}
+
+	/**
+	 * @Description: 两个浮点数相加，格式化结果保留两位小数
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	public static double add(Object a, Object b) {
+		double ret = 0.0D;
+		BigDecimal e = new BigDecimal(null2Double(a));
+		BigDecimal f = new BigDecimal(null2Double(b));
+		ret = e.add(f).doubleValue();
+		DecimalFormat df = new DecimalFormat("0.00");
+		return Double.valueOf(df.format(ret)).doubleValue();
+	}
+
+	/**
+	 * @Description: 两个浮点数相乘，格式化结果保留两位小数
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	public static double mul(Object a, Object b) {
+		BigDecimal e = new BigDecimal(null2Double(a));
+		BigDecimal f = new BigDecimal(null2Double(b));
+		double ret = e.multiply(f).doubleValue();
+		DecimalFormat df = new DecimalFormat("0.00");
+		return Double.valueOf(df.format(ret)).doubleValue();
+	}
+
+	/**
+	 * @Description: 格式化浮点类型，保留两位小数
+	 * @param money
+	 * @return
+	 */
+	public static double formatMoney(Object money) {
+		DecimalFormat df = new DecimalFormat("0.00");
+		return Double.valueOf(df.format(money)).doubleValue();
+	}
+
 	/**
 	 * 获取请求的上下文路径
 	 * @author hanson

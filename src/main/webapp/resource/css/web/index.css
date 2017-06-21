@@ -8,8 +8,13 @@
 }
 
 
-
 /* 登录相关  end */
+
+@media (min-width: 1360px){
+	.container {
+	    width: 1200px;
+	}
+}
 
 #top{
 	background-color: #fafafa;
@@ -17,9 +22,15 @@
 	line-height: 30px;
 }
 
+#header{
+	height:60px;
+}
+
 #main{
 	width:100%;
 }
+
+/* 首页相关   start */
 .banner{
 	height:400px;
 	width:100%;
@@ -67,3 +78,14 @@
 .banner .circle ul li.active{
 	background-color: #F8a768;
 }
+
+/* 首页相关   end */
+
+/* 商品详情相关  start */
+.photo .photo-main{
+	width:500px;
+}
+.photo .photo-list>ul>li{
+	width:100px;
+}
+/* 商品详情相关  start */

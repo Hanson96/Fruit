@@ -27,6 +27,9 @@ public class Cart extends IdEntity{
 	// 商品项
 	@OneToMany(mappedBy="cart")
 	private List<GoodsItem> goods_item_list = new ArrayList<GoodsItem>();
+	//购物车有多少个商品
+	@Column(columnDefinition="int default 0")
+	private Integer goods_item_count = 0;
 	// 购物车总价
 	@Column(precision=12, scale=2)
 	private BigDecimal total_price;
@@ -45,6 +48,14 @@ public class Cart extends IdEntity{
 
 	public void setGoods_item_list(List<GoodsItem> goods_item_list) {
 		this.goods_item_list = goods_item_list;
+	}
+	
+	public Integer getGoods_item_count() {
+		return goods_item_count;
+	}
+
+	public void setGoods_item_count(Integer goods_item_count) {
+		this.goods_item_count = goods_item_count;
 	}
 
 	public BigDecimal getTotal_price() {

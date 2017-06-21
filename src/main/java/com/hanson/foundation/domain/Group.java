@@ -5,8 +5,12 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.hanson.core.domain.IdEntity;
 
@@ -25,9 +29,15 @@ public class Group extends IdEntity{
 	@OneToMany(mappedBy="group")
 	private List<Goods> goods_list = new ArrayList<Goods>();
 	// 活动开始时间
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date start_time;
 	// 活动结束时间
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date end_time;
+	// 活动宣传图片
+	@OneToOne(cascade={javax.persistence.CascadeType.REMOVE}, fetch=FetchType.LAZY)
+	private Accessory acc;
+	
 	public String getName() {
 		return name;
 	}
@@ -51,6 +61,12 @@ public class Group extends IdEntity{
 	}
 	public void setEnd_time(Date end_time) {
 		this.end_time = end_time;
+	}
+	public Accessory getAcc() {
+		return acc;
+	}
+	public void setAcc(Accessory acc) {
+		this.acc = acc;
 	}
 	
 	

@@ -185,5 +185,13 @@ public class Goods extends IdEntity{
 		this.group_sold_count = group_sold_count;
 	}
 	
-	
+	// 只取出5张商品的其它图片
+	@Transient
+	public List getPhoto_list5(){
+		if(this.photo_list.size()<=5){
+			return this.photo_list;
+		}else{
+			return this.photo_list.subList(0, 5);
+		}
+	} 
 }

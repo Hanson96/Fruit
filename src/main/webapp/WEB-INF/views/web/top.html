@@ -7,14 +7,21 @@
 			<div class="col-sm-6 pull-right div-right">
 				<ul class="list-inline pull-right" style="margin-bottom:0;">
 					<li>
-						<a href="${ctx}/login">登录</a>
-						<a href="${ctx}/login?type=register">注册</a>
+						<a href="${ctx}/index">首页</a>
 					</li>
 					<li>
 						<a href="${ctx}/buyer_center">个人中心</a>
 					</li>
 					<li>
-						<a href="${ctx}/login">我的购物车</a>
+						<a href="${ctx}/buyer/mycart">我的购物车${(user_cart.goods_item_list?size)!}[${(user_cart.total_price)!}]</a>
+					</li>
+					<li>
+						<#if currentUser??>
+							<a href="${ctx}/logout">退出</a>
+						<#else>
+							<a href="${ctx}/login">登录</a>
+							<a href="${ctx}/login?type=register">注册</a>
+						</#if>
 					</li>
 				</ul>
 			</div>

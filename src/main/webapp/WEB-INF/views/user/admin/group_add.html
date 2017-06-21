@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<#include "/WEB-INF/views/include/meta.html"/>
+<title>编辑团购活动</title>
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/plugin/bootstrap/bootstrap-3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/plugin/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" media="screen">
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/plugin/bootstrap/bootstrap-fileinput/css/fileinput.min.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/css/user/admin/admin.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/css/common/common.css" />
+</head>
+<body>
+	<div class="container-fluid">
+		<header>
+			<h3><#if (obj.id)??>编辑<#else>新增</#if>团购活动</h3>
+		</header>
+		<form action="${ctx}/admin/group_save" method="post" class="form-horizontal form_group" enctype="multipart/form-data" >
+			<input type="hidden" name="obj_id" value="${(obj.id)!}"/>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">活动名称：</label>
+				<div class="col-sm-6 parent">
+					<input type="text" name="name" value="${(obj.name)!}" class="form-control" placeholder="输入活动名称" required/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">开始时间：</label>
+				<div class="col-sm-6 parent">
+					<div id="datetimepicker_start_time" class="input-group date form_datetime" data-date="" data-date-format="yyyy-mm-dd" style="width:95%">
+				        <input name="start_time" value="${(obj.start_time?string('yyyy-MM-dd'))!}" class="form-control" type="text" readonly required/>
+						<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+			        </div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">结束时间：</label>
+				<div class="col-sm-6 parent">
+					<div id="datetimepicker_end_time" class="input-group date form_datetime" data-date="" data-date-format="yyyy-mm-dd" style="width:95%">
+				        <input name="end_time" value="${(obj.end_time?string('yyyy-MM-dd'))!}" class="form-control" type="text" readonly required/>
+						<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+			        </div>
+			    </div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">活动宣传图：</label>
+				<div class="col-sm-6">
+					<input type="file" id="acc_file" name="acc_file" multiple file_count="0" class="form-control file-loading" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-10 col-sm-offset-2">
+					<button type="button" class="btn btn-primary btn_group_submit">保存</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+<script type="text/javascript">
+	var _ctx = '${ctx}';
+</script>
+<script type="text/javascript" src="${ctx}/resource/plugin/requirejs/require.js"></script>
+<script type="text/javascript" src="${ctx}/resource/js/require-config.js"></script>
+<script type="text/javascript">
+	require(['./user/admin/group_add'],function(page){
+		var p = new page();
+		p.main();
+		window.page = p;
+		<#if (obj.acc)??>
+			$('#acc_file').attr('file_count','1');
+		</#if>
+		// initial preview configuration
+		$('#acc_file').fileinput({
+	    	language: 'zh', //设置语言
+	    	maxFileCount: 1, // 最大上传数量
+	    	showCaption: false, // 显示标题
+	        showUpload: false, // 显示上传按钮
+	        showRemove: false, // 显示删除按钮
+	        required: true, // 是否必选
+	        validateInitialCount: true, // 验证是否超过数目
+	        allowedFileExtensions : ['jpg', 'png','gif'],//接收的文件后缀
+	        previewSettings:{
+	        	image:{width: "100%", height: "auto"}
+	        },
+	        initialPreview: [
+	        	<#if (obj.acc)??>
+	        	'<img src="${ctx}/${(obj.acc.path)!}/${(obj.acc.name)!}" style="width:100%;" class="file-preview-image" >',
+	        	</#if>
+		    ],
+	        initialPreviewConfig: [
+	        	<#if (obj.acc)??>
+		        {
+		            //caption: '商品主图.jpg',
+		            //width: '120px', 
+		            //url: '${ctx}/admin/goods_photo_delete', 
+		            key: 101, 
+		            //frameClass: 'photo-main-frame-css',
+		            frameAttr: {
+		                style: 'height:300px',
+		                title: 'My Custom Title',
+		            }
+		        },
+		        </#if>
+		    ]
+	    });	
+	});
+</script>
+</body>
+</html>

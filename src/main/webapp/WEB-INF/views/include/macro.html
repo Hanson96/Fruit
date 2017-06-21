@@ -1,0 +1,12 @@
+<#-- 宏模板 -->
+<#macro floor_list goods_list>
+	<#list goods_list as item>
+		<li>
+			<div style="width:240px;height:240px;">
+				<a href="${ctx}/goods_detail?obj_id=${item.id}">
+					<img src="${ctx}/${(item.main_photo.path)!}/${(item.main_photo.name)!}" width="240"/>
+				</a>
+			</div>
+		</li>
+	</#list>
+</#macro>

@@ -30,6 +30,26 @@ define(['jquery'],function(){
 		return '';
 	}
 	
+	// 验证用户是否已经登录
+	U.checkUserLogin = function(){
+		var login = false;
+		$.ajax({
+			url:_ctx + '/checkUserLogin',
+			type:'post',
+			async:false,
+			dataType:'json',
+			success:function(data){
+				if(data.login){
+					login = true;
+				}else{
+					login = false;
+					alert('您还未登录，请先登录');
+					window.top.location.href = _ctx + '/login';
+				}
+			}
+		});
+		return login;
+	}
 	Util = U;
 	return Util;
 });

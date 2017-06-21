@@ -51,19 +51,32 @@ define(['jquery','jquery-validate-messages_zh','user/../../common/validate','use
 			},
 			errorPlacement : function(error_label, element) { // 错误元素处理
 				var $parent = $(element).parent();
-				validate.error_handle($parent, 'right-15');
+				validate.error_handle($parent, 'right-5');
 				error_label.appendTo($parent);
 			},
 			success : function(error_label) { // 正确时回调
 				var $parent = $(error_label).parent();
-				validate.success_handle($parent, 'right-15');
+				validate.success_handle($parent, 'right-5');
 			}
 		});
 		
 		// 提交登录表单
-		DOM.btn_form_login_submit.click(function(){console.log('aaa');
+		DOM.btn_form_login_submit.click(function(){
 			if(DOM.form_login.valid()){
-				DOM.form_login.submit();
+				var action = DOM.form_login.attr('action');
+			    var form_data = DOM.form_login.serialize();
+			    $.post(action,form_data,function(data){
+			    	if(data.result){ // 登录成功
+			    		if(data.user_type=='admin'){
+			    			window.location.href = 'admin/index';
+			    		}else{
+			    			window.location.href = 'index';
+			    		}
+			    	}else{
+			    		$(".div_login_error_msg .login_error_msg").html(data.error_msg);
+						$(".div_login_error_msg").removeClass("hide");
+			    	}
+			    },'json');
 			}
 		});
 		
@@ -72,6 +85,7 @@ define(['jquery','jquery-validate-messages_zh','user/../../common/validate','use
 			errorClass : 'text-danger '+ Validate.inp_feedback.error_selector_class,
 			rules : {
 				userName:{
+					required:true,
 					letter_number_underline:true,
 					remote:{
 						type:'post',
@@ -109,19 +123,30 @@ define(['jquery','jquery-validate-messages_zh','user/../../common/validate','use
 			},
 			errorPlacement : function(error_label, element) { // 错误元素处理
 				var $parent = $(element).parent();
-				validate.error_handle($parent, 'right-15');
+				validate.error_handle($parent, 'right-5');
 				error_label.appendTo($parent);
 			},
 			success : function(error_label) { // 正确时回调
 				var $parent = $(error_label).parent();
-				validate.success_handle($parent, 'right-15');
+				validate.success_handle($parent, 'right-5');
 			}
 		});
 		
 		// 提交注册表单
 		DOM.btn_form_register_submit.click(function(){
 			if(DOM.form_register.valid()){
-				DOM.form_register.submit();
+				var action = DOM.form_register.attr('action');
+			    var form_data = DOM.form_register.serialize();
+			    $.post(action,form_data,function(data){
+			    	if(data.result){ // 注册账号成功
+			    		$(".div_register_error_msg .register_error_msg").removeClass('text-danger').addClass('text-success').html('账号注册成功，自动跳转到登录界面...');
+						$(".div_register_error_msg").removeClass("hide");
+						window.setTimeout('top.location.href = "login"',3000);
+			    	}else{
+			    		$(".div_register_error_msg .register_error_msg").html(data.error_msg);
+						$(".div_register_error_msg").removeClass("hide");
+			    	}
+			    },'json');
 			}
 		});
 		
@@ -138,6 +163,18 @@ define(['jquery','jquery-validate-messages_zh','user/../../common/validate','use
 			var src = _ctx + '/get_verify_code?s='+seconds;
 			$(this).attr('src',src);
 		});
+		
+		// 回车触发
+		$("body").keydown(function(event) {
+            if (event.keyCode == "13") {//keyCode=13是回车键
+            	if(!DOM.section_login.is(':hidden')){
+            		DOM.btn_form_login_submit.click();
+            	}
+            	if(!DOM.section_register.is(':hidden')){
+            		DOM.btn_form_register_submit.click();
+            	}
+            }
+        });
 	}
 	
 	var method = {

@@ -17,10 +17,10 @@
 							<div class="form-group text-center">
 								<h4>登录</h4>
 							</div>
-							<div class="form-group">
-								<input type="text" name="userName" class="form-control inp_verify_code" placeholder="用户名" required>
+							<div class="form-group relative">
+								<input type="text" name="userName" class="form-control" placeholder="用户名" required>
 							</div>
-							<div class="form-group">
+							<div class="form-group relative">
 								<input type="password" name="password" class="form-control" placeholder="密码" required>
 							</div>
 							<div class="form-group">
@@ -45,10 +45,15 @@
 							</div>
 							<div class="form-group">
 								<label><input type="checkbox"> 记住我</label>
-								<span class="pull-right">还没有账号？<a>立即注册</a></span>
+								<span class="pull-right">还没有账号？<a href="${ctx}/login?type=register">立即注册</a></span>
 							</div>
 							<div class="form-group">
 								<button type="button" class="form-control btn btn_form_login_submit">登&nbsp;&nbsp;&nbsp;&nbsp;录</button>
+							</div>
+							<div class="form-group hide clearfix div_login_error_msg">
+								<div class="col-sm-offset-3 col-sm-7">
+									<p class="text-danger login_error_msg"></p>
+								</div>
 							</div>
 						</form>
 					</section>
@@ -57,14 +62,14 @@
 							<div class="form-group text-center">
 								<h4>注册</h4>
 							</div>
-							<div class="form-group">
-								<input type="text" name="userName" class="form-control" placeholder="用户名(只能包含数组、字母、下划线)" required>
+							<div class="form-group relative">
+								<input type="text" name="userName" class="form-control inp_userName" placeholder="用户名(只能包含数组、字母、下划线)" required>
 							</div>
-							<div class="form-group">
-								<input type="password" name="password" class="form-control" placeholder="6-20位密码(只能包含数组、字母、下划线)" required>
+							<div class="form-group relative">
+								<input type="password" name="password" class="form-control inp_password" placeholder="6-20位密码(只能包含数组、字母、下划线)" required>
 							</div>
-							<div class="form-group">
-								<input type="password" name="password_confirm" class="form-control inp_password" placeholder="确认密码" required>
+							<div class="form-group relative">
+								<input type="password" name="password_confirm" class="form-control" placeholder="确认密码" required>
 							</div>
 							<div class="form-group">
 								<div class="col-sm-7" style="padding-left:0px;">
@@ -75,7 +80,12 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<button type="button" class="form-control btn btn_form_login_register">注&nbsp;&nbsp;&nbsp;&nbsp;册</button>
+								<button type="button" class="form-control btn btn_form_register_submit">注&nbsp;&nbsp;&nbsp;&nbsp;册</button>
+							</div>
+							<div class="form-group hide clearfix div_register_error_msg">
+								<div class="col-sm-offset-1 col-sm-10">
+									<p class="text-danger register_error_msg" ></p>
+								</div>
 							</div>
 						</form>
 					</section>

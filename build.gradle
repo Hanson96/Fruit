@@ -27,6 +27,7 @@ repositories {
 ext {
 	slf4jVersion = '1.7.2'
     springVersion = '4.3.7.RELEASE'
+    shiroVersion = '1.3.2'
     jacksonVersion = '2.8.7'
 }
 
@@ -61,6 +62,12 @@ dependencies {
     /* hibernate */
     compile "org.hibernate:hibernate-core:4.2.5.Final"
     compile "mysql:mysql-connector-java:5.1.38"
+    
+    /* shiro security */
+    compile group: 'org.apache.shiro', name: 'shiro-core', version: "$shiroVersion"
+    compile group: 'org.apache.shiro', name: 'shiro-web', version: "$shiroVersion"
+    compile group: 'org.apache.shiro', name: 'shiro-spring', version: "$shiroVersion"
+    compile group: 'org.apache.shiro', name: 'shiro-ehcache', version: "$shiroVersion"
     
     /* jackson */
     compile "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"

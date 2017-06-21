@@ -75,7 +75,7 @@ button{
 .fr{
     float:right;
 }
-.margin-left-10{
-	margin-left:10px;
+.relative{
+	position: relative;
 }
 /* util end */

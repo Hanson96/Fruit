@@ -60,7 +60,13 @@ require.config({
       'bootstrap-fileinput_zh': '../../plugin/bootstrap/bootstrap-fileinput/js/locales/zh',
       'ueditor': '../../plugin/ueditor/ueditor.all',
       'ueditor_zh-cn': '../../plugin/ueditor/lang/zh-cn/zh-cn',
-      'zeroclipboard': '../../plugin/ueditor/third-party/zeroclipboard/ZeroClipboard.min'
+      'zeroclipboard': '../../plugin/ueditor/third-party/zeroclipboard/ZeroClipboard.min',
+      'imagezoom': '../../plugin/imagezoom/jquery.imagezoom',
+    	  
+       // 自己的js文件
+      'common':'../common/common',
+      'util':'../common/util',
+      'validate':'../common/validate'
     },
     map: { 
         '*': {
@@ -106,6 +112,9 @@ require.config({
 		},
 		'ueditor_zh-cn': {
 			deps:['ueditor']
+		},
+		'imagezoom': {
+			deps:['jquery']
 		}
     }
 });

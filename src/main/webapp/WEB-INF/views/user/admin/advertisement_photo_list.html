@@ -22,7 +22,7 @@
 			    </div>
 			    <div class="form-group my-inline-div">
 				    <label>所属广告位:</label>
-				    <select name="q_position" class="form-control" required>
+				    <select name="q_position" class="form-control">
 				    	<option value="">所有广告位</option>
 						<#list position_list! as item>
 							<option value="${item.value()}" <#if ((queryMap.q_position)??&&queryMap.q_position==item.value()?string)>selected</#if> >${item.typeName()}</option>

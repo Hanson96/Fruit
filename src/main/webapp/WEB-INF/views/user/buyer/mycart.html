@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<#include "/WEB-INF/views/include/meta.html"/>
+<title>我的购物侧</title>
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/plugin/bootstrap/bootstrap-3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/css/common/common.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/css/web/index.css" />
+</head>
+<body>
+	<@include_page path="/top" />
+	<@include_page path="/header" />
+	<div class="container">
+		<div class="row">
+		
+		</div>
+		<table class="table table-cart table_cart">
+			<thead>
+				<tr>
+					<th></th>
+					<th>商品</th>
+					<th>单价</th>
+					<th>数量</th>
+					<th>小计</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<#list (cart.goods_item_list)! as item>
+				<tr class="goods-item goods_item">
+					<td class="item_checkbox_id">
+						<input type="checkbox" name="goods_item_id" value="${item.id}" goods_id="${(item.goods.id)!}" onclick="page.calculateTotalPrice();"/>
+					</td>
+					<td><a href="${ctx}/goods_detail?obj_id=${(item.goods.id)!}">${(item.goods.name)!}</a></td>
+					<td class="item_price">￥<span class="number">${(item.goods.price)!}</span></td>
+					<td class="item_count">
+						<div class="col-sm-4">
+							<div class="input-group input-group-sm">
+								<span class="input-group-addon btn_change_count" type="subtract" style="cursor: pointer;">-</span> 
+								<input type="text" class="form-control inp_count" value="${(item.count)!1}" style="width:45px;text-align: center;">
+								<span class="input-group-addon btn_change_count" type="add" style="cursor: pointer;">+</span>
+							</div>
+						</div>
+					</td>
+					<td class="item_subtotal">￥<span class="number">${(item.goods.price * item.count)!}</span></td>
+					<td><a>删除</a></td>
+				</tr>
+				</#list>
+				<tr class="tr_end">
+					<td class="item_select_all"><label ><input type="checkbox" name="all"/> 全选</label></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td colspan="2" class="item_settle">总计：￥<span class="number">0.00</span><button class="btn btn-info btn_settle" >结算</button></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="row">
+		
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	var _ctx = '${ctx}';
+</script>
+<script type="text/javascript" src="${ctx}/resource/plugin/requirejs/require.js"></script>
+<script type="text/javascript" src="${ctx}/resource/js/require-config.js"></script>
+<script>
+	require(['./user/buyer/mycart'],function(page){
+		var p = new page();
+		p.main();
+		window.page = p;
+	});
+</script>
+</html>

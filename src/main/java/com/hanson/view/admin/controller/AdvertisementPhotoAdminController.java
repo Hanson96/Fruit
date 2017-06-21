@@ -103,7 +103,7 @@ public class AdvertisementPhotoAdminController {
 			this.accessoryService.saveOrUpdate(acc);
 			advert_true.setAcc(acc);
 		}
-		result = this.advertisementPhotoService.save(advert_true);
+		result = this.advertisementPhotoService.saveOrUpdate(advert_true);
 		String msg_title = result ? "操作成功" : error_msg;
 		String ctx = CommUtil.getContextPath(request);
 		mv.addObject("result", result);

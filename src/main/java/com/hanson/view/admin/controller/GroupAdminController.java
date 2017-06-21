@@ -1,6 +1,7 @@
 package com.hanson.view.admin.controller;
 
 import java.io.File;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,14 +40,30 @@ public class GroupAdminController {
 	private IAccessoryService accessoryService;
 	
 	@RequestMapping("/group_list")
-	public ModelAndView group_list(HttpServletRequest request, String currentPage, String pageRows){
+	public ModelAndView group_list(HttpServletRequest request, String currentPage, String pageRows, String q_status){
 		JModelAndView mv = new JModelAndView("group_list.html", 11, request);
 		QueryHelper.queryParamsIntoModel(request, mv);
 		QueryObject qo = new QueryObject(mv, currentPage, pageRows, null, null);
 		String[] fields = {"name"};
 		QueryHelper.addQueryBatch(Group.class, qo, request, fields, "like");
+		if(StringUtils.isNotEmpty(q_status)){
+			Date now = new Date();
+			int status = CommUtil.null2Int(q_status);
+			Map paramMap = new HashMap();
+			paramMap.put("now", now);
+			String paramString = "and obj.start_time>:now ";
+			if(status == Group.Status.NO_START.value()){
+				paramString = "and obj.start_time>:now ";
+			}else if(status == Group.Status.STARTED.value()){
+				paramString = "and obj.start_time<=:now and obj.end_time>=:now";
+			}else if(status == Group.Status.FINISH.value()){
+				paramString = "and obj.end_time<:now ";
+			}
+			qo.addQuery(paramString, paramMap);
+		}
 		IPageObject pageObj = this.groupService.list(qo);
 		mv.addObject("pageObj", pageObj);
+		mv.addObject("status_list", Group.Status.values());
 		return  mv;
 	}
 	

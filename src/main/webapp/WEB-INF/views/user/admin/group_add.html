@@ -78,11 +78,11 @@
 	        validateInitialCount: true, // 验证是否超过数目
 	        allowedFileExtensions : ['jpg', 'png','gif'],//接收的文件后缀
 	        previewSettings:{
-	        	image:{width: "100%", height: "auto"}
+	        	image:{width: "auto", height: "100%"}
 	        },
 	        initialPreview: [
 	        	<#if (obj.acc)??>
-	        	'<img src="${ctx}/${(obj.acc.path)!}/${(obj.acc.name)!}" style="width:100%;" class="file-preview-image" >',
+	        	'<img src="${ctx}/${(obj.acc.path)!}/${(obj.acc.name)!}" style="height:100%;" class="file-preview-image" >',
 	        	</#if>
 		    ],
 	        initialPreviewConfig: [
@@ -94,7 +94,7 @@
 		            key: 101, 
 		            //frameClass: 'photo-main-frame-css',
 		            frameAttr: {
-		                style: 'height:300px',
+		                //style: 'height:300px',
 		                title: 'My Custom Title',
 		            }
 		        },

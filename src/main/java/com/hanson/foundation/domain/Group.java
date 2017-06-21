@@ -4,15 +4,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.hanson.core.domain.IdEntity;
+import com.hanson.core.tools.CustomEnum;
 
 /**
  * 团购实体
@@ -37,6 +40,39 @@ public class Group extends IdEntity{
 	// 活动宣传图片
 	@OneToOne(cascade={javax.persistence.CascadeType.REMOVE}, fetch=FetchType.LAZY)
 	private Accessory acc;
+	
+	@Column(columnDefinition="int default 0")
+	private Integer status = 0;
+	
+	public static enum Status implements CustomEnum{
+		NO_START("未开始",0),STARTED("进行中",1),FINISH("已结束",2);
+		private String typeName;
+		private int value;
+		private Status(String typeName, int value){
+			this.typeName = typeName;
+			this.value = value;
+		}
+		public int value(){
+			return this.value;
+		}
+		public String typeName(){
+			return this.typeName;
+		}
+		@Override
+		public String originalName() {
+			return this.name();
+		}
+	}
+	
+	@Transient
+	public String parseStatusn(){
+		for(Group.Status type : Group.Status.values()){
+			if(this.status.intValue() == type.value()){
+				return type.typeName();
+			}
+		}
+		return "";
+	}
 	
 	public String getName() {
 		return name;

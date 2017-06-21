@@ -20,6 +20,15 @@
 				    <label>用户名称:</label>
 				    <input type="text" name="q_name" value="${(queryMap.q_name)!}" class="form-control" placeholder="活动名称">
 			    </div>
+			    <div class="form-group" >
+				    <label>活动状态:</label>
+				    <select name="q_status" class="form-control">
+				    	<option value="">所有活动</option>
+						<#list status_list! as item>
+							<option value="${item.value()}" <#if ((queryMap.q_status)??&&queryMap.q_status==item.value()?string)>selected</#if> >${item.typeName()}</option>
+						</#list> 
+					</select>
+			    </div>
 				<button type="button" class="btn btn-primary" onclick="common.query()"><span class="glyphicon glyphicon-search"></span></button>
 			</form>
 		</div>
@@ -31,6 +40,8 @@
 				<thead>
 					<tr>
 						<th>活动名称</th>
+						<th>开始时间</th>
+						<th>结束时间</th>
 						<th>编辑</th>
 						<th>删除</th>
 					</tr>
@@ -39,6 +50,8 @@
 					<#list (pageObj.resultList)! as obj>
 					<tr>
 						<td>${(obj.name)!}</td>
+						<td>${(obj.start_time?string('yyyy-MM-dd'))!}</td>
+						<td>${(obj.end_time?string('yyyy-MM-dd'))!}</td>
 						<td>
 							<a href="${ctx}/admin/group_add?obj_id=${obj.id}" class="btn btn-primary btn-xs" >编辑</a>
 						</td>

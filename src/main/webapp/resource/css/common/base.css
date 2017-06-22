@@ -78,4 +78,22 @@ button{
 .relative{
 	position: relative;
 }
+.wrap-center {
+  float: left; /* 自适应内容宽度 */
+  position: relative;
+  left: 50%; 
+}
+.wrap-center .wrap-center-inner {
+  position: relative;
+  left: -50%; 
+}
+.div-center{
+	display:absolute;
+	left:50%;
+	top:50%;
+	margin-left:-width/2;  /*负向偏移宽度的一半，如果width不定，需要动态获取。*/
+	margin-top:-height/2;  /*原理同上。*/
+}
+
+
 /* util end */

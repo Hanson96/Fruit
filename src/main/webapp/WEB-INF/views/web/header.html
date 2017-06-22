@@ -1,20 +1,31 @@
-<header id="header" class="header">
-	<div class="container">
-		<div class="col-sm-3">
+<#include "/WEB-INF/views/include/macro.html"/>
+<header id="header" class="header" style="margin:5px 0;">
+	<div class="container" style="height:100px;">
+		<div class="col-sm-3" style="padding-left:0px">
 			<div class="logo">
-				<a href="${ctx}/index"><img src="${ctx}/logo"/ alt="logo"></a>
+				<a href="${ctx}/index"><img src="${ctx}/${(logo.acc.path)!}/${(logo.acc.name)!}" class="img-responsive" alt="logo"></a>
 			</div>
 		</div>
 		<div class="col-sm-6">
-			<div class="input-group search">
-			  <input type="text" class="form-control" placeholder="搜索你想要查找的内容" >
-			  <span class="input-group-btn" >
-			  	  <button class="btn btn-info btn-search"><span class="glyphicon glyphicon-search"> </span></button>
-			  </span>
+			<div class="input-group search" style="margin-top:30px;">
+				<input type="text" class="form-control" placeholder="搜索你想要查找的内容">
+				<span class="input-group-btn">
+					<button class="btn btn-info btn-search">
+						<span class="glyphicon glyphicon-search"> </span>
+					</button>
+				</span>
 			</div>
 		</div>
-		<div class="col-sm-2">
-		
+		<div class="col-sm-2 col-sm-offset-1">
+			<div class="shopping-cart">
+				<div class="icon iconfont icon-gouwuche icon-cart" style="color:#9dcd17;font-size:72px;position: relative;margin-left:-50px;">
+					<span class="word">共${(user_cart.goods_item_list?size)!0}种商品</span>
+					<div class="goods-item-detail">
+						<@shopping_cart_goods_item_list (user_cart.goods_item_list)! />
+					</div>
+				</div>
+                    <!-- <div class="name">购物车</div> -->
+			</div>
 		</div>
 	</div>
 </header>

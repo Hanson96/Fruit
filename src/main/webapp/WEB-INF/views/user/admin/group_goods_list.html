@@ -2,7 +2,7 @@
 <html>
 <head>
 <#include "/WEB-INF/views/include/meta.html"/>
-<title>商品管理</title>
+<title>团购商品管理</title>
 <link rel="stylesheet" type="text/css" href="${ctx}/resource/plugin/bootstrap/bootstrap-3.3.7/css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="${ctx}/resource/css/common/common.css" />
 <link rel="stylesheet" type="text/css" href="${ctx}/resource/css/user/admin/admin.css" />
@@ -10,12 +10,13 @@
 <body>
 	<div class="container-fluid">
 		<header>
-			<h4>商品列表 </h4>
+			<h4><a href="${ctx}/admin/group_list">团购商品列表</a><#if group??> ——[团购] ${(group.name)!}</#if></h4>
 		</header>
 		<div class="search">
 			<form id="queryForm" action="" method="post" class="form-inline">
 				<input type="hidden" id="currentPage" name="currentPage" value="${currentPage!}"/>
 				<input type="hidden" id="pageRows" name="pageRows" value="${pageRows!}"/>
+				<input type="hidden" name="q_group.id" value="${(queryMap.q_group_id)!}"/>
 				<div class="form-group" >
 				    <label>商品名称:</label>
 				    <input type="text" name="q_name" value="${(queryMap.q_name)!}" class="form-control" placeholder="商品名称">
@@ -24,37 +25,20 @@
 			</form>
 		</div>
 		<section>
-			<div class="div-handle">
-				<a href="${ctx}/admin/goods_add" class="btn btn-primary btn-sm" >新增</a>
-			</div>
 			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
 						<th>商品名称</th>
-						<th>推荐</th>
-						<th>编辑</th>
-						<th>删除</th>
+						<th>操作</th>
 					</tr>
 				</thead>
 				<tbody>
 					<#list (pageObj.resultList)! as obj>
 					<tr>
-						<td><a href="${ctx}/goods_detail?obj_id=${obj.id}" target="_blank">${obj.name!}</a></td>
-						<td>
-							<#if obj.recommend==true>
-								<button type="button" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="right" title="点击取消推荐"
-								onclick="page.recommend_control(this)" obj_id="${obj.id}">已推荐</button>
-							<#else>
-								<button type="button" class="btn btn-primary btn-xs" data-toggle="tooltip" data-placement="right" title="点击进行推荐"
-								onclick="page.recommend_control(this)" obj_id="${obj.id}">未推荐</button>
-							</#if>
-						</td>
-						<td>
-							<a href="${ctx}/admin/goods_add?obj_id=${obj.id}" class="btn btn-primary btn-xs" >编辑</a>
-						</td>
+						<td>${obj.name!}</td>
 						<td>
 							<button type="button" class="btn btn-danger btn-xs" 
-								onclick="common.delete_obj_by_id('${ctx}/admin/goods_delete','${obj.id}')">删除</button>
+								onclick="common.delete_obj_by_id('${ctx}/admin/group_goods_delete','${obj.id}','确认移除？')">移除</button>
 						</td>
 					</tr>
 					</#list>
@@ -80,11 +64,6 @@
 		}
 		c.paging('${(pageObj.currentPage)!}', '${(pageObj.pageRows)!}', '${(pageObj.totalPages)!}', '${(pageObj.totalRows)!}', {}, cssConfg);
 		window.common = c;
-	});
-	require(['./user/admin/goods_list'],function(page){
-		var p = new page();
-		p.main();
-		window.page = p;
 	});
 </script>
 </html>

@@ -51,6 +51,12 @@ public class Goods extends IdEntity{
 	@Lob
     @Column(columnDefinition = "LongText")
     private String description_html;
+	// 销量  
+	@Column(columnDefinition="int default 0")
+	private Integer sales_count = 0;
+	// 是否推荐  
+	@Column(columnDefinition="bit default false")
+	private Boolean recommend = false;
 	
 	// 活动状态  
 	@Column(columnDefinition="int default 0")
@@ -184,6 +190,19 @@ public class Goods extends IdEntity{
 	public void setGroup_sold_count(Integer group_sold_count) {
 		this.group_sold_count = group_sold_count;
 	}
+	public Integer getSales_count() {
+		return sales_count;
+	}
+	public void setSales_count(Integer sales_count) {
+		this.sales_count = sales_count;
+	}
+	public Boolean getRecommend() {
+		return recommend;
+	}
+	public void setRecommend(Boolean recommend) {
+		this.recommend = recommend;
+	}
+	
 	
 	// 只取出5张商品的其它图片
 	@Transient

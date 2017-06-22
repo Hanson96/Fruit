@@ -42,8 +42,9 @@
 						<th>活动名称</th>
 						<th>开始时间</th>
 						<th>结束时间</th>
-						<th>编辑</th>
-						<th>删除</th>
+						<th>团购商品数量</th>
+						<th>商品操作</th>
+						<th>操作</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -52,10 +53,13 @@
 						<td>${(obj.name)!}</td>
 						<td>${(obj.start_time?string('yyyy-MM-dd'))!}</td>
 						<td>${(obj.end_time?string('yyyy-MM-dd'))!}</td>
+						<td>${(obj.goods_list?size)!}</td>
 						<td>
-							<a href="${ctx}/admin/group_add?obj_id=${obj.id}" class="btn btn-primary btn-xs" >编辑</a>
+							<a href="${ctx}/admin/group_goods_list?q_group_id=${obj.id}" class="btn btn-primary btn-xs" >查看商品</a> | 
+							<a href="${ctx}/admin/group_goods_add?group_id=${obj.id}" class="btn btn-primary btn-xs" >新增商品</a>
 						</td>
 						<td>
+							<a href="${ctx}/admin/group_add?obj_id=${obj.id}" class="btn btn-primary btn-xs" >编辑</a> | 
 							<button type="button" class="btn btn-danger btn-xs" 
 								onclick="common.delete_obj_by_id('${ctx}/admin/group_delete','${obj.id}')">删除</button>
 						</td>

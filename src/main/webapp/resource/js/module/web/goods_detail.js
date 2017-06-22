@@ -47,7 +47,19 @@ define(['jquery','imagezoom','util'],function($, Imagezoom, Util){
 		
 		// 立即购买
 		DOM.btn_buy_now.click(function(){
-			
+			if(Util.checkUserLogin() == false) return;
+			var goods_id = DOM.section_goods_info.attr('goods_id');
+			var count = DOM.section_goods_info.find('.inp_count').val();
+			var url = _ctx + '/buyer/buy_info';
+			var goods_data = {
+					'goods_id':goods_id,
+					'count':count
+			};
+			var form_data = {
+					'type':'goods_buy',
+					'goods_data':JSON.stringify(goods_data)
+			}
+			Util.StandardPost(url,form_data);
 		});
 	}
 	

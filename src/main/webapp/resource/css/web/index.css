@@ -6,8 +6,18 @@
 	border-radius:5px;
 	padding:10px;
 }
-
-
+a{
+	color:#56a031;
+}
+a:hover{
+	color:#7ccd39;
+}
+.text-green{
+	color:#56a031
+}
+.bg-green{
+	background-color: #7ccd39;
+}
 /* 登录相关  end */
 
 @media (min-width: 1360px){
@@ -16,19 +26,58 @@
 	}
 }
 
+/* 顶部相关  start */
 #top{
 	background-color: #fafafa;
 	height:30px;
 	line-height: 30px;
 }
+/* 顶部相关  end */
 
+/* 头部相关  start */
 #header{
-	height:60px;
+	height:100px;
 }
+.shopping-cart .icon-cart .word{
+	font-size:16px;
+}
+.shopping-cart .icon-cart .goods-item-detail{
+	display: none;
+	font-size:16px;
+	position: absolute;
+	top:100px;
+	left:-120px;
+	z-index:2;
+	background-color: #ffffff;
+}
+.shopping-cart .icon-cart:hover .goods-item-detail{
+	display: block;
+	border:1px solid #9dcd17;
+}
+.goods-item-detail .cart-goods-item-ul>li{
+	border-bottom:1px solid #9dcd17;
+}
+
+/* 头部相关  end */
 
 #main{
 	width:100%;
 }
+
+/* 底部关  start */
+#footer{
+	width:100%;
+	margin-bottom:0;
+	bottom:0;
+}
+#footer .friendly-link{
+	margin:0 auto;
+}
+/* #footer ul.friendly-link>li:not(:first-child){
+	border-left:1px solid #56a031;
+} */
+/* 底部关  end */
+
 
 /* 首页相关   start */
 .banner{

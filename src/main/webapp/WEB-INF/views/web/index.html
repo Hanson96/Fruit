@@ -53,22 +53,40 @@
 					</ul>
 				</div>
 			</section>
+			<section class="floor">
+				<div class="floor-title">团购商品</div>
+				<div class="floor-content">
+					<ul class="list-inline">
+						<@floor_list group_goods_list! />
+					</ul>
+				</div>
+			</section>
+			<section class="floor">
+				<div class="floor-title">热门商品</div>
+				<div class="floor-content">
+					<ul class="list-inline">
+						<@floor_list hot_goods_list! />
+					</ul>
+				</div>
+			</section>
+			<section class="floor">
+				<div class="floor-title">卖家推荐</div>
+				<div class="floor-content">
+					<ul class="list-inline">
+						<@floor_list recommend_goods_list! />
+					</ul>
+				</div>
+			</section>
 		</div>
 	</div>
-	
-	<div class="container-fluid">
-		
-	</div>
-	<footer>
-	
-	</footer>
+	<@include_page path="/footer" />
 </body>
 <script type="text/javascript">
 	var _ctx = '${ctx}';
 </script>
 <script type="text/javascript" src="${ctx}/resource/plugin/requirejs/require.js"></script>
 <script type="text/javascript" src="${ctx}/resource/js/require-config.js"></script>
-<script>
+<script type="text/javascript">
 	require(['./web/index'],function(page){
 		var p = new page();
 		p.main();

@@ -8,10 +8,16 @@
 <link rel="stylesheet" type="text/css" href="${ctx}/resource/css/web/index.css" />
 </head>
 <body>
+	<@include_page path="/top" />
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-4 pull-right">
-				<div class="div-login-register">
+			<div class="col-sm-6">
+				<a href="${(advert_photo.url)!}" style="height:80px;display: block;">
+					<img src="${ctx}/${(advert_photo.acc.path)!}/${(advert_photo.acc.name)!}" class="img-responsive"/>
+				</a>
+			</div>
+			<div class="col-sm-4 col-sm-offset-1">
+				<div class="div-login-register" style="margin-top:50px;">
 					<section class="section-login section_login">
 						<form action="${ctx}/login_submit" metho="post" class="form_login">
 							<div class="form-group text-center">
@@ -48,7 +54,7 @@
 								<span class="pull-right">还没有账号？<a href="${ctx}/login?type=register">立即注册</a></span>
 							</div>
 							<div class="form-group">
-								<button type="button" class="form-control btn btn_form_login_submit">登&nbsp;&nbsp;&nbsp;&nbsp;录</button>
+								<button type="button" class="form-control btn btn-success btn_form_login_submit">登&nbsp;&nbsp;&nbsp;&nbsp;录</button>
 							</div>
 							<div class="form-group hide clearfix div_login_error_msg">
 								<div class="col-sm-offset-3 col-sm-7">
@@ -80,7 +86,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<button type="button" class="form-control btn btn_form_register_submit">注&nbsp;&nbsp;&nbsp;&nbsp;册</button>
+								<button type="button" class="form-control btn btn-success btn_form_register_submit">注&nbsp;&nbsp;&nbsp;&nbsp;册</button>
 							</div>
 							<div class="form-group hide clearfix div_register_error_msg">
 								<div class="col-sm-offset-1 col-sm-10">
@@ -93,6 +99,10 @@
 			</div>
 		</div>
 	</div>
+	<div style="position:absolute;bottom:0;width:100%;">
+		<@include_page path="/footer" />
+	</div>
+	
 </body>
 <script type="text/javascript">
 	var _ctx = '${ctx}';

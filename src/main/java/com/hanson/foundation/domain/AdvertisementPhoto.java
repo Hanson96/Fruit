@@ -35,7 +35,7 @@ public class AdvertisementPhoto extends IdEntity{
 	
 	/** 广告图片的位置*/
 	public static enum Position implements CustomEnum{
-		LOGIN("登录页面",0),INDEX_SLIDE("首页滚动图",1);
+		LOGIN("登录页面",0),INDEX_SLIDE("首页滚动图",1),LOGO("网站logo",2);
 		private String typeName;
 		private int value;
 		private Position(String typeName, int value){

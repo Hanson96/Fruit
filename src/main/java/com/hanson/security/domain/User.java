@@ -62,6 +62,11 @@ public class User extends IdEntity{
 		return "";
 	}
 	
+	
+	// 姓名
+	private String name;
+	// 手机
+	private String phone;
 	// 收货地址
 	private String address;
 	
@@ -85,6 +90,18 @@ public class User extends IdEntity{
 	}
 	public void setUser_type(Integer user_type) {
 		this.user_type = user_type;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	public String getAddress() {
 		return address;

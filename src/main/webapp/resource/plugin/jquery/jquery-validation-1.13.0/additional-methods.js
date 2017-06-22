@@ -939,6 +939,11 @@ $.validator.addMethod("positive_decimal_two", function(value, element) {
 	return this.optional(element) || /^\+?\d+\.?\d{0,2}$/.test(value);
 }, "请输入最多两位小数的正数"); 
 
+// 正整数
+$.validator.addMethod("positive_integer", function(value, element) {
+	return this.optional(element) || /^[1-9][0-9]*$/.test(value);
+}, "请输入正整数"); 
+
 // 移动电话
 $.validator.addMethod("mobile_phone", function(value, element) {
     var length = value.length;

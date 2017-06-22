@@ -1,10 +1,11 @@
-define(['jquery'],function($){
+define(['jquery','util'],function($, Util){
 	'use strict';
 	
 	var page = function(){}
 	
 	var DOM = {
-			table_cart: $('.table_cart')
+			table_cart: $('.table_cart'),
+			btn_settle: $('.table_cart .tr_end .item_settle .btn_settle')
 	}
 	
 	var main = function(){
@@ -54,6 +55,27 @@ define(['jquery'],function($){
 			$checkbox.attr('checked',check);
 			DOM.table_cart.find('.goods_item .item_checkbox_id input[name=goods_item_id]').prop('checked',check);
 			calculateTotalPrice();
+		});
+		
+		// 结算商品
+		DOM.btn_settle.click(function(){
+			var goods_item_id_array = new Array();
+			DOM.table_cart.find('.goods_item .item_checkbox_id input[name=goods_item_id]:checked').each(function(){
+				goods_item_id_array.push($(this).val());
+			});
+			if(goods_item_id_array.length==0){
+				alert('请先选择要结算的商品');
+				return;
+			}
+			var url = _ctx + '/buyer/buy_info';
+			var goods_item_data = {
+					'goods_item_ids':goods_item_id_array.join(',')
+			};
+			var form_data = {
+					'type':'goods_item_buy',
+					'goods_item_data':JSON.stringify(goods_item_data)
+			}
+			Util.StandardPost(url,form_data);
 		});
 	}
 	

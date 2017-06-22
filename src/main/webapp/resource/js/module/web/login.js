@@ -75,6 +75,7 @@ define(['jquery','jquery-validate-messages_zh','user/../../common/validate','use
 			    	}else{
 			    		$(".div_login_error_msg .login_error_msg").html(data.error_msg);
 						$(".div_login_error_msg").removeClass("hide");
+						DOM.form_login.find('.img_verify_code').click()
 			    	}
 			    },'json');
 			}
@@ -145,6 +146,7 @@ define(['jquery','jquery-validate-messages_zh','user/../../common/validate','use
 			    	}else{
 			    		$(".div_register_error_msg .register_error_msg").html(data.error_msg);
 						$(".div_register_error_msg").removeClass("hide");
+						DOM.form_register.find('.img_verify_code').click()
 			    	}
 			    },'json');
 			}

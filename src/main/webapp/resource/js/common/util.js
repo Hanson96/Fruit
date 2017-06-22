@@ -50,6 +50,23 @@ define(['jquery'],function(){
 		});
 		return login;
 	}
+	
+	// 构造一个标准的form表单进行post提交 且页面跳转
+	U.StandardPost = function(url,args){
+	    var $form = $("<form method='post'></form>");
+	    var $input;
+        $form.attr({"action":url});
+        $.each(args,function(key,value){console.log('key:'+key+' value:'+value)
+            $input = $("<input type='hidden'>");
+            $input.attr({"name":key});
+            $input.val(value);
+            $form.append($input);
+        });
+        $form.appendTo($('body'));
+        $form.submit();
+        $form.remove();
+    }
+	
 	Util = U;
 	return Util;
 });

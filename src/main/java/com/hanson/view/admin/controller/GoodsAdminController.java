@@ -211,4 +211,22 @@ public class GoodsAdminController {
 		data.put("error_msg", error_msg);
 		return data;
 	}
+	
+	@ResponseBody
+	@RequestMapping("/goods_handle")
+	public Map goods_handle(HttpServletRequest request, String obj_id, String type){
+		Map data = new HashMap();
+		boolean result = false;
+		String error_msg = "";
+		if(StringUtils.isAnyEmpty(obj_id,type)){
+			error_msg = "参数有误";
+		}else if(StringUtils.equals(type, "recommend")){
+			Goods goods= this.goodsService.getObjById(Long.valueOf(obj_id));
+			goods.setRecommend(!goods.getRecommend());
+			result = this.goodsService.update(goods);
+		}
+		data.put("result", result);
+		data.put("error_msg", error_msg);
+		return data;
+	}
 }

@@ -1,7 +1,9 @@
 package com.hanson.view.web.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,8 +24,12 @@ import org.springframework.web.util.WebUtils;
 
 import com.hanson.core.constant.Globals;
 import com.hanson.core.mv.JModelAndView;
+import com.hanson.core.query.QueryObject;
 import com.hanson.core.tools.CommUtil;
+import com.hanson.core.tools.SimpleMap;
 import com.hanson.core.tools.WebViewHelper;
+import com.hanson.foundation.domain.AdvertisementPhoto;
+import com.hanson.foundation.service.IAdvertisementPhotoService;
 import com.hanson.security.domain.User;
 import com.hanson.security.service.IUserService;
 import com.hanson.security.shiro.ShiroUtils;
@@ -33,10 +39,20 @@ public class LoginController {
 
 	@Autowired
 	private IUserService userService;
+	@Autowired
+	private IAdvertisementPhotoService advertisementPhotoService;
 	
 	@RequestMapping("/login")
 	public ModelAndView login(HttpServletRequest request){
 		JModelAndView mv = new JModelAndView("login.html", 0, request);
+		QueryObject qo = new QueryObject();
+		qo.addQuery("and obj.sequence>=0", null);
+		qo.addQuery("obj.position", new SimpleMap("position", AdvertisementPhoto.Position.LOGIN.value()), "=");
+		List<AdvertisementPhoto> advert_login_list = this.advertisementPhotoService.query(qo);
+		if(advert_login_list.size()>0){
+			int rand_num = new Random().nextInt(advert_login_list.size());
+			mv.addObject("advert_photo", advert_login_list.get(rand_num));
+		}
 		mv.addObject("UserType", WebViewHelper.enumToMap(User.UserType.values()));
 		return mv;
 	}

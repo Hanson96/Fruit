@@ -1,5 +1,6 @@
 @CHARSET "UTF-8";
 @import url('base.css');
+@import url('../iconfont/iconfont.css');
 
 html {
   font-family: "Microsoft YaHei";

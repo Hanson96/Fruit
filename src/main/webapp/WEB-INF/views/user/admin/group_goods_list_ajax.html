@@ -1,0 +1,43 @@
+<table class="table table-striped table-hover">
+	<thead>
+		<tr>
+			<th>商品名称</th>
+			<th>操作</th>
+		</tr>
+	</thead>
+	<tbody>
+		<#list (pageObj.resultList)! as obj>
+		<tr>
+			<td>${obj.name!}</td>
+			<td>
+				<button type="button" class="btn btn-primary btn-xs" 
+					onclick="page.group_goods_choose(['${(obj.id)!}','${(obj.name)!}','${(obj.price)!}'])">选择</button>
+			</td>
+		</tr>
+		</#list>
+	</tbody>
+</table>
+<div id="pagingNode">
+</div>
+		
+<script type="text/javascript">
+	require(["./../common/common"],function(common){
+		var c = new common();
+		var cssConfg = {
+				page_word_skip_btn_c:'btn btn-primary btn-xs',
+				page_number_wrap_c:'pagination',
+				page_current_c:'active',
+		}
+		var nodeConfig = {
+				paging_node:'#pagingNode',
+				query_form_node:'.form_group_goods_list_ajax',
+				query_form_currentPage_inp:'.form_group_goods_list_ajax inp_currentPage',
+				query_form_pageRows_inp:'.form_group_goods_list_ajax inp_pageRows',
+				query_form_search_btn:'.form_group_goods_list_ajax .btn_search_ajax',
+		}
+		c.ajax_paging('${(pageObj.currentPage)!}', '${(pageObj.pageRows)!}', '${(pageObj.totalPages)!}', '${(pageObj.totalRows)!}', nodeConfig, cssConfg);
+	}); 
+	require(['jquery'],function($){
+		
+	}); 
+</script>

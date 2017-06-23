@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<#include "/WEB-INF/views/include/meta.html"/>
+<#include "/WEB-INF/views/include/macro.html"/>
+<title>搜索页面</title>
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/plugin/bootstrap/bootstrap-3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/css/common/common.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/css/web/index.css" />
+</head>
+<body>
+	<@include_page path="/top" />
+	<@include_page path="/header" />
+	<div class="container-fluid" >
+		<section class="search-condition search_condition">
+			<div class="row condition-activity condition_activity" search_type="activity">
+				活动：<span condition="all" class="select">全部</span><span condition="1" activity="is_group">团购</span><span condition="1" activity="not_group">非团购</span>
+			</div>
+			<div class="row condition-goods-class condition_goods_class" search_type="goods_class_id">
+				分类：<span condition="all" class="select">全部</span>
+				<#list goods_class_list! as item >
+					<span goods_class_id="${(item.id)!}" condition="1">${(item.name)!}</span>
+				</#list>
+			</div>
+			<div class="row condition-price condition_price" search_type="price">
+				价格：<span condition="all" class="select">全部</span>从<input type="text" name="price_low" class="inp_price_low"/> - <input type="text" name="price_high" class="inp_price_high"/>
+			</div>
+			<div class="row condition-sort condition_sort" search_type="sort">
+				排序：<span condition="all" class="select">默认</span><span sort="low_to_high" condition="1">价格从低到高</span><span sort="high_to_low" condition="1">价格从高到低</span>
+			</div>
+		</section>
+	</div>
+	<div class="container" style="padding:0;">
+		<section class="search-result">
+			<ul class="list-inline goods-list-many">
+			<#list (pageObj.resultList)! as item>
+				<li class="goods-item">
+					<div class="image">
+						<a href="${ctx}/goods_detail?obj_id=${item.id}">
+							<img src="${ctx}/${(item.main_photo.path)!}/${(item.main_photo.name)!}" class="img-responsive"/>
+						</a>
+						<div class="add-cart" goods_id="${(item.id)!}" onclick="common.add_cart(this);">
+							<span><i class="icon iconfont icon-gouwuche"> </i>加入购物车</span>
+						</div>
+					</div>
+					<div class="goods-name text-limit-length">
+						<a href="${ctx}/goods_detail?obj_id=${(item.id)!}" title="${(item.name)!}"><span>${(item.name)!}</span></a>
+					</div>
+					<div class="goods-price">
+						<span class="price">￥${(item.price?string("0.00"))!}</span>
+						<span class="original-price">￥${(item.original_price?string("0.00"))!}</span>
+					</div>
+				</li>
+			</#list>
+			</ul>
+		</section>
+		<div id="pagingNode">
+		</div>
+	</div>
+	<@include_page path="/footer" />
+</body>
+<script type="text/javascript">
+	var _ctx = '${ctx}';
+</script>
+<script type="text/javascript" src="${ctx}/resource/plugin/requirejs/require.js"></script>
+<script type="text/javascript" src="${ctx}/resource/js/require-config.js"></script>
+<script type="text/javascript">
+	require(['common'],function(Common){
+		var c = new Common();
+		window.common = c;
+	});
+	require(['./web/search'],function(page){
+		var p = new page();
+		p.main();
+	});
+</script>
+</html>

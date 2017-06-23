@@ -120,7 +120,7 @@ a:hover{
 	display:inline-block;
 	border-radius: 50%;
 	border: 1px solid #F8a768;
-	margin:0 5px;
+	margin:10px 5px;
 	cursor: pointer;
 }
 .banner .circle ul li:hover{
@@ -142,16 +142,16 @@ a:hover{
 	float:right;
 	margin-right:5px;
 }
-.floor .floor-content ul>li{
+ul.goods-list-many>li.goods-item{
 	width:235px;
 	padding:0px;
 	overflow: hidden;
 	margin:0 1px;
 }
-.floor .floor-content ul>li:hover{
+ul.goods-list-many>li.goods-item:hover{
 	border:1px solid #9dcd17;
 }
-.floor .floor-content ul>li img:hover{
+ul.goods-list-many>li.goods-item img:hover{
 	-moz-transform:scale(1.2);
 	-webkit-transform:scale(1.2);
 	-ms-transform:scale(1);
@@ -162,13 +162,13 @@ a:hover{
 	-o-transition:transform 0.3s;
 	transition: transform 0.3s;
 }
-.floor .floor-content ul>li .image{
+ul.goods-list-many>li.goods-item .image{
 	width:235px;
 	height:235px;
 	overflow: hidden;
 	position: relative;
 }
-.image .add-cart{
+ul.goods-list-many>li.goods-item .image .add-cart{
 	position: absolute;
 	z-index:1;
 	width:235px;
@@ -182,7 +182,7 @@ a:hover{
 	cursor: pointer;
 	/* margin:0 1px; */
 }
-.floor .floor-content ul>li:hover .image .add-cart{
+ul.goods-list-many>li.goods-item:hover .image .add-cart{
 	/* bottom:0; */
 	transform:translate(0,-30px);
 	-webkit-transform:translate(0,-30px);
@@ -194,15 +194,15 @@ a:hover{
 	-o-transition:transform 0.5s;
 	transition: transform 0.5s;
 }
-li.goods-item .goods-name{
+ul.goods-list-many>li.goods-item .goods-name{
 	padding:5px;
 }
-li.goods-item .goods-price{
+ul.goods-list-many>li.goods-item .goods-price{
 	padding:5px;
 	color:#ff6633;
 	font-size:20px;
 }
-li.goods-item .goods-price .original-price{
+ul.goods-list-many>li.goods-item .goods-price .original-price{
 	color:#ababab;
 	text-decoration: line-through;
 	float:right;
@@ -325,3 +325,21 @@ li.goods-item .goods-price .original-price{
 }
 
 /* 分页样式  end */
+
+/* 搜索页面 start  */
+.search-condition .row{
+	margin:0;
+	padding:10px 0;
+	border-bottom: 1px dashed #9dcd17; 
+}
+.search-condition .row span{
+	margin:0 10px;
+	cursor: pointer;
+	padding:5px;
+}
+.search-condition .row span.select{
+	border:1px solid #9dcd17 ;
+	color: #9dcd17;
+	border-radius:3px;
+}
+/* 搜索页面 end  */

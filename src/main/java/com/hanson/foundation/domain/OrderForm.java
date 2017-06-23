@@ -49,7 +49,7 @@ public class OrderForm extends IdEntity{
 	private Integer pay_status = 0;
 	// 支付状态枚举
 	public static enum PayStatus implements CustomEnum{
-		NO_PAY("未支付",0),PAID("已支付员",1);
+		NO_PAY("未支付",0),PAID("已支付",1);
 		private String typeName;
 		private int value;
 		private PayStatus(String typeName, int value){

@@ -1,37 +1,29 @@
 <header id="header" class="header" style="margin:5px 0;">
 	<div class="container" style="height:100px;">
-		<div class="col-sm-3" style="padding-left:0px">
-			<div class="logo">
-				<a href="${ctx}/index"><img src="${ctx}/${(logo.acc.path)!}/${(logo.acc.name)!}" class="img-responsive" alt="logo"></a>
+		<div class="row">
+			<div class="col-sm-3" style="padding-left:0px">
+				<div class="logo">
+					<a href="${ctx}/index"><img src="${ctx}/${(logo.acc.path)!}/${(logo.acc.name)!}" class="img-responsive" alt="logo"></a>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="input-group search" style="margin-top:30px;">
+					<input type="text" class="form-control" placeholder="搜索你想要查找的内容">
+					<span class="input-group-btn">
+						<button class="btn btn-info btn-search">
+							<span class="glyphicon glyphicon-search"> </span>
+						</button>
+					</span>
+				</div>
+			</div>
+			<div class="col-sm-2 col-sm-offset-1">
+				<div class="shopping-cart shopping_cart">
+					<@include_page path="/shopping_cart" />
+				</div>
 			</div>
 		</div>
-		<div class="col-sm-6">
-			<div class="input-group search" style="margin-top:30px;">
-				<input type="text" class="form-control" placeholder="搜索你想要查找的内容">
-				<span class="input-group-btn">
-					<button class="btn btn-info btn-search">
-						<span class="glyphicon glyphicon-search"> </span>
-					</button>
-				</span>
-			</div>
-		</div>
-		<div class="col-sm-2 col-sm-offset-1">
-			<div class="shopping-cart shopping_cart">
-				<#-- <div class="icon iconfont icon-gouwuche icon-cart" style="color:#9dcd17;font-size:72px;position: relative;margin-left:-50px;">
-					<span class="word">共${(user_cart.goods_item_list?size)!0}种商品</span>
-					<div class="goods-item-detail popover bottom">
-						<div class="arrow"></div>
-						<div class="popover-content">
-							<@shopping_cart_goods_item_list (user_cart.goods_item_list)! />
-						</div>
-						<h3 class="popover-title clearfix" style="padding:2px 14px;height:34px;line-height:34px">
-							共${(CartHelper.calculateCartTotalCount(user_cart))!}件商品，总计：￥${(CartHelper.calculateCartTotalPrice(user_cart))!}
-							<a href="${ctx}/buyer/mycart" class="btn btn-success btn-sm fr" >去结算</a>
-						</h3>
-					</div>
-				</div> -->
-				<@include_page path="/shopping_cart" />
-			</div>
+		<div class="row">
+			
 		</div>
 	</div>
 </header>

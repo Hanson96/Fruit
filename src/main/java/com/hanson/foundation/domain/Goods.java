@@ -31,9 +31,12 @@ public class Goods extends IdEntity{
 	// 商品分类
 	@ManyToOne
 	private GoodsClass goods_class;
-	// 现价
+	// 当前真正的价格    可能是团购价也可能是现价
 	@Column(precision = 12, scale = 2)
 	private BigDecimal price;
+	// 现价
+	@Column(precision = 12, scale = 2)
+	private BigDecimal now_price;
 	// 原价
 	@Column(precision = 12, scale = 2)
 	private BigDecimal original_price;
@@ -123,6 +126,13 @@ public class Goods extends IdEntity{
 	}
 	public void setPrice(BigDecimal price) {
 		this.price = price;
+	}
+	
+	public BigDecimal getNow_price() {
+		return now_price;
+	}
+	public void setNow_price(BigDecimal now_price) {
+		this.now_price = now_price;
 	}
 	public BigDecimal getOriginal_price() {
 		return original_price;

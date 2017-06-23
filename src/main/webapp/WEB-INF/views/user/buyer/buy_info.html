@@ -11,67 +11,90 @@
 	<@include_page path="/top" />
 	<@include_page path="/header" />
 	<div class="container">
-		<div class="row">
-			<form action="${ctx}/buyer/buy_info_confirm" method="post" class="form-horizontal form_buy_info_confirm" >
-				<div class="form-group">
-					<label class="col-sm-2 control-label">收货人：</label>
-					<div class="col-sm-6">
-						<input type="text" name="consignee" value="${(order.consignee)!}" class="form-control" placeholder="输入收货人姓名" required/>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+		    	<h3 class="panel-title">订单结算</h3>
+		    </div>
+			<div class="panel-body">
+				<form action="${ctx}/buyer/buy_info_confirm" method="post" class="form-horizontal form_buy_info_confirm" >
+					<input type="hidden" name="session_id" value="${(session_id)!}" />
+					<input type="hidden" name="obj_id" value="${(order.id)!}" />
+					<div class="form-group">
+						<label class="col-sm-2 control-label">订单编号：</label>
+						<div class="col-sm-6" style="line-height: 35px;">
+							${(order.number)!}
+						</div>
 					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">手机号：</label>
-					<div class="col-sm-6">
-						<input type="text" name="phone" value="${(order.phone)!}" class="form-control" placeholder="输入收货人手机号" required/>
+					<div class="row" style="padding:0 8%;">
+						<table class="table table-cart table_cart">
+							<thead>
+								<tr>
+									<th>商品详情</th>
+									<th>数量</th>
+									<th>单价</th>
+									<th>小计</th>
+								</tr>
+							</thead>
+							<tbody>
+								<#list (order.goods_item_list)! as item>
+								<tr class="goods-item goods_item">
+									<td>
+										<a href="${ctx}/goods_detail?obj_id=${(item.goods.id)!}">
+											<img src="${ctx}/${(item.goods.main_photo.path)!}/${(item.goods.main_photo.name)!}" width="70"/>
+											<span>${(item.goods.name)!}</span>
+										</a>
+									</td>
+									<td>×${(item.count)!}</td>
+									<td>￥${(item.price)!}</td>
+									<td>￥${(item.price * item.count)!}</td>
+								</tr>
+								</#list>
+							</tbody>
+						</table>
 					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">收货地址：</label>
-					<div class="col-sm-6">
-						<input type="text" name="address" value="${(order.address)!}" class="form-control" placeholder="输入收货地址" required/>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">订单总价：</label>
+						<div class="col-sm-6">
+							<input type="text" name="total_price" value="${(order.total_price)!}" class="form-control" placeholder="输入收货地址" readonly/>
+						</div>
 					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">订单编号：</label>
-					<div class="col-sm-6">
-						<input type="text" name="number" value="${(order.number)!}" class="form-control" placeholder="输入收货地址" readonly/>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">收货人：</label>
+						<div class="col-sm-3">
+							<input type="text" name="consignee" value="${(order.consignee)!}" class="form-control" placeholder="输入收货人姓名" required/>
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div>
-						<ul>
-							<#list (order.goods_item_list)! as item>
-							<li>
-								${(item.goods.name)!}
-								${(item.price)!}
-								×{(item.count)!}
-								${(item.price * item.count)!}
-							</li>
-							</#list>
-						</ul>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">手机号：</label>
+						<div class="col-sm-3">
+							<input type="text" name="phone" value="${(order.phone)!}" class="form-control" placeholder="输入收货人手机号" required/>
+						</div>
 					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">订单总价：</label>
-					<div class="col-sm-6">
-						<input type="text" name="total_price" value="${(order.total_price)!}" class="form-control" placeholder="输入收货地址" readonly/>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">收货地址：</label>
+						<div class="col-sm-6">
+							<input type="text" name="address" value="${(order.address)!}" class="form-control" placeholder="输入收货地址" required/>
+						</div>
 					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">支付方式：</label>
-					<div class="col-sm-6">
-						<select name="payment" class="form-control" required>
-							<option value="支付宝支付">支付宝支付</option> 
-							<option value="微信支付">微信支付</option> 
-						</select>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">支付方式：</label>
+						<div class="col-sm-6">
+							<select name="payment" class="form-control" required>
+								<option value="支付宝支付">支付宝支付</option> 
+								<option value="微信支付">微信支付</option> 
+							</select>
+						</div>
 					</div>
-				</div>
-				<div class="form-group">
-					<button type="button" class="btn btn_buy_info_confirm_submit">确认支付</button>
-				</div>
-			</form>
+					<div class="form-group">
+						<div class="col-sm-6 col-sm-offset-2">
+							<button type="button" class="btn btn btn-success btn_form_buy_info_confirm_submit" style="width:200px;">确认支付</button>
+						</div>
+					</div>
+				</form>
+			</div>
 		</div>
 	</div>
+	<@include_page path="/footer" />
 </body>
 <script type="text/javascript">
 	var _ctx = '${ctx}';

@@ -26,7 +26,7 @@ define(['jquery','user/../../common/util','jquery-validate-messages_zh',
 			errorClass : 'text-danger '+ Validate.inp_feedback.error_selector_class,
 			rules : {
 				name:{maxlength:20},
-				price:{positive_decimal_two:true},
+				now_price:{positive_decimal_two:true},
 				original_price:{positive_decimal_two:true}
 			},
 			errorPlacement : function(error_label, element) { // 错误元素处理

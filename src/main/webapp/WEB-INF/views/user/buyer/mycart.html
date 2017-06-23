@@ -31,7 +31,12 @@
 					<td class="item_checkbox_id">
 						<input type="checkbox" name="goods_item_id" value="${item.id}" goods_id="${(item.goods.id)!}" onclick="page.calculateTotalPrice();"/>
 					</td>
-					<td><a href="${ctx}/goods_detail?obj_id=${(item.goods.id)!}">${(item.goods.name)!}</a></td>
+					<td>
+						<a href="${ctx}/goods_detail?obj_id=${(item.goods.id)!}">
+							<img src="${ctx}/${(item.goods.main_photo.path)!}/${(item.goods.main_photo.name)!}" width="70"/>
+							<span>${(item.goods.name)!}</span>
+						</a>
+					</td>
 					<td class="item_price">￥<span class="number">${(item.goods.price)!}</span></td>
 					<td class="item_count">
 						<div class="col-sm-4">
@@ -51,7 +56,10 @@
 					<td></td>
 					<td></td>
 					<td></td>
-					<td colspan="2" class="item_settle">总计：￥<span class="number">0.00</span><button class="btn btn-info btn_settle" >结算</button></td>
+					<td colspan="2" class="item_settle text-price-color" style="font-size:16px;line-height: 35px;" >
+						总计：￥<span class="number">0.00</span>
+						<button class="btn btn-success  pull-right width-100 btn_settle" style="margin-right:10px;">结算</button>
+					</td>
 				</tr>
 			</tbody>
 		</table>
@@ -59,6 +67,7 @@
 		
 		</div>
 	</div>
+	<@include_page path="/footer" />
 </body>
 <script type="text/javascript">
 	var _ctx = '${ctx}';

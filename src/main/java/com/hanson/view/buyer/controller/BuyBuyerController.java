@@ -4,7 +4,10 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,11 +16,15 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.WebUtils;
 
+import com.hanson.core.constant.Globals;
 import com.hanson.core.exception.BusinessException;
 import com.hanson.core.mv.JModelAndView;
 import com.hanson.core.tools.CommUtil;
+import com.hanson.core.tools.WebFormHelper;
 import com.hanson.foundation.domain.Goods;
 import com.hanson.foundation.domain.GoodsItem;
 import com.hanson.foundation.domain.OrderForm;
@@ -41,7 +48,7 @@ public class BuyBuyerController {
 	@Autowired
 	private IUserService userService;
 	
-	@RequestMapping("buy_now")
+	@RequestMapping("/buy_now")
 	public ModelAndView buy_now(HttpServletRequest request){
 		JModelAndView mv = new JModelAndView("buy.html", 12, request);
 		
@@ -56,7 +63,7 @@ public class BuyBuyerController {
 	 * @param goods_item_data
 	 * @return
 	 */
-	@RequestMapping("buy_info")
+	@RequestMapping("/buy_info")
 	public ModelAndView buy_info(HttpServletRequest request, String type, String goods_data, String goods_item_data){
 		JModelAndView mv = new JModelAndView("buy_info.html", 12, request);
 		User user = this.userService.getObjById(ShiroUtils.getUserId());
@@ -103,6 +110,9 @@ public class BuyBuyerController {
 			this.orderFormService.update(order);
 			mv.addObject("order", order);
 		}
+		String session_id = UUID.randomUUID().toString();
+		WebUtils.setSessionAttribute(request, Globals.SESSION_UUID, session_id);
+		mv.addObject("session_id", session_id);
 		return mv;
 	}
 	
@@ -110,16 +120,16 @@ public class BuyBuyerController {
 	/**
 	 * 未支付的订单进行支付
 	 * @param request
-	 * @param order_id
+	 * @param obj_id
 	 * @return
 	 */
-	@RequestMapping("buy_order")
-	public ModelAndView buy_order(HttpServletRequest request, String order_id){
+	@RequestMapping("/buy_order")
+	public ModelAndView buy_order(HttpServletRequest request, String obj_id){
 		JModelAndView mv = new JModelAndView("buy_info.html", 12, request);
-		if(StringUtils.isEmpty(order_id)){
+		if(StringUtils.isEmpty(obj_id)){
 			throw new BusinessException("参数有误");
 		}else{
-			OrderForm order = this.orderFormService.getObjById(Long.valueOf(order_id));
+			OrderForm order = this.orderFormService.getObjById(Long.valueOf(obj_id));
 			if(order.getPay_status() == OrderForm.PayStatus.PAID.value()){
 				throw new BusinessException("您的订单已经支付过，不允许再支付");
 			}
@@ -127,7 +137,39 @@ public class BuyBuyerController {
 			this.orderFormService.update(order);
 			mv.addObject("order", order);
 		}
+		String session_id = UUID.randomUUID().toString();
+		WebUtils.setSessionAttribute(request, Globals.SESSION_UUID, session_id);
+		mv.addObject("session_id", session_id);
 		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/buy_info_confirm")
+	public Map buy_info_confirm(HttpServletRequest request, String session_id, String obj_id, OrderForm order){
+		Map data = new HashMap();
+		boolean result = false;
+		String error_msg = "";
+		String session_id_true = (String) WebUtils.getSessionAttribute(request, Globals.SESSION_UUID);
+		WebUtils.setSessionAttribute(request, Globals.SESSION_UUID, null);
+		if(StringUtils.isEmpty(session_id) || !StringUtils.equals(session_id, session_id_true)){
+			error_msg = "不允许重复提交表单";
+		}
+		User user = this.userService.getObjById(ShiroUtils.getUserId());
+		OrderForm order_true = StringUtils.isEmpty(obj_id) ? null : this.orderFormService.getObjById(Long.valueOf(obj_id));
+		if(order_true==null){
+			error_msg = "参数有误";
+		}else if(!order_true.getUser().getId().equals(user.getId())){
+			error_msg = "此订单不属于你，不允许提交";
+		}else{
+			order_true = (OrderForm) WebFormHelper.toPo(request, order, order_true, "obj", 0);
+			double total_price = calculateTotalPrice(order_true.getGoods_item_list());
+			order_true.setTotal_price(BigDecimal.valueOf(total_price));
+			order_true.setPay_status(OrderForm.PayStatus.PAID.value());
+			result = this.orderFormService.update(order_true);
+		}
+		data.put("result", result);
+		data.put("error_msg", error_msg);
+		return data;
 	}
 	
 	/**

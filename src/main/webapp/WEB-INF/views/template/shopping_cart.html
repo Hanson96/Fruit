@@ -1,0 +1,14 @@
+<#include "/WEB-INF/views/include/macro.html"/>
+<div class="icon iconfont icon-gouwuche icon-cart" style="color:#9dcd17;font-size:72px;position: relative;margin-left:-50px;">
+	<span class="word">共${(user_cart.goods_item_list?size)!0}种商品</span>
+	<div class="goods-item-detail popover bottom">
+		<div class="arrow"></div>
+		<div class="popover-content">
+			<@shopping_cart_goods_item_list (user_cart.goods_item_list)! />
+		</div>
+		<h3 class="popover-title clearfix" style="padding:2px 14px;height:34px;line-height:34px">
+			共${(CartHelper.calculateCartTotalCount(user_cart))!}件商品，总计：￥${(CartHelper.calculateCartTotalPrice(user_cart))!}
+			<a href="${ctx}/buyer/mycart" class="btn btn-success btn-sm fr" >去结算</a>
+		</h3>
+	</div>
+</div>

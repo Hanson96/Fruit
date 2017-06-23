@@ -17,7 +17,9 @@ html {
 .right-15{
 	right:15px;
 }
-
+.text-price-color{
+	color: #ff6633;
+}
 /* 列表数据操作相关  start */
 .div-handle{
 	margin: 10px 0;

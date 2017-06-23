@@ -34,4 +34,11 @@ public interface IGoodsService extends ICommonService<Goods>{
 	 * @return
 	 */
 	public List<Goods> findRecommendGoods(int count);
+	
+	/**
+	 * 随机查询商品
+	 * @param count  查询的条数
+	 * @return
+	 */
+	public List<Goods> findRandomGoods(int count);
 }

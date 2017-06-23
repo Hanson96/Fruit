@@ -2,7 +2,7 @@
  * 通用的方法
  * @author hanson
  */
-define(['jquery'],function($){
+define(['jquery','util'],function($, Util){
 	
 	"use strict";
 	var common = function(){}
@@ -67,6 +67,7 @@ define(['jquery'],function($){
 					page_total_rows:page_total_rows,
 					page_rows:page_rows
 			}
+			console.log('page_end:'+page_end);
 			return page;
 		}
 		return null;
@@ -226,6 +227,40 @@ define(['jquery'],function($){
 						}
 					},'json');
 				}
+			},
+			add_cart:function(element){
+				if(Util.checkUserLogin() == false) return;
+				var $this = $(element);
+				var goods_id = $this.attr('goods_id');
+				var count = 1;
+				var url = _ctx + '/buyer/add_cart';
+				var form_data = {
+						'goods_id':goods_id,
+						'count':count
+				}
+				var result = false;
+				$.ajax({
+						url:url,
+						type:'post',
+						contentType:'application/json',
+						async:false,
+						dataType:'json',
+						data:JSON.stringify(form_data),
+						success:function(data){
+							if(data.result){
+								result = true;
+								var span_html = '<span><i class="icon iconfont icon-gouwuche"> </i>加入购物车</span>';
+								$this.html('<span class="add_cart_success">加入购物车成功</span>');
+								$this.find('.add_cart_success').fadeOut(1000);
+								window.setTimeout(function(){
+									$this.html(span_html);
+								},2000);
+							}else{
+								alert(data.error_msg);
+							}
+						}
+				});
+				Util.refresh_shopping_cart(result);
 			}
 	}
 	

@@ -19,6 +19,7 @@ import com.hanson.foundation.domain.AdvertisementPhoto;
 import com.hanson.foundation.domain.Cart;
 import com.hanson.foundation.service.IAdvertisementPhotoService;
 import com.hanson.foundation.service.IGoodsService;
+import com.hanson.foundation.tools.CartHelper;
 import com.hanson.security.domain.User;
 import com.hanson.security.service.IUserService;
 import com.hanson.security.shiro.ShiroUtils;
@@ -74,10 +75,11 @@ public class IndexController {
 		if(logo_list.size()>0){
 			mv.addObject("logo", logo_list.get(0));
 		}
-		User user = this.userService.getObjById(ShiroUtils.getUserId());
+		/*User user = this.userService.getObjById(ShiroUtils.getUserId());
 		if(user!=null && user.getCart_list().size()>0){
 			mv.addObject("user_cart", user.getCart_list().get(0));
-		}
+			mv.addObject("CartHelper", CartHelper.getInstance());
+		}*/
 		return mv;
 	}
 	

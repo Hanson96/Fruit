@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hanson.core.mv.JModelAndView;
+import com.hanson.core.tools.WebViewHelper;
 import com.hanson.foundation.domain.Goods;
 import com.hanson.foundation.service.IGoodsService;
 
@@ -25,6 +26,8 @@ public class GoodsController {
 			Goods obj = this.goodsService.getObjById(Long.valueOf(obj_id));
 			mv.addObject("obj", obj);
 		}
+		mv.addObject("ActivityStatus", WebViewHelper.enumToMap(Goods.ActivityStatus.values()));
+		mv.addObject("random_goods_list", this.goodsService.findRandomGoods(10));
 		return mv;
 	}
 	

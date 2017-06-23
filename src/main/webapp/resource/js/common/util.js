@@ -67,6 +67,15 @@ define(['jquery'],function(){
         $form.remove();
     }
 	
+	U.refresh_shopping_cart = function(result){
+		if(result && $('#header .shopping_cart')[0]){ // 如果存在header 的购物车 就需要刷新
+			var url = _ctx + '/shopping_cart';
+			$.post(url,{},function(data){
+				$('#header .shopping_cart').html(data);
+			},'html');
+		}
+	}
+	
 	Util = U;
 	return Util;
 });

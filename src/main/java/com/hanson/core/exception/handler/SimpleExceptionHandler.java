@@ -31,7 +31,7 @@ public class SimpleExceptionHandler implements HandlerExceptionResolver{
 	@Override
 	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
 			Exception ex) {
-		JModelAndView mv = new JModelAndView("error.jsp", 0, request);
+		JModelAndView mv = new JModelAndView("error.html", 0, request);
 		log.info(ex.getMessage());
 		// 判断是否ajax请求
         if (!(request.getHeader("accept").indexOf("application/json") > -1 || (request

@@ -1,5 +1,6 @@
 package com.hanson.view.web.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,8 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +40,8 @@ import com.hanson.security.shiro.ShiroUtils;
 @Controller
 public class LoginController {
 
+	private static final Logger log = LoggerFactory.getLogger(LoginController.class);
+	
 	@Autowired
 	private IUserService userService;
 	@Autowired
@@ -120,6 +125,22 @@ public class LoginController {
 		data.put("error_msg", error_msg);
 		return data;
 	}
+	
+	//@Log(title = "用户退出", type = LogType.LOGOUT)
+	@RequestMapping("/logout")
+	public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		//JModelAndView mv = new JModelAndView("logout.html", 0, request);
+		try{
+			User user = ShiroUtils.getUser();
+			SecurityUtils.getSubject().logout();
+			WebUtils.setSessionAttribute(request, Globals.CURRENTUSER_SESSION_KEY, null);
+		}catch (Exception e) {
+			log.info("当期用户已失效");
+		}
+		String ctx = CommUtil.getContextPath(request);
+		response.sendRedirect(ctx + "/index");
+	}
+	
 	
 	@RequestMapping("/init_admin")
 	public void init_user(){

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 import org.junit.Test;
 
@@ -52,5 +53,6 @@ public class UtilTest {
 	public void test4(){
 		Random rand = new Random();
 		System.out.println(rand.nextInt(2));
+		System.out.println(UUID.randomUUID());
 	}
 }

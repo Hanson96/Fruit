@@ -78,6 +78,9 @@ public class GoodsAdminController {
 			// 编辑商品
 			goods_true = this.goodsService.getObjById(Long.valueOf(obj_id));
 			goods_true = (Goods) WebFormHelper.toPo(request, goods, goods_true, "obj", 0);
+			if(goods_true.getActivity_status() == Goods.ActivityStatus.GROUP.value()){ // 如果是团购活动   出售价就是团购价
+				goods_true.setPrice(goods_true.getGroup_price());
+			}
 			goods_true.setGoods_class(gc);
 			Map uploadConfig = new HashMap();
 			if(main_photo_file!=null){
@@ -104,6 +107,7 @@ public class GoodsAdminController {
 			// 新增商品
 			goods_true = WebFormHelper.toPo(request, goods, Goods.class, "obj", 0);
 			goods_true.setGoods_class(gc);
+			goods_true.setPrice(goods_true.getNow_price());  // 出售价格等于现价
 			Map uploadConfig = new HashMap();
 			if(main_photo_file!=null){
 				uploadConfig.put("multipartFile", main_photo_file);

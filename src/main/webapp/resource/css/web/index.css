@@ -11,6 +11,7 @@ a{
 }
 a:hover{
 	color:#7ccd39;
+	text-decoration: none;
 }
 .text-green{
 	color:#56a031
@@ -45,8 +46,8 @@ a:hover{
 	display: none;
 	font-size:16px;
 	position: absolute;
-	top:100px;
-	left:-120px;
+	top:80px;
+	left:-60px;
 	z-index:2;
 	background-color: #ffffff;
 }
@@ -55,7 +56,8 @@ a:hover{
 	border:1px solid #9dcd17;
 }
 .goods-item-detail .cart-goods-item-ul>li{
-	border-bottom:1px solid #9dcd17;
+	border-bottom:1px dashed #9dcd17;
+	padding:5px 0;
 }
 
 /* 头部相关  end */
@@ -67,7 +69,7 @@ a:hover{
 /* 底部关  start */
 #footer{
 	width:100%;
-	margin-bottom:0;
+	margin:50px 0 0;
 	bottom:0;
 }
 #footer .friendly-link{
@@ -128,13 +130,198 @@ a:hover{
 	background-color: #F8a768;
 }
 
+.floor .floor-title{
+	border-left:5px solid #5cb85c;
+	padding-left:20px;
+	color:#9dcd17;
+}
+.floor .floor-title h4{
+	cursor:pointer;
+}
+.floor .floor-title .more{
+	float:right;
+	margin-right:5px;
+}
+.floor .floor-content ul>li{
+	width:235px;
+	padding:0px;
+	overflow: hidden;
+	margin:0 1px;
+}
+.floor .floor-content ul>li:hover{
+	border:1px solid #9dcd17;
+}
+.floor .floor-content ul>li img:hover{
+	-moz-transform:scale(1.2);
+	-webkit-transform:scale(1.2);
+	-ms-transform:scale(1);
+	-o-transform:scale(1.2);
+	transform:scale(1.2);
+	-moz-transition:transform 0.3s;
+	-webkit-transition:transform 0.3s;
+	-o-transition:transform 0.3s;
+	transition: transform 0.3s;
+}
+.floor .floor-content ul>li .image{
+	width:235px;
+	height:235px;
+	overflow: hidden;
+	position: relative;
+}
+.image .add-cart{
+	position: absolute;
+	z-index:1;
+	width:235px;
+	height:30px;
+	text-align:center;
+	line-height: 30px;
+	bottom:-30px;
+	background-color: #5cb85c;
+	border-radius:6px 6px 0 0;
+	color:#fff;
+	cursor: pointer;
+	/* margin:0 1px; */
+}
+.floor .floor-content ul>li:hover .image .add-cart{
+	/* bottom:0; */
+	transform:translate(0,-30px);
+	-webkit-transform:translate(0,-30px);
+	-moz-transform:translate(0,-30px);
+	-o-transform:translate(0,-30px);
+	-ms-transform:translate(0,-30px);
+	-moz-transition:transform 0.5s;
+	-webkit-transition:transform 0.5s;
+	-o-transition:transform 0.5s;
+	transition: transform 0.5s;
+}
+li.goods-item .goods-name{
+	padding:5px;
+}
+li.goods-item .goods-price{
+	padding:5px;
+	color:#ff6633;
+	font-size:20px;
+}
+li.goods-item .goods-price .original-price{
+	color:#ababab;
+	text-decoration: line-through;
+	float:right;
+	font-size:16px;
+}
 /* 首页相关   end */
 
 /* 商品详情相关  start */
 .photo .photo-main{
 	width:500px;
 }
+.photo .photo-main img{
+	width:500px;
+}
 .photo .photo-list>ul>li{
 	width:100px;
+	padding:0;
+	margin:2px;
+}
+.photo .photo-list>ul>li:hover, .photo .photo-list>ul>li.active{
+	border:1px solid #9dcd17;
+}
+.section-goods-info .row{
+	height:50px;
+	font-size:18px;
+	margin:5px 0;
+}
+.section-goods-info .price{
+	color:#ff6633;
+	font-size:24px;
+}
+.random-goods-list{
+	width:250px;
+	border:1px solid #9dcd17;
+	border-radius:5px;
+}
+.random-goods-list .title{
+	background-color: #5cb85c;
+	color:#fff;
+	height: 35px;
+	line-height: 35px;
+	padding-left:5px;
+}
+.random-goods-list .content{
+	width:100%;
+	padding:5px;
+}
+.random-goods-list .content ul>li{
+	height: 80px;
+	padding:5px 0;
+	border-bottom: 1px dashed #cdcdcd; 
+}
+.random-goods-list .content ul>li img{
+	border:1px solid #cdcdcd;
+}
+.goods-description{
+	border: 1px solid #d4d4d4;
+	border-radius:5px;
+}
+.goods-description .title{
+	position:relative;
+	height:45px;
+	line-height: 45px;
+	border-bottom:1px solid #d4d4d4;
+}
+.goods-description .title .txt{
+	position:absolute;
+	top:-3px;
+	width:200px;
+	font-size:20px;
+	border-top:3px solid #5cb85c;
+	background-color: #fff;
+	color:#5cb85c;
+	border-right: 1px solid #d4d4d4;
+	margin-bottom:-1px;
+	padding-bottom:1px;
+	text-align: center;
+	z-index:1;
+	border-radius:5px 5px 0 0;
+}
+.goods-description .description{
+	width:100%;
+	padding-top:10px;
+}
+.goods-description .description img{
+	max-width:100%;
 }
 /* 商品详情相关  start */
+
+/* 个人中心相关  start*/
+.center-left-menu{
+	border:1px solid #5cb85c;
+	border-radius:4px 4px 0 0;
+}
+.center-left-menu .nav-pills>li.active>a, 
+.center-left-menu .nav-pills>li.active>a:focus, 
+.center-left-menu .nav-pills>li.active>a:hover{
+	background-color: #5cb85c;
+}
+.center-content{
+	border:1px solid #5cb85c;
+	border-radius:5px;
+	padding:10px;
+}
+/* 个人中心相关  end*/
+
+/* 分页样式  start */
+.pagination>li>a, .pagination>li>span{
+	color: #5cb85c;
+}
+
+.pagination>.active>a, 
+.pagination>.active>a:focus, 
+.pagination>.active>a:hover, 
+.pagination>.active>span, 
+.pagination>.active>span:focus, 
+.pagination>.active>span:hover{
+	background-color: #5cb85c;
+	border-color: #5cb85c;
+}
+
+/* 分页样式  end */

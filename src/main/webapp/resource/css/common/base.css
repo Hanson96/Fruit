@@ -94,6 +94,19 @@ button{
 	margin-left:-width/2;  /*负向偏移宽度的一半，如果width不定，需要动态获取。*/
 	margin-top:-height/2;  /*原理同上。*/
 }
+.text-limit-length {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap; /* 文本不换行，这样超出一行的部分被截取，显示... */ 
 
-
+}
+.width-150{
+	width:150px;
+}
+.width-100{
+	width:100px;
+}
+.form-inline .width-150{
+	width:150px;
+}
 /* util end */

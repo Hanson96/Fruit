@@ -2,18 +2,18 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-4 div-left">
-				<div>欢迎来到校园水果团购大世界！</div>
+				<div>欢迎<#if currentUser??>${currentUser.userName}，</#if>来到校园水果团购大世界！</div>
 			</div>
 			<div class="col-sm-6 pull-right div-right">
 				<ul class="list-inline pull-right" style="margin-bottom:0;">
 					<li>
-						<a href="${ctx}/index">首页</a>
+						<a href="${ctx}/index"><i class="icon iconfont icon-shouye"> </i>首页</a>
 					</li>
 					<li>
-						<a href="${ctx}/buyer_center">个人中心</a>
+						<a href="${ctx}/buyer/buyer_info"><i class="icon iconfont icon-gerenzhongxin"> </i>个人中心</a>
 					</li>
 					<li>
-						<a href="${ctx}/buyer/mycart">我的购物车${(user_cart.goods_item_list?size)!}[${(user_cart.total_price)!}]</a>
+						<a href="${ctx}/buyer/mycart"><i class="icon iconfont icon-gouwuche"> </i>我的购物车</a>
 					</li>
 					<li>
 						<#if currentUser??>

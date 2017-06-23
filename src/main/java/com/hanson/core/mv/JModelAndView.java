@@ -36,6 +36,8 @@ public class JModelAndView extends ModelAndView{
 			super.setViewName("user/admin/"+viewName);
 		}else if(type==12){
 			super.setViewName("user/buyer/"+viewName);
+		}else if(type==20){
+			super.setViewName("template/"+viewName);
 		}
 		if(request == null){
 			request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
@@ -75,6 +77,8 @@ public class JModelAndView extends ModelAndView{
 			super.setViewName("user/admin/"+viewName);
 		}else if(type==12){
 			super.setViewName("user/buyer/"+viewName);
+		}else if(type==20){
+			super.setViewName("template/"+viewName);
 		}
 	}
 }

@@ -19,10 +19,6 @@ public class Globals {
 	public static final String ACTIVATE_SESSION_KEY = "activate_session_key";
 	/** 文件默认的上传目录 */
 	public static final String DEFAULT_UPLOAD_FOLDER = "upload";
-	/** 系统中swf tools的安装目录 */
-	public static final String SYSTEM_SWF_TOOLS_PATH = "I:\\software\\SWFTools";
-	/** 系统中swf 的缓存目录 */
-	public static final String SYSTEM_SWF_CACHE_FOLDER = DEFAULT_UPLOAD_FOLDER + File.separator + "swfcache";
-	/** 不允许删除的市局id */
-	public static final String[] NO_REMOVE_CITY_OFFICE_IDS = {"1"};
+	/** 校验用户的状态是否正确 */
+	public static final String SESSION_UUID = "session_uuid";
 }

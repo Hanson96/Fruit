@@ -23,6 +23,7 @@ import com.hanson.foundation.domain.GoodsItem;
 import com.hanson.foundation.service.ICartService;
 import com.hanson.foundation.service.IGoodsItemService;
 import com.hanson.foundation.service.IGoodsService;
+import com.hanson.foundation.tools.CartHelper;
 import com.hanson.security.domain.User;
 import com.hanson.security.service.IUserService;
 import com.hanson.security.shiro.ShiroUtils;
@@ -42,7 +43,7 @@ public class CartBuyerController {
 	
 	// 添加购物车
 	@ResponseBody
-	@RequestMapping("add_cart")
+	@RequestMapping("/add_cart")
 	public Map add_cart(HttpServletRequest request, @RequestBody Map<String,String> form_data){
 		Map data = new HashMap();
 		boolean result = false;
@@ -85,7 +86,7 @@ public class CartBuyerController {
 		}
 		Cart cart_latest = this.cartService.getObjById(cart_id);
 		cart_latest.setGoods_item_count(cart_latest.getGoods_item_list().size());
-		cart_latest.setTotal_price(BigDecimal.valueOf(calculateCartTotalPrice(cart_latest))); // 更新购物车价格
+		cart_latest.setTotal_price(BigDecimal.valueOf(CartHelper.calculateCartTotalPrice(cart_latest))); // 更新购物车价格
 		this.cartService.update(cart_latest);
 		Map cart_data = new HashMap();
 		cart_data.put("goods_item_count", cart_latest.getGoods_item_count());
@@ -106,19 +107,4 @@ public class CartBuyerController {
 		return mv;
 	}
 	
-	
-	/**
-	 * 计算购物车的总价格
-	 * @param cart
-	 * @return
-	 */
-	private double calculateCartTotalPrice(Cart cart){
-		double total_price = 0;
-		for(GoodsItem goods_item : cart.getGoods_item_list()){
-			double item_money = CommUtil.mul(goods_item.getGoods().getPrice(), goods_item.getCount());
-			total_price += item_money;
-		}
-		total_price = CommUtil.formatMoney(total_price); // 只保留两位小数
-		return total_price;
-	}
 }

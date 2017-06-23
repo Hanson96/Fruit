@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<#include "/WEB-INF/views/include/meta.html"/>
+<title>错误页面</title>
+</head>
+<body>
+	<div style="text-align:center;margin-top:100px;color:#666666;">
+		<h2>
+			<#if error_type?? && error_type=='business_error'>
+				<span>温馨提示：${error_msg!}</span>
+			<#else>
+				<span>温馨提示：${error_msg!}</span>
+				<script>
+					  var count=3;
+					  window.setInterval(go,1000);
+					  function go(){
+					    count--;
+					    if(count==0) window.top.location.href = '${ctx}/index';
+					  }
+				</script>
+			</#if>
+		</h2>
+	</div>
+	<#if redirect_url??>
+		<script>
+		  var count=3;
+		  window.setInterval(go,1000);
+		  function go(){
+		    count--;
+		    if(count==0) window.location.href="${redirect_url}";
+		  }
+		</script>
+	</#if>
+</body>
+</html>

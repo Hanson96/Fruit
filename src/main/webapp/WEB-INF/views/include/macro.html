@@ -1,28 +1,50 @@
 <#-- 宏模板 -->
 <#macro floor_list goods_list>
+	<ul class="list-inline">
 	<#list goods_list! as item>
-		<li>
-			<div style="width:240px;height:240px;">
+		<li class="goods-item">
+			<div class="image">
 				<a href="${ctx}/goods_detail?obj_id=${item.id}">
-					<img src="${ctx}/${(item.main_photo.path)!}/${(item.main_photo.name)!}" width="240"/>
+					<img src="${ctx}/${(item.main_photo.path)!}/${(item.main_photo.name)!}" class="img-responsive"/>
 				</a>
+				<div class="add-cart" goods_id="${(item.id)!}" onclick="common.add_cart(this);">
+					<span><i class="icon iconfont icon-gouwuche"> </i>加入购物车</span>
+				</div>
+			</div>
+			<div class="goods-name text-limit-length">
+				<a href="${ctx}/goods_detail?obj_id=${(item.id)!}" title="${(item.name)!}"><span>${(item.name)!}</span></a>
+			</div>
+			<div class="goods-price">
+				<span class="price">￥${(item.price?string("0.00"))!}</span>
+				<span class="original-price">￥${(item.original_price?string("0.00"))!}</span>
 			</div>
 		</li>
 	</#list>
+	</ul>
 </#macro>
 
 <#macro shopping_cart_goods_item_list goods_item_list>
 	<ul class="cart-goods-item-ul">
 	<#list goods_item_list! as item>
-		<li style="width:300px">
-			<span style="width:100px;height:240px;margin:5px 10px;">
-				<a href="${ctx}/goods_detail?obj_id=${item.id}">
-					<img src="${ctx}/${(item.goods.main_photo.path)!}/${(item.goods.main_photo.name)!}" width="50"/>
+		<li style="width:250px">
+			<span style="width:100px;height:240px;">
+				<a href="${ctx}/goods_detail?obj_id=${item.id}" title="${(item.goods.name)!}">
+					<img src="${ctx}/${(item.goods.main_photo.path)!}/${(item.goods.main_photo.name)!}" width="50" height="50"/>
 				</a>
 			</span>
-			<span style="width:50px;margin:5px 10px;">数量：${(item.count)!}</span>
-			<span style="width:50px;margin:5px 10px;"">单价：￥${(item.goods.price)!}</span>
+			<span style="width:100px;margin:0 30px;">×${(item.count)!}</span>
+			<span style="width:100px;margin:0 30px;"">￥${(item.goods.price)!}</span>
 		</li>
 	</#list>
 	</ul>
+</#macro>
+
+<#macro center_left_menu >
+	<nav class="center-left-menu center_left_menu">
+		<ul class="nav nav-pills nav-stacked">
+			<li role="presentation" class="active"><a >菜单栏</a></li>
+			<li role="presentation"><a href="${ctx}/buyer/buyer_info" class="current">个人信息</a></li>
+			<li role="presentation"><a href="${ctx}/buyer/myorder">我的订单</a></li>
+		</ul>
+	</nav>
 </#macro>

@@ -2,10 +2,11 @@ define(['jquery','jquery-validate-messages_zh', 'validate'],function($, Message,
 	'use strict';
 	
 	var page = function(){}
+	var validate = new Validate();
 	
 	var DOM = {
 			form_buy_info_confrim: $('.form_buy_info_confrim'),
-			btn_buy_info_confrim_submit: $('.btn_buy_info_confrim_submit')
+			btn_form_buy_info_confirm_submit: $('.btn_form_buy_info_confirm_submit')
 	}
 	
 	var main = function(){
@@ -17,7 +18,7 @@ define(['jquery','jquery-validate-messages_zh', 'validate'],function($, Message,
 		DOM.form_buy_info_confrim.validate({
 			errorClass : 'text-danger '+ Validate.inp_feedback.error_selector_class,
 			rules : {
-				
+				phone:{mobile_phone:true}
 			},
 			errorPlacement : function(error_label, element) { // 错误元素处理
 				var $parent = $(element).parent();
@@ -30,9 +31,17 @@ define(['jquery','jquery-validate-messages_zh', 'validate'],function($, Message,
 			}
 		});
 		// 提交表单
-		DOM.btn_form_group_goods_submit.click(function(){
+		DOM.btn_form_buy_info_confirm_submit.click(function(){
 			if(DOM.form_buy_info_confrim.valid()){
-				DOM.form_buy_info_confrim.submit();
+				var form_data = DOM.form_buy_info_confrim.serialize();
+				var action =  DOM.form_buy_info_confrim.attr('action');
+				$.post(action,form_data,function(data){
+					if(data.result){
+						
+					}else{
+						alert(data.error_msg);
+					}
+				},'json');
 			}
 		});
 	}

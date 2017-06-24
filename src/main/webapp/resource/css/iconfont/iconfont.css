@@ -1,16 +1,15 @@
 
 @font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1498184172937'); /* IE9*/
-  src: url('iconfont.eot?t=1498184172937#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.woff?t=1498184172937') format('woff'), /* chrome, firefox */
-  url('iconfont.ttf?t=1498184172937') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('iconfont.svg?t=1498184172937#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1498313505256'); /* IE9*/
+  src: url('iconfont.eot?t=1498313505256#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1498313505256') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1498313505256') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1498313505256#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
   font-family:"iconfont" !important;
-  /* font-size:16px; */
-  font-size:1.5em;
+  font-size:16px;
   font-style:normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -20,15 +19,41 @@
 
 .icon-gouwuche:before { content: "\e632"; }
 
+.icon-chakangengduo:before { content: "\e602"; }
+
+.icon-tuangou:before { content: "\e603"; }
+
 .icon-remen:before { content: "\e60c"; }
 
 .icon-icontuan:before { content: "\e601"; }
 
 .icon-zuixin:before { content: "\e6d9"; }
 
+.icon-dingdanguanli:before { content: "\e617"; }
+
+.icon-shouqi:before { content: "\e689"; }
+
+.icon-guanggaowei:before { content: "\e609"; }
+
+.icon-shengqian:before { content: "\e690"; }
+
+.icon-shangpinguanli:before { content: "\e65a"; }
+
 .icon-shouye:before { content: "\e604"; }
+
+.icon-shangpinfenlei:before { content: "\e6cd"; }
 
 .icon-denglu:before { content: "\e60a"; }
 
+.icon-yonghuguanli:before { content: "\e620"; }
+
+.icon-zhifuchenggong:before { content: "\e6a0"; }
+
+.icon-biaoqian:before { content: "\e619"; }
+
+.icon-system-log:before { content: "\e61f"; }
+
 .icon-dianjiabaotuijian:before { content: "\e67f"; }
+
+.icon-icon-test:before { content: "\e73c"; }
 

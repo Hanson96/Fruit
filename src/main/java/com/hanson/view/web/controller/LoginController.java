@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
+import com.hanson.core.annotation.Log;
 import com.hanson.core.constant.Globals;
 import com.hanson.core.mv.JModelAndView;
 import com.hanson.core.query.QueryObject;
@@ -32,6 +33,7 @@ import com.hanson.core.tools.CommUtil;
 import com.hanson.core.tools.SimpleMap;
 import com.hanson.core.tools.WebViewHelper;
 import com.hanson.foundation.domain.AdvertisementPhoto;
+import com.hanson.foundation.domain.SystemLog.LogType;
 import com.hanson.foundation.service.IAdvertisementPhotoService;
 import com.hanson.security.domain.User;
 import com.hanson.security.service.IUserService;
@@ -62,6 +64,7 @@ public class LoginController {
 		return mv;
 	}
 	
+	@Log(title = "用户登录", type = LogType.LOGIN)
 	@ResponseBody
 	@RequestMapping("/login_submit")
 	public Map login_submit(HttpServletRequest request, HttpServletResponse response, String userName, String password,
@@ -102,6 +105,7 @@ public class LoginController {
 		return data;
 	}
 	
+	@Log(title = "用户注册", type = LogType.REGISTER)
 	@ResponseBody
 	@RequestMapping("/register_submit")
 	public Map register_submit(HttpServletRequest request, String userName, String password, String verify_code){
@@ -126,10 +130,9 @@ public class LoginController {
 		return data;
 	}
 	
-	//@Log(title = "用户退出", type = LogType.LOGOUT)
+	@Log(title = "用户退出", type = LogType.LOGOUT)
 	@RequestMapping("/logout")
 	public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		//JModelAndView mv = new JModelAndView("logout.html", 0, request);
 		try{
 			User user = ShiroUtils.getUser();
 			SecurityUtils.getSubject().logout();

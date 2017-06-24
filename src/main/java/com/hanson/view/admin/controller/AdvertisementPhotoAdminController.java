@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hanson.core.annotation.Log;
 import com.hanson.core.constant.Globals;
 import com.hanson.core.mv.JModelAndView;
 import com.hanson.core.query.IPageObject;
@@ -28,6 +29,7 @@ import com.hanson.foundation.domain.Accessory;
 import com.hanson.foundation.domain.AdvertisementPhoto;
 import com.hanson.foundation.domain.Goods;
 import com.hanson.foundation.domain.GoodsClass;
+import com.hanson.foundation.domain.SystemLog.LogType;
 import com.hanson.foundation.service.IAccessoryService;
 import com.hanson.foundation.service.IAdvertisementPhotoService;
 
@@ -81,6 +83,7 @@ public class AdvertisementPhotoAdminController {
 		return  mv;
 	}
 	
+	@Log(title="管理员新增或修改广告位图片信息", type=LogType.SAVE, entityName="AdvertisementPhoto")
 	@RequestMapping("advertisement_photo_save")
 	public ModelAndView advertisement_photo_save(HttpServletRequest request, String obj_id, AdvertisementPhoto advert, 
 			@RequestParam MultipartFile acc_file){
@@ -117,6 +120,7 @@ public class AdvertisementPhotoAdminController {
 		return  mv;
 	}
 	
+	@Log(title = "管理员删除广告位图片", type = LogType.DELETE, entityName="AdvertisementPhoto")
 	@ResponseBody
 	@RequestMapping("/advertisement_photo_delete")
 	public Map advertisement_photo_delete(HttpServletRequest request, String obj_id){

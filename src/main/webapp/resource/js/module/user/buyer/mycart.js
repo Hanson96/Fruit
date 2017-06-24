@@ -77,6 +77,25 @@ define(['jquery','util'],function($, Util){
 			}
 			Util.StandardPost(url,form_data);
 		});
+		
+		// 删除购物车商品
+		DOM.table_cart.find('.goods_item .item_delete .btn_delete').click(function(){console.log('delete');
+			var $goods_item = $(this).parents('.goods_item');
+			var obj_id = $goods_item.find('.item_checkbox_id input[name=goods_item_id]').val();
+			var url = _ctx + '/buyer/cart_goods_item_delete';
+			$.post(url,{'obj_id':obj_id},function(data){
+				if(data.result){
+					$goods_item.fadeOut(2000);
+					window.setTimeout(function(){
+						$goods_item.remove();
+					},2000);
+					Util.refresh_shopping_cart(true);
+				}else{
+					alert(data.error_msg);
+				}
+			},'json');
+		});
+		
 	}
 	
 	function calculateTotalPrice(){

@@ -65,7 +65,9 @@
 						<td>${(obj.payment)!}</td>
 						<td>${(obj.parsePay_status())!}</td>
 						<td>
-							<a href="${ctx}/admin/order_add?obj_id=${obj.id}" class="btn btn-primary btn-xs" >详情</a>
+							<a href="${ctx}/admin/order_detail?obj_id=${obj.id}" class="btn btn-primary btn-xs" >详情</a> | 
+							<button type="button" class="btn btn-danger btn-xs" 
+								onclick="common.delete_obj_by_id('${ctx}/admin/order_delete','${obj.id}')">删除</button>
 						</td>
 					</tr>
 					</#list>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hanson.core.annotation.Log;
 import com.hanson.core.exception.BusinessException;
 import com.hanson.core.mv.JModelAndView;
 import com.hanson.core.query.IPageObject;
@@ -21,6 +22,7 @@ import com.hanson.core.tools.SimpleMap;
 import com.hanson.core.tools.WebFormHelper;
 import com.hanson.core.tools.WebViewHelper;
 import com.hanson.foundation.domain.OrderForm;
+import com.hanson.foundation.domain.SystemLog.LogType;
 import com.hanson.foundation.service.IOrderFormService;
 import com.hanson.security.domain.User;
 import com.hanson.security.service.IUserService;
@@ -51,6 +53,7 @@ public class BuyerCenterBuyerController {
 		return mv;
 	}
 	
+	@Log(title="买家修改个人信息", type=LogType.UPDATE, entityName="User")
 	@ResponseBody
 	@RequestMapping("/buyer_info_save")
 	public Map buyer_info_save(HttpServletRequest request, String obj_id, User user){
@@ -88,6 +91,17 @@ public class BuyerCenterBuyerController {
 		mv.addObject("pageObj", pageObj);
 		mv.addObject("pay_status_list", OrderForm.PayStatus.values());
 		mv.addObject("PayStatus", WebViewHelper.enumToMap(OrderForm.PayStatus.values()));
+		return  mv;
+	}
+	
+	@RequestMapping("/order_detail")
+	public ModelAndView order_detail(HttpServletRequest request, String obj_id){
+		JModelAndView mv = new JModelAndView("order_detail.html", 12, request);
+		User user = this.userService.getObjById(ShiroUtils.getUserId());
+		if(StringUtils.isNotEmpty(obj_id)){
+			OrderForm order = this.orderFormService.getObjById(Long.valueOf(obj_id));
+			mv.addObject("order", order);
+		}
 		return  mv;
 	}
 	

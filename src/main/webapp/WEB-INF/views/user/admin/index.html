@@ -6,24 +6,64 @@
 <link rel="stylesheet" type="text/css" href="${ctx}/resource/plugin/bootstrap/bootstrap-3.3.7/css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="${ctx}/resource/css/common/common.css" />
 <link rel="stylesheet" type="text/css" href="${ctx}/resource/css/user/admin/admin.css" />
+<style type="text/css">
+	/* .aside-left ul.nav>li.active{
+		border-left:3px solid #337ab7;
+	}
+	.aside-left ul.nav>li.active a{
+		background-color: #f9f9f9;
+	}
+	.aside-left ul.nav>li:hover{
+		background-color: #f9f9f9;
+	} */
+	#header{
+		background-color: #4caf50;
+		color:#fff;
+	}
+	#header .right a{
+		color: #fff;
+		font-size: 16px;
+	}
+	#header .right a:hover{
+		text-decoration: underline;
+		color: #fff;
+	}
+	.aside-left .title{
+		color: #fff;
+		height: 40px;
+		line-height: 40px;
+		padding-left:15px;
+		font-size: 20px;
+	}
+</style>
 </head>
-<body style="overflow-y:hidden;background-color: #92f396">
+<body style="overflow-y:hidden;background-color: #222d32;">
 	<header id="header">
-		<h3>校园水果团购运营平台</h3>
-		<a href="${ctx}/logout" style="float:right;"><span>退出</span></a>
-		<a href="${ctx}/index" style="float:right;margin-right:50px;"><span>首页</span></a>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-3">
+					<h3>校园水果团购运营平台</h3>
+				</div>
+				<div class="col-sm-4 right pull-right" style="line-height: 56px;">
+					<a href="${ctx}/logout" class="fr" style="margin-right:20px;"><span>退出</span></a>
+					<a href="${ctx}/index" class="fr" style="margin-right:50px;"><span><i class="icon iconfont icon-shouye"> </i>首页</span></a>
+					<span class="fr" style="margin-right:50px;font-size: 16px;">管理员：${(currentUser.userName)!}</span>
+				</div>
+			</div>
+		</div>
 	</header>
 	<div id="main">
-		<aside class="aside-left">
+		<aside class="aside-left aside_left">
+			<div class="title">菜单栏<span class="fr menu_move" type="outside" style="width:30px;margin-left:20px;"><i class="icon iconfont icon-shouqi" > </i></span></div>
 			<nav class="nav_">
 				<ul class="nav nav-pills nav-stacked">
-					<li role="presentation" class="active"><a href="${ctx}/admin/goods_class_list" target="main_content">商品分类管理</a></li>
-					<li role="presentation"><a href="${ctx}/admin/goods_list" target="main_content">商品管理</a></li>
-					<li><a href="${ctx}/admin/group_list" target="main_content">团购活动管理</a></li>
-					<li><a href="${ctx}/admin/order_list" target="main_content">订单管理</a></li>
-					<li><a href="${ctx}/admin/advertisement_photo_list" target="main_content">广告位管理</a></li>
-					<li><a href="${ctx}/admin/user_list" target="main_content">用户管理</a></li>
-					<li><a href="" target="main_content">系统日志管理</a></li>
+					<li role="presentation" class="active"><a href="${ctx}/admin/goods_class_list" target="main_content"><i class="icon iconfont icon-shangpinfenlei"> </i>商品分类管理</a></li>
+					<li><a href="${ctx}/admin/goods_list" target="main_content"><i class="icon iconfont icon-shangpinguanli"> </i>商品管理</a></li>
+					<li><a href="${ctx}/admin/group_list" target="main_content"><i class="icon iconfont icon-tuangou"> </i>团购活动管理</a></li>
+					<li><a href="${ctx}/admin/order_list" target="main_content"><i class="icon iconfont icon-dingdanguanli"> </i>订单管理</a></li>
+					<li><a href="${ctx}/admin/advertisement_photo_list" target="main_content"><i class="icon iconfont icon-guanggaowei"> </i>广告位管理</a></li>
+					<li><a href="${ctx}/admin/user_list" target="main_content"><i class="icon iconfont icon-yonghuguanli"> </i>用户管理</a></li>
+					<li><a href="${ctx}/admin/system_log_list" target="main_content"><i class="icon iconfont icon-system-log"> </i>系统日志管理</a></li>
 				</ul>
 			</nav>
 		</aside>
@@ -44,6 +84,21 @@
 		$('#main').height(window_h - header_h);
 		$('.nav_ ul li').click(function(){
 			$(this).addClass('active').siblings().removeClass('active');
+		});
+		$('.aside-left .menu_move').click(function(){
+			var $aside_left = $(this).parents('.aside_left');
+			var type = $(this).attr('type');
+			if(type=='outside'){
+				$(this).attr('type','inside');
+				$aside_left.css({
+					'margin-left':'-230px'
+				});
+			}else if(type=='inside'){
+				$(this).attr('type','outside');
+				$aside_left.css({
+					'margin-left':'0px'
+				});
+			}
 		});
 	});
 </script>

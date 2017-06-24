@@ -13,8 +13,11 @@
 	<@include_page path="/header" />
 	<div class="container-fluid" >
 		<section class="search-condition search_condition">
-			<div class="row condition-activity condition_activity" search_type="activity">
-				活动：<span condition="all" class="select">全部</span><span condition="1" activity="is_group">团购</span><span condition="1" activity="not_group">非团购</span>
+			<div class="row condition-activity condition_activity" search_type="group_id">
+				活动：<span condition="all" class="select">全部</span><span condition="1" group_id="not_group">非团购</span>
+				<#list group_list! as item >
+					<span group_id="${(item.id)!}" condition="1">${(item.name)!}</span>
+				</#list>
 			</div>
 			<div class="row condition-goods-class condition_goods_class" search_type="goods_class_id">
 				分类：<span condition="all" class="select">全部</span>
@@ -23,19 +26,29 @@
 				</#list>
 			</div>
 			<div class="row condition-price condition_price" search_type="price">
-				价格：<span condition="all" class="select">全部</span>从<input type="text" name="price_low" class="inp_price_low"/> - <input type="text" name="price_high" class="inp_price_high"/>
+				价格：<span condition="all" class="select">全部</span>
+					从 <input type="text" name="price_low" value="${(queryMap.q_price_low)!}" class="form-control input-sm inp_price_low"/>
+					 - <input type="text" name="price_high" value="${(queryMap.q_price_high)!}" class="form-control input-sm inp_price_high"/> 元
+					 <a class="btn btn-success btn-xs btn_condition_price">确定</a>
 			</div>
 			<div class="row condition-sort condition_sort" search_type="sort">
 				排序：<span condition="all" class="select">默认</span><span sort="low_to_high" condition="1">价格从低到高</span><span sort="high_to_low" condition="1">价格从高到低</span>
 			</div>
 		</section>
 	</div>
-	<div class="container" style="padding:0;">
+	<div class="container" style="padding:0;margin-top:30px;">
 		<section class="search-result">
 			<ul class="list-inline goods-list-many">
 			<#list (pageObj.resultList)! as item>
-				<li class="goods-item">
+				<li class="goods-item" style="margin-top:5px;margin-bottom:5px;">
 					<div class="image">
+						<div class="tip-label">
+							<#if item.activity_status == ActivityStatus.group>
+								<i class="icon iconfont icon-biaoqian"> <span class="txt">团</span></i>
+							<#elseif (item.price<item.original_price) >
+								<i class="icon iconfont icon-biaoqian"> <span class="txt">省</span></i>
+							</#if>
+						</div>
 						<a href="${ctx}/goods_detail?obj_id=${item.id}">
 							<img src="${ctx}/${(item.main_photo.path)!}/${(item.main_photo.name)!}" class="img-responsive"/>
 						</a>
@@ -49,6 +62,7 @@
 					<div class="goods-price">
 						<span class="price">￥${(item.price?string("0.00"))!}</span>
 						<span class="original-price">￥${(item.original_price?string("0.00"))!}</span>
+						<span class="sales-count">已售：${(item.sales_count)!}</span>
 					</div>
 				</li>
 			</#list>
@@ -67,11 +81,22 @@
 <script type="text/javascript">
 	require(['common'],function(Common){
 		var c = new Common();
+		var cssConfg = {
+				page_word_skip_btn_c:'btn btn-success btn-xs',
+				page_number_wrap_c:'pagination',
+				page_current_c:'active',
+		}
+		var paging_html = c.paging(${(pageObj.currentPage)!0}, ${(pageObj.pageRows)!0}, ${(pageObj.totalPages)!0}, ${(pageObj.totalRows)!0}, '', cssConfg);
+		$('#pagingNode').html(paging_html);
 		window.common = c;
 	});
 	require(['./web/search'],function(page){
 		var p = new page();
 		p.main();
+		var queryMap_JSON = '${(queryMap_JSON)!}';
+		console.log(queryMap_JSON);
+		console.log(JSON.parse(queryMap_JSON));
+		p.init_search_condition(JSON.parse(queryMap_JSON));
 	});
 </script>
 </html>

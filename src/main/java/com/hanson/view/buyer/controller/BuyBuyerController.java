@@ -1,6 +1,7 @@
 package com.hanson.view.buyer.controller;
 
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
+import com.hanson.core.annotation.Log;
 import com.hanson.core.constant.Globals;
 import com.hanson.core.exception.BusinessException;
 import com.hanson.core.mv.JModelAndView;
@@ -28,6 +30,7 @@ import com.hanson.core.tools.WebFormHelper;
 import com.hanson.foundation.domain.Goods;
 import com.hanson.foundation.domain.GoodsItem;
 import com.hanson.foundation.domain.OrderForm;
+import com.hanson.foundation.domain.SystemLog.LogType;
 import com.hanson.foundation.service.IGoodsItemService;
 import com.hanson.foundation.service.IGoodsService;
 import com.hanson.foundation.service.IOrderFormService;
@@ -143,12 +146,14 @@ public class BuyBuyerController {
 		return mv;
 	}
 	
+	@Log(title="买家支付订单", type=LogType.SPECIAL, entityName="OrderForm")
 	@ResponseBody
 	@RequestMapping("/buy_info_confirm")
 	public Map buy_info_confirm(HttpServletRequest request, String session_id, String obj_id, OrderForm order){
 		Map data = new HashMap();
 		boolean result = false;
 		String error_msg = "";
+		String log_content = "操作了id为"+obj_id+"的OrderForm对象。"; // 日志内容
 		String session_id_true = (String) WebUtils.getSessionAttribute(request, Globals.SESSION_UUID);
 		WebUtils.setSessionAttribute(request, Globals.SESSION_UUID, null);
 		if(StringUtils.isEmpty(session_id) || !StringUtils.equals(session_id, session_id_true)){
@@ -165,8 +170,24 @@ public class BuyBuyerController {
 			double total_price = calculateTotalPrice(order_true.getGoods_item_list());
 			order_true.setTotal_price(BigDecimal.valueOf(total_price));
 			order_true.setPay_status(OrderForm.PayStatus.PAID.value());
+			order_true.setPay_time(new Date());
 			result = this.orderFormService.update(order_true);
 		}
+		if(result){ // 支付成功  增加商品的销量
+			for(GoodsItem goods_item : order_true.getGoods_item_list()){
+				Goods goods = goods_item.getGoods();
+				if(goods.getActivity_status() == Goods.ActivityStatus.GROUP.value() && goods.getGroup()!=null){
+					goods.setGroup_sold_count(goods.getGroup_sold_count() + goods_item.getCount());
+				}
+				goods.setSales_count(goods.getSales_count() + goods_item.getCount());
+				this.goodsService.update(goods);
+			}
+			MessageFormat.format("<br/>订单编号[{0}]，共{1}种商品，总金额：{2}", order_true.getNumber(),
+					order_true.getGoods_item_list().size(), order_true.getTotal_price());
+			log_content += "订单编号:。<br/>";
+		}
+		log_content += "。<br/>";
+		data.put("log_content", log_content);
 		data.put("result", result);
 		data.put("error_msg", error_msg);
 		return data;
@@ -180,8 +201,13 @@ public class BuyBuyerController {
 	private double calculateTotalPrice(List<GoodsItem> goods_item_list){
 		double total_price = 0;
 		for(GoodsItem goods_item : goods_item_list){
-			double item_money = CommUtil.mul(goods_item.getPrice(), goods_item.getCount());
-			total_price += item_money;
+			Goods goods = goods_item.getGoods();
+			if(goods==null){
+				this.goodsItemService.maintainDelete(goods_item.getId()); // 商品不存在   那么商品项需要移除    不能作为支付
+			}else{
+				double item_money = CommUtil.mul(goods_item.getPrice(), goods_item.getCount());
+				total_price += item_money;
+			}
 		}
 		total_price = CommUtil.formatMoney(total_price); // 只保留两位小数
 		return total_price;

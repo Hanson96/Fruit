@@ -32,7 +32,7 @@ public class UserAdminController {
 	private IUserService userService;
 	
 	@RequestMapping("/user_list")
-	public ModelAndView advertisement_photo_list(HttpServletRequest request, String currentPage, String pageRows){
+	public ModelAndView user_list(HttpServletRequest request, String currentPage, String pageRows){
 		JModelAndView mv = new JModelAndView("user_list.html", 11, request);
 		QueryHelper.queryParamsIntoModel(request, mv);
 		QueryObject qo = new QueryObject(mv, currentPage, pageRows, null, null);
@@ -47,7 +47,7 @@ public class UserAdminController {
 	}
 	
 	@RequestMapping("/user_add")
-	public ModelAndView advertisement_photo_add(HttpServletRequest request, String obj_id){
+	public ModelAndView user_add(HttpServletRequest request, String obj_id){
 		JModelAndView mv = new JModelAndView("user_add.html", 11, request);
 		if(StringUtils.isNotEmpty(obj_id)){
 			User obj = this.userService.getObjById(Long.valueOf(obj_id));

@@ -15,8 +15,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.hanson.core.mv.JModelAndView;
 import com.hanson.core.query.QueryObject;
 import com.hanson.core.tools.SimpleMap;
+import com.hanson.core.tools.WebViewHelper;
 import com.hanson.foundation.domain.AdvertisementPhoto;
 import com.hanson.foundation.domain.Cart;
+import com.hanson.foundation.domain.Goods;
 import com.hanson.foundation.service.IAdvertisementPhotoService;
 import com.hanson.foundation.service.IGoodsService;
 import com.hanson.foundation.tools.CartHelper;
@@ -51,6 +53,7 @@ public class IndexController {
 		mv.addObject("hot_goods_list", this.goodsService.findHotGoods(5));
 		// 推荐商品  最多5个
 		mv.addObject("recommend_goods_list", this.goodsService.findRecommendGoods(5));
+		mv.addObject("ActivityStatus", WebViewHelper.enumToMap(Goods.ActivityStatus.values()));
 		return mv;
 	}
 	

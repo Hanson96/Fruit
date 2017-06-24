@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hanson.core.annotation.Log;
 import com.hanson.core.mv.JModelAndView;
 import com.hanson.core.query.IPageObject;
 import com.hanson.core.query.QueryObject;
@@ -21,6 +22,7 @@ import com.hanson.core.tools.QueryHelper;
 import com.hanson.core.tools.WebFormHelper;
 import com.hanson.foundation.domain.Goods;
 import com.hanson.foundation.domain.Group;
+import com.hanson.foundation.domain.SystemLog.LogType;
 import com.hanson.foundation.service.IGoodsService;
 import com.hanson.foundation.service.IGroupService;
 
@@ -72,6 +74,7 @@ public class GroupGoodsAdminController {
 		return  mv;
 	}
 	
+	@Log(title="管理员新增或修改团购商品", type=LogType.SAVE, entityName="Goods")
 	@RequestMapping("/group_goods_save")
 	public ModelAndView group_goods_save(HttpServletRequest request, String obj_id, Goods goods, 
 			String group_id){
@@ -98,6 +101,7 @@ public class GroupGoodsAdminController {
 		return mv;
 	}
 	
+	@Log(title = "管理员删除移除团购商品", type = LogType.DELETE, entityName="Goods")
 	@ResponseBody
 	@RequestMapping("/group_goods_delete")
 	public Map group_goods_delete(HttpServletRequest request, String obj_id){

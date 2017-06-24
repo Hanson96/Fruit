@@ -47,7 +47,31 @@
 						<div class="inline-block">
 							<span class="price">￥${(obj.price)!}</span>
 						</div>
+						<div class="inline-block" style="margin-left:30px;">
+							<#if obj.activity_status == ActivityStatus.group>
+								<span class="group-over group_over" end_time="${(obj.group.end_time?string('yyyy-MM-dd HH:mm:ss'))!}">
+								距离结束还有：<span class="count_down"></span>
+								</span>
+							</#if>
+						</div>
 					</div>
+					<#if obj.activity_status == ActivityStatus.group>
+					<div class="row">
+						<div class="width-100 inline-block">
+							成团目标：
+						</div>
+						<div class="inline-block">
+							${(obj.group_count)!} 份
+							<span style="margin-left:30px;">
+								<#if (obj.group_sold_count>=obj.group_count) >
+									已抱团成功，快加入我们吧
+								<#else>
+									还差${obj.group_count-obj.group_sold_count}份即可抱团，助我一臂之力吧
+								</#if>
+							</span>
+						</div>
+					</div>
+					</#if>
 					<div class="row">
 						<div class="width-100 inline-block">
 							原价：

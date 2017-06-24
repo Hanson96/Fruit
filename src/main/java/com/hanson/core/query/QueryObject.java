@@ -74,7 +74,7 @@ public class QueryObject implements IQueryObject{
 	 * @param paramMap 参数值对
 	 */
 	public void addQuery(String paramString, Map paramMap){
-		this.where_str += paramString;
+		this.where_str += " "+paramString;
 		if(paramMap!=null){
 			Iterator iterator = paramMap.entrySet().iterator();
 			while(iterator.hasNext()){

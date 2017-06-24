@@ -2,6 +2,7 @@ package com.hanson.foundation.domain;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -44,6 +45,8 @@ public class OrderForm extends IdEntity{
 	private String address;
 	// 支付方式
 	private String payment;
+	// 支付时间
+	private Date pay_time;
 	
 	@Column(columnDefinition="int default 0")
 	private Integer pay_status = 0;
@@ -132,6 +135,12 @@ public class OrderForm extends IdEntity{
 	}
 	public void setPay_status(Integer pay_status) {
 		this.pay_status = pay_status;
+	}
+	public Date getPay_time() {
+		return pay_time;
+	}
+	public void setPay_time(Date pay_time) {
+		this.pay_time = pay_time;
 	}
 	
 }

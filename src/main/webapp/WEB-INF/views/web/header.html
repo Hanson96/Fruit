@@ -7,14 +7,16 @@
 				</div>
 			</div>
 			<div class="col-sm-6">
-				<div class="input-group search" style="margin-top:30px;">
-					<input type="text" class="form-control" placeholder="搜索你想要查找的内容">
+				<form action="${ctx}/search" method="post">
+					<div id="search" class="input-group search" style="margin-top:30px;">
+					<input type="text" name="q_name" value="${(queryMap.q_name)!}" class="form-control inp_search" placeholder="搜索你想要查找的内容">
 					<span class="input-group-btn">
-						<button class="btn btn-info btn-search">
+						<button class="btn btn-info btn-search" type="submit">
 							<span class="glyphicon glyphicon-search"> </span>
 						</button>
 					</span>
 				</div>
+				</form>
 			</div>
 			<div class="col-sm-2 col-sm-offset-1">
 				<div class="shopping-cart shopping_cart">

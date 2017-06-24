@@ -85,6 +85,9 @@ dependencies {
     compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
     compile group: 'commons-codec', name: 'commons-codec', version: '1.10'
     
+    /* quartz */
+    compile group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.0'
+    
     /* 添加单独的本地jar */
     compile fileTree(dir:'src/main/webapp/WEB-INF/lib',include:['*.jar'])
 }

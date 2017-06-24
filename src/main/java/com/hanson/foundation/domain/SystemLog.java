@@ -41,7 +41,7 @@ public class SystemLog extends IdEntity{
 	public static enum LogType implements CustomEnum{
 
 		REGISTER("注册",1),LOGIN("登录",5),LOGOUT("退出",10),CHANGEPWS("修改密码",10),
-		VIEW("查看",15),UPDATE("更新",19),SAVE("保存",20),DELETE("删除",25),
+		VIEW("查看",15),UPDATE("更新",19),SAVE("保存",20),DELETE("删除",25),PAY_ORDER("支付订单",26),
 		SPECIAL("特殊处理",45)
 		;
 		

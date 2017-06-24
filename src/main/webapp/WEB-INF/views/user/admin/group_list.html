@@ -10,7 +10,7 @@
 <body>
 	<div class="container-fluid">
 		<header>
-			<h4>团购活动列表 </h4>
+			<h4>团购活动列表 （每日凌晨0点自动更新团购活动状态）</h4>
 		</header>
 		<div class="search">
 			<form id="queryForm" action="" method="post" class="form-inline">
@@ -35,6 +35,7 @@
 		<section>
 			<div class="div-handle">
 				<a href="${ctx}/admin/group_add" class="btn btn-primary btn-sm" >新增</a>
+				<a  class="btn btn-primary btn-sm btn_group_status_update" >手动更新团购活动状态</a>
 			</div>
 			<table class="table table-striped table-hover">
 				<thead>
@@ -87,6 +88,19 @@
 		}
 		c.paging(${(pageObj.currentPage)!0}, ${(pageObj.pageRows)!0}, ${(pageObj.totalPages)!0}, ${(pageObj.totalRows)!0}, {}, cssConfg);
 		window.common = c;
+	});
+	require(['jquery'],function($){
+		$('.btn_group_status_update').click(function(){
+			var url = _ctx + '/admin/group_status_update';
+			$.post(url,{},function(data){
+				if(data.result){
+					alert('手动更新活动状态成功');
+					window.location = window.location.href;
+				}else{
+					alert(data.error_msg);
+				}
+			},'json');
+		});
 	});
 </script>
 </html>

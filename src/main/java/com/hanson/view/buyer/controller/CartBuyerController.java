@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.hanson.core.exception.BusinessException;
 import com.hanson.core.mv.JModelAndView;
 import com.hanson.core.tools.CommUtil;
+import com.hanson.core.tools.UserHelper;
 import com.hanson.foundation.domain.Cart;
 import com.hanson.foundation.domain.Goods;
 import com.hanson.foundation.domain.GoodsItem;
@@ -105,6 +107,25 @@ public class CartBuyerController {
 			mv.addObject("cart", user.getCart_list().get(0));
 		}
 		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/cart_goods_item_delete")
+	public Map cart_goods_item_delete(HttpServletRequest request, String obj_id){
+		Map data = new HashMap();
+		boolean result = false;
+		String error_msg = "";
+		User user = this.userService.getObjById(ShiroUtils.getUserId());
+		if(StringUtils.isNotEmpty(obj_id)){
+			GoodsItem goods_item = this.goodsItemService.getObjById(Long.valueOf(obj_id));
+			UserHelper.checkUserTypeAndUserId(user, User.UserType.BUYER.value(), goods_item.getCart().getUser().getId());
+			result = this.goodsItemService.maintainDelete(goods_item.getId());
+		}else{
+			error_msg = "参数有误";
+		}
+		data.put("result", result);
+		data.put("error_msg", error_msg);
+		return data;
 	}
 	
 }

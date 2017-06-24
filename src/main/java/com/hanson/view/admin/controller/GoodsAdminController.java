@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hanson.core.annotation.Log;
 import com.hanson.core.constant.Globals;
 import com.hanson.core.mv.JModelAndView;
 import com.hanson.core.query.IPageObject;
@@ -28,6 +29,7 @@ import com.hanson.core.tools.WebFormHelper;
 import com.hanson.foundation.domain.Accessory;
 import com.hanson.foundation.domain.Goods;
 import com.hanson.foundation.domain.GoodsClass;
+import com.hanson.foundation.domain.SystemLog.LogType;
 import com.hanson.foundation.service.IAccessoryService;
 import com.hanson.foundation.service.IGoodsClassService;
 import com.hanson.foundation.service.IGoodsService;
@@ -66,6 +68,7 @@ public class GoodsAdminController {
 		return  mv;
 	}
 	
+	@Log(title="管理员新增或修改商品信息", type=LogType.SAVE, entityName="Goods")
 	@RequestMapping("/goods_save")
 	public ModelAndView goods_save(HttpServletRequest request, String obj_id, Goods goods, 
 			String goods_class_id, @RequestParam MultipartFile main_photo_file, MultipartFile[] photo_list_file){
@@ -142,6 +145,7 @@ public class GoodsAdminController {
 		return  mv;
 	}
 	
+	@Log(title = "管理员删除商品", type = LogType.DELETE, entityName="Goods")
 	@ResponseBody
 	@RequestMapping("/goods_delete")
 	public Map goods_delete(HttpServletRequest request, String obj_id){
@@ -192,6 +196,7 @@ public class GoodsAdminController {
 	 * @param photo_type 图片的类型    main表示主图， other表示其它图片
 	 * @return
 	 */
+	@Log(title = "管理员删除商品图片", type = LogType.DELETE, entityName="Accessory")
 	@ResponseBody
 	@RequestMapping("/goods_photo_delete")
 	public Map goods_photo_delete(HttpServletRequest request, String obj_id, String photo_type){

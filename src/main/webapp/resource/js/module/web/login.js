@@ -65,19 +65,26 @@ define(['jquery','jquery-validate-messages_zh','user/../../common/validate','use
 			if(DOM.form_login.valid()){
 				var action = DOM.form_login.attr('action');
 			    var form_data = DOM.form_login.serialize();
-			    $.post(action,form_data,function(data){
-			    	if(data.result){ // 登录成功
-			    		if(data.user_type=='admin'){
-			    			window.location.href = 'admin/index';
-			    		}else{
-			    			window.location.href = 'index';
-			    		}
-			    	}else{
-			    		$(".div_login_error_msg .login_error_msg").html(data.error_msg);
-						$(".div_login_error_msg").removeClass("hide");
-						DOM.form_login.find('.img_verify_code').click()
-			    	}
-			    },'json');
+			    $.ajax({
+			    	url:action,
+			    	type:'post',
+			    	dataType:'json',
+			    	async:false,
+			    	data:form_data,
+			    	success:function(data){
+				    	if(data.result){ // 登录成功
+				    		if(data.user_type=='admin'){
+				    			window.location.href = 'admin/index';
+				    		}else{
+				    			window.location.href = 'index';
+				    		}
+				    	}else{
+				    		$(".div_login_error_msg .login_error_msg").html(data.error_msg);
+							$(".div_login_error_msg").removeClass("hide");
+							DOM.form_login.find('.img_verify_code').click()
+				    	}
+				    }
+			    });
 			}
 		});
 		

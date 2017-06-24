@@ -47,7 +47,7 @@ public class QueryHelper {
 	 * @param mv
 	 * @return
 	 */
-	public static void queryParamsIntoModel(HttpServletRequest request, ModelAndView mv) {
+	public static Map queryParamsIntoModel(HttpServletRequest request, ModelAndView mv) {
 		Map map = request.getParameterMap();
 		Enumeration enum1 = request.getParameterNames();
 		String value;
@@ -61,6 +61,7 @@ public class QueryHelper {
 			}
 		}
 		mv.addObject("queryMap", queryMap);
+		return queryMap;
 	}
 	
 	/**

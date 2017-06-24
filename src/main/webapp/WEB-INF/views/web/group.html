@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<#include "/WEB-INF/views/include/meta.html"/>
+<#include "/WEB-INF/views/include/macro.html"/>
+<title>团购专场</title>
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/plugin/bootstrap/bootstrap-3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/css/common/common.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/resource/css/web/index.css" />
+</head>
+<body>
+	<@include_page path="/top" />
+	<@include_page path="/header" />
+	<div class="container" style="padding:0;margin-top:30px;">
+		<section class="group-activity">
+			<ul class="list-inline group-list-many group_list_many">
+					<#list (pageObj.resultList)! as item>
+					<li class="group-item group_item">
+						<div class="image">
+							<a href="${ctx}/search?q_group_id=${item.id}">
+								<img src="${ctx}/${(item.acc.path)!}/${(item.acc.name)!}" class="img-responsive"/>
+							</a>
+							<div class="card-wrap">
+								<div class="title">
+									<span class="small">
+										<#if item.status==Status.no_start>
+											暂未开始
+										<#elseif item.status==Status.started>
+											火热进行中
+										<#elseif item.status==Status.finish>
+											活动已结束
+										</#if>
+									</span>
+									<div class="group-name">${(item.name)!}</div>
+								</div>
+							</div>
+						</div>
+					</li>
+				</#list>
+			</ul>
+		</section>
+		<div id="pagingNode">
+		</div>
+	</div>
+	<@include_page path="/footer" />
+</body>
+<script type="text/javascript">
+	var _ctx = '${ctx}';
+</script>
+<script type="text/javascript" src="${ctx}/resource/plugin/requirejs/require.js"></script>
+<script type="text/javascript" src="${ctx}/resource/js/require-config.js"></script>
+<script type="text/javascript">
+	require(['common','util'],function(Common, Util){
+		var c = new Common();
+		window.common = c;
+		/* $('.group_list_many .group_item .group_no_start').each(function(){
+			var start_time_string = $(this).attr('start_time');
+			Util.exact_count_down(start_time_string,$(this).find('.count_down'));
+		});
+		$('.group_list_many .group_item .group_started').each(function(){
+			var end_time_string = $(this).attr('end_time');
+			Util.exact_count_down(end_time_string,$(this).find('.count_down'));
+		}); */
+		
+	});
+	
+</script>
+</html>

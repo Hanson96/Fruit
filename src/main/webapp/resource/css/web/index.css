@@ -168,6 +168,25 @@ ul.goods-list-many>li.goods-item .image{
 	overflow: hidden;
 	position: relative;
 }
+ul.goods-list-many>li.goods-item .image .tip-label{
+	position: absolute;
+	top:-5px;
+	left:5px;
+	width:60px;
+	height: 30px;
+}
+ul.goods-list-many>li.goods-item .image .tip-label .icon{
+	font-size: 42px;
+	color: #ff6633;
+	position: relative;
+	z-index: 5;
+}
+ul.goods-list-many>li.goods-item .image .tip-label .icon .txt{
+	position: absolute;
+	font-size: 16px;
+	left:13px;
+	top:18px;
+}
 ul.goods-list-many>li.goods-item .image .add-cart{
 	position: absolute;
 	z-index:1;
@@ -205,7 +224,11 @@ ul.goods-list-many>li.goods-item .goods-price{
 ul.goods-list-many>li.goods-item .goods-price .original-price{
 	color:#ababab;
 	text-decoration: line-through;
+	font-size:16px;
+}
+ul.goods-list-many>li.goods-item .goods-price .sales-count{
 	float:right;
+	color:#ababab;
 	font-size:16px;
 }
 /* 首页相关   end */
@@ -342,4 +365,70 @@ ul.goods-list-many>li.goods-item .goods-price .original-price{
 	color: #9dcd17;
 	border-radius:3px;
 }
+.search-condition .condition-price input{
+	width:80px;
+	display: inline;
+}
 /* 搜索页面 end  */
+
+/* 团购活动列表  start*/
+ul.group-list-many>li.group-item{
+	width:380px;
+	margin:5px;
+	padding:5px;
+} 
+ul.group-list-many>li.group-item .image{
+	position: relative;
+}
+.card-wrap {
+	/* box-shadow: 0 0 5px #ccc; */
+	position: absolute;
+	bottom:5px;
+	left:-10px;
+	cursor: pointer;
+}
+.card-wrap .title{
+	width:250px;
+	height:60px;
+	line-height:60px;
+	background-color: #e97d6c;
+	position: relative;
+	box-shadow: 0 0 5px #ccc;
+	border-radius:5px 0 0 5px;
+	color:#fff;
+	font-size:18px;
+}
+.card-wrap .title:before{
+	width: 0; 
+	height: 0; 
+	/* border:10px solid #ff6633;
+	border-top-right-radius: 10px;
+	transform: rotate(45deg); */
+	border-bottom: 10px solid #da6943; 
+	border-left: 12px solid transparent;
+	position: absolute;
+	top:-8px;
+	content: "";
+}
+.card-wrap .title:after{
+	width: 0; 
+	height: 0; 
+	border:21px solid #e97d6c;
+	border-top-right-radius: 10px;
+	transform: rotate(45deg);
+	position: absolute;
+	right:-22px;
+	top:9px;
+	content: "";
+}
+.card-wrap .title .group-name{
+	margin-left:20px;
+	font-weight: bolder;
+}
+.card-wrap .title .small{
+	position: absolute;
+	right:-18px;;
+	z-index:2;
+}
+/* 团购活动列表  end*/
+

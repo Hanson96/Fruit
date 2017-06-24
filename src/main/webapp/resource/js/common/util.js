@@ -76,6 +76,31 @@ define(['jquery'],function(){
 		}
 	}
 	
+	U.exact_count_down = function(end_time_string,$seletor){
+		//var s = "2017-12-15 09:41:30";
+		var end_time = new Date(Date.parse(end_time_string.replace(/-/g, "/")));
+		function start(){
+			 var distance = end_time - new Date(); // 计算剩余的毫秒数
+			 var days = parseInt(distance / 1000 / 60 / 60 / 24 , 10); // 计算剩余的天数
+			 var hours = parseInt(distance / 1000 / 60 / 60 % 24 , 10); // 计算剩余的小时
+			 var minutes = parseInt(distance / 1000 / 60 % 60, 10);// 计算剩余的分钟
+			 var seconds = parseInt(distance / 1000 % 60, 10);// 计算剩余的秒数
+			 days = checkTime(days); 
+			 hours = checkTime(hours); 
+			 minutes = checkTime(minutes); 
+			 seconds = checkTime(seconds);
+			 var html = days+"天" + hours+"时" + minutes+"分"+seconds+"秒"; console.log(html);
+			 $seletor.html(html);
+		}
+		function checkTime(i){ // 将0-9的数字前面加上0，例1变为01
+			if(i<10){ 
+				i = "0" + i; 
+			} 
+			return i; 
+		} 
+		window.setInterval(start,1000);
+	}
+	
 	Util = U;
 	return Util;
 });

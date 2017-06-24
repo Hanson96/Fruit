@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hanson.core.annotation.Log;
 import com.hanson.core.mv.JModelAndView;
 import com.hanson.core.query.IPageObject;
 import com.hanson.core.query.QueryObject;
 import com.hanson.core.tools.QueryHelper;
 import com.hanson.foundation.domain.GoodsClass;
+import com.hanson.foundation.domain.SystemLog.LogType;
 import com.hanson.foundation.service.IGoodsClassService;
 
 @Controller
@@ -38,6 +40,7 @@ public class GoodsClassAdminController {
 		return  mv;
 	}
 	
+	@Log(title="管理员新增或修改商品分类", type=LogType.SAVE, entityName="GoodsClass")
 	@ResponseBody
 	@RequestMapping("/goods_class_save")
 	public Map goods_class_save(HttpServletRequest request, String obj_id, String name){
@@ -58,6 +61,7 @@ public class GoodsClassAdminController {
 		return data;
 	}
 	
+	@Log(title = "管理员删除商品分类", type = LogType.DELETE, entityName="GoodsClass")
 	@ResponseBody
 	@RequestMapping("/goods_class_delete")
 	public Map goods_class_delete(HttpServletRequest request, String obj_id){

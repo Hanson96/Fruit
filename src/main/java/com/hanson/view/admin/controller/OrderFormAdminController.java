@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hanson.core.annotation.Log;
 import com.hanson.core.mv.JModelAndView;
 import com.hanson.core.query.IPageObject;
 import com.hanson.core.query.QueryObject;
@@ -20,6 +21,7 @@ import com.hanson.core.tools.CommUtil;
 import com.hanson.core.tools.QueryHelper;
 import com.hanson.foundation.domain.Group;
 import com.hanson.foundation.domain.OrderForm;
+import com.hanson.foundation.domain.SystemLog.LogType;
 import com.hanson.foundation.service.IOrderFormService;
 
 @Controller
@@ -44,7 +46,17 @@ public class OrderFormAdminController {
 		return  mv;
 	}
 	
+	@RequestMapping("/order_detail")
+	public ModelAndView order_detail(HttpServletRequest request, String obj_id){
+		JModelAndView mv = new JModelAndView("order_detail.html", 11, request);
+		if(StringUtils.isNotEmpty(obj_id)){
+			OrderForm order = this.orderFormService.getObjById(Long.valueOf(obj_id));
+			mv.addObject("order", order);
+		}
+		return  mv;
+	}
 	
+	@Log(title="管理员新增或修改订单", type=LogType.SAVE, entityName="OrderForm")
 	@ResponseBody
 	@RequestMapping("/order_delete")
 	public Map order_delete(HttpServletRequest request, String obj_id){

@@ -12,6 +12,7 @@ import javax.persistence.Transient;
 import com.hanson.core.domain.IdEntity;
 import com.hanson.core.tools.CustomEnum;
 import com.hanson.foundation.domain.Cart;
+import com.hanson.foundation.domain.OrderForm;
 
 /**
  * 所有用户
@@ -73,6 +74,9 @@ public class User extends IdEntity{
 	@OneToMany(mappedBy="user")
 	private List<Cart> cart_list = new ArrayList<Cart>();
 	
+	@OneToMany(mappedBy="user")
+	private List<OrderForm> order_list = new ArrayList<OrderForm>();
+	
 	public String getUserName() {
 		return userName;
 	}
@@ -115,6 +119,14 @@ public class User extends IdEntity{
 	public void setCart_list(List<Cart> cart_list) {
 		this.cart_list = cart_list;
 	}
+	public List<OrderForm> getOrder_list() {
+		return order_list;
+	}
+	public void setOrder_list(List<OrderForm> order_list) {
+		this.order_list = order_list;
+	}
+	
+	
 	@Transient
 	public List<String> getRolesName(){
 		List<String> rolesName = new ArrayList<>();

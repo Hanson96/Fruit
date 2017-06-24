@@ -13,6 +13,8 @@ define(['jquery','imagezoom','util'],function($, Imagezoom, Util){
 	
 	var main = function(){
 		handleEvent();
+		var end_time_string = DOM.section_goods_info.find('.group_over').attr('end_time');
+		Util.exact_count_down(end_time_string, DOM.section_goods_info.find('.group_over .count_down'));
 	}
 	
 	function handleEvent(){

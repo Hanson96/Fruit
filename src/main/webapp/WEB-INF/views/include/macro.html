@@ -4,6 +4,13 @@
 	<#list goods_list! as item>
 		<li class="goods-item">
 			<div class="image">
+				<div class="tip-label">
+					<#if item.activity_status == ActivityStatus.group>
+						<i class="icon iconfont icon-biaoqian"> <span class="txt">团</span></i>
+					<#elseif (item.price<item.original_price) >
+						<i class="icon iconfont icon-biaoqian"> <span class="txt">省</span></i>
+					</#if>
+				</div>
 				<a href="${ctx}/goods_detail?obj_id=${item.id}">
 					<img src="${ctx}/${(item.main_photo.path)!}/${(item.main_photo.name)!}" class="img-responsive"/>
 				</a>
@@ -17,6 +24,7 @@
 			<div class="goods-price">
 				<span class="price">￥${(item.price?string("0.00"))!}</span>
 				<span class="original-price">￥${(item.original_price?string("0.00"))!}</span>
+				<span class="sales-count">已售：${(item.sales_count)!}</span>
 			</div>
 		</li>
 	</#list>

@@ -56,7 +56,7 @@ public class OrderFormAdminController {
 		return  mv;
 	}
 	
-	@Log(title="管理员新增或修改订单", type=LogType.SAVE, entityName="OrderForm")
+	@Log(title="管理员删除订单", type=LogType.DELETE, entityName="OrderForm")
 	@ResponseBody
 	@RequestMapping("/order_delete")
 	public Map order_delete(HttpServletRequest request, String obj_id){

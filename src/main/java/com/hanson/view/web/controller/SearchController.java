@@ -27,6 +27,11 @@ import com.hanson.security.domain.User;
 import com.hanson.security.service.IUserService;
 import com.hanson.security.shiro.ShiroUtils;
 
+/**
+ * 商品搜索
+ * @author hanson
+ *
+ */
 @Controller
 public class SearchController {
 
@@ -40,20 +45,23 @@ public class SearchController {
 	private IGroupService groupService;
 	
 	@RequestMapping("/search")
-	public ModelAndView search(HttpServletRequest request, String currentPage, String pageRows,
+	public ModelAndView search(HttpServletRequest request, String currentPage, String pageRows,String orderBy, String orderType,
 			String q_group_id, String q_price_low, String q_price_high, String q_sort){
 		JModelAndView mv = new JModelAndView("search.html", 0, request);
 		Map queryMap = QueryHelper.queryParamsIntoModel(request, mv);
-		QueryObject qo = new QueryObject(mv, currentPage, pageRows, null, null);
+		QueryObject qo = new QueryObject(mv, currentPage, pageRows, orderBy, orderType);
 		String[] fields = {"name"};
 		QueryHelper.addQueryBatch(Goods.class, qo, request, fields, "like");
-		String[] fields1 = {"goods_class.id"};
+		String[] fields1 = {"goods_class.id","recommend"};
 		QueryHelper.addQueryBatch(Goods.class, qo, request, fields1, "=");
 		// 是否是团购活动
 		if(StringUtils.isNotEmpty(q_group_id)){
 			if(StringUtils.equals(q_group_id, "not_group")){
 				qo.addQuery("and obj.group.id is null ", null);
 				qo.addQuery("obj.activity_status", new SimpleMap("activity_status", Goods.ActivityStatus.NORMAL.value()), "=");
+			}else if(StringUtils.equals(q_group_id, "is_group")){
+				qo.addQuery("and obj.group.id is not null ", null);
+				qo.addQuery("obj.activity_status", new SimpleMap("activity_status", Goods.ActivityStatus.GROUP.value()), "=");
 			}else{
 				qo.addQuery("obj.group.id", new SimpleMap("group_id", Long.valueOf(q_group_id)), "=");;
 				qo.addQuery("obj.activity_status", new SimpleMap("activity_status", Goods.ActivityStatus.GROUP.value()), "=");

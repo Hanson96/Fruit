@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,13 +15,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hanson.core.annotation.Log;
 import com.hanson.core.mv.JModelAndView;
 import com.hanson.core.query.IPageObject;
 import com.hanson.core.query.QueryObject;
 import com.hanson.core.tools.CommUtil;
 import com.hanson.core.tools.QueryHelper;
 import com.hanson.core.tools.WebFormHelper;
+import com.hanson.core.tools.WebViewHelper;
 import com.hanson.foundation.domain.AdvertisementPhoto;
+import com.hanson.foundation.domain.SystemLog.LogType;
 import com.hanson.security.domain.User;
 import com.hanson.security.service.IUserService;
 
@@ -53,10 +57,11 @@ public class UserAdminController {
 			User obj = this.userService.getObjById(Long.valueOf(obj_id));
 			mv.addObject("obj", obj);
 		}
-		mv.addObject("user_type_list", User.UserType.values());
+		mv.addObject("UserType", WebViewHelper.enumToMap(User.UserType.values()));
 		return  mv;
 	}
 	
+	@Log(title="管理员新增或修改用户信息", type=LogType.SAVE, entityName="User")
 	@RequestMapping("user_save")
 	public ModelAndView user_save(HttpServletRequest request, String obj_id, User user){
 		JModelAndView mv = new JModelAndView("handle_msg.html", 11, request);
@@ -69,6 +74,7 @@ public class UserAdminController {
 		}else{
 			user_true = WebFormHelper.toPo(request, user, User.class, "obj", 0);
 		}
+		user_true.setPassword(DigestUtils.md5Hex(user.getPassword()));
 		result = this.userService.saveOrUpdate(user_true);
 		String msg_title = result ? "操作成功" : error_msg;
 		String ctx = CommUtil.getContextPath(request);
@@ -83,6 +89,7 @@ public class UserAdminController {
 		return mv;
 	}
 	
+	@Log(title = "管理员删除用户", type = LogType.DELETE, entityName="User")
 	@ResponseBody
 	@RequestMapping("/user_delete")
 	public Map user_delete(HttpServletRequest request, String obj_id){

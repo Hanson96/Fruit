@@ -34,6 +34,11 @@ import com.hanson.foundation.service.IAccessoryService;
 import com.hanson.foundation.service.IGoodsClassService;
 import com.hanson.foundation.service.IGoodsService;
 
+/**
+ * 商品管理控制
+ * @author hanson
+ *
+ */
 @Controller
 @RequestMapping("/admin")
 public class GoodsAdminController {

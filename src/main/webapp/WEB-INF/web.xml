@@ -29,7 +29,7 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-	<!--全站编码过滤器，过滤以.htm为后缀的请求 -->
+	<!--全站编码过滤器 -->
 	<filter>
 		<filter-name>encoding-filter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>

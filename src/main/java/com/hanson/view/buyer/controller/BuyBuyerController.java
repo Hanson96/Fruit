@@ -182,9 +182,8 @@ public class BuyBuyerController {
 				goods.setSales_count(goods.getSales_count() + goods_item.getCount());
 				this.goodsService.update(goods);
 			}
-			MessageFormat.format("<br/>订单编号[{0}]，共{1}种商品，总金额：{2}", order_true.getNumber(),
+			log_content += MessageFormat.format("<br/>订单编号[{0}]，共{1}种商品，总金额：{2}", order_true.getNumber(),
 					order_true.getGoods_item_list().size(), order_true.getTotal_price());
-			log_content += "订单编号:。<br/>";
 		}
 		log_content += "。<br/>";
 		data.put("log_content", log_content);

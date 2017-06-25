@@ -39,6 +39,7 @@
 				<thead>
 					<tr>
 						<th>用户名</th>
+						<th>用户类型</th>
 						<th>编辑</th>
 						<th>删除</th>
 					</tr>
@@ -47,6 +48,7 @@
 					<#list (pageObj.resultList)! as obj>
 					<tr>
 						<td>${(obj.userName)!}</td>
+						<td>${(obj.parseUserType())!}</td>
 						<td>
 							<a href="${ctx}/admin/user_add?obj_id=${obj.id}" class="btn btn-primary btn-xs" >编辑</a>
 						</td>

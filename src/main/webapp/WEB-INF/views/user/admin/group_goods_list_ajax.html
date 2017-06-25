@@ -35,7 +35,7 @@
 				query_form_pageRows_inp:'.form_group_goods_list_ajax inp_pageRows',
 				query_form_search_btn:'.form_group_goods_list_ajax .btn_search_ajax',
 		}
-		c.ajax_paging('${(pageObj.currentPage)!}', '${(pageObj.pageRows)!}', '${(pageObj.totalPages)!}', '${(pageObj.totalRows)!}', nodeConfig, cssConfg);
+		c.ajax_paging(${(pageObj.currentPage)!0}, ${(pageObj.pageRows)!0}, ${(pageObj.totalPages)!0}, ${(pageObj.totalRows)!0}, nodeConfig, cssConfg);
 	}); 
 	require(['jquery'],function($){
 		

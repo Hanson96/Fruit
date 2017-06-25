@@ -48,12 +48,12 @@
 										<tr class="goods-item goods_item">
 											<td>
 												<#if item.goods??>
-												此商品已被管理员删除
+													<a href="${ctx}/goods_detail?obj_id=${(item.goods.id)!}">
+														<img src="${ctx}/${(item.goods.main_photo.path)!}/${(item.goods.main_photo.name)!}" width="70"/>
+														<span>${(item.goods.name)!}</span>
+													</a>
 												<#else>
-												<a href="${ctx}/goods_detail?obj_id=${(item.goods.id)!}">
-													<img src="${ctx}/${(item.goods.main_photo.path)!}/${(item.goods.main_photo.name)!}" width="70"/>
-													<span>${(item.goods.name)!}</span>
-												</a>
+													此商品已被管理员删除
 												</#if>
 											</td>
 											<td>×${(item.count)!}</td>
